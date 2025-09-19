@@ -20,4 +20,7 @@ public class IdCard {
 
     private String frontImageUrl;
     private String backImageUrl;
+    private Long size;
+    private String type;
+    private String url;
 }
