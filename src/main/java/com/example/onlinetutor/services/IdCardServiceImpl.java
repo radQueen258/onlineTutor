@@ -21,31 +21,32 @@ public class IdCardServiceImpl implements IdCardService {
     @Value("${storage.path}")
     private String storagePath;
 
-    @Autowired
-    private IdCardRepo  idCardRepo;
+//    @Autowired
+//    private IdCardRepo  idCardRepo;
 
 
-    @Override
-    public String saveIdCard(MultipartFile file, IdCardForm idCardForm) {
-        String storageName = UUID.randomUUID().toString() + "." +
-                FilenameUtils.getExtension(file.getOriginalFilename());
-
-        IdCard idCard = IdCard.builder()
-                .frontImageUrl(idCardForm.getFrontImageUrl())
-                .backImageUrl(idCardForm.getBackImageUrl())
-                .type(file.getContentType())
-                .size(file.getSize())
-                .storageFileName(storageName)
-                .url(storagePath + "/" + storageName)
-                .build();
+    public String saveFile(MultipartFile file) {
+        String storageName = UUID.randomUUID().toString() + "."
+                + FilenameUtils.getExtension(file.getOriginalFilename());
 
         try {
             Files.copy(file.getInputStream(), Paths.get(storagePath, storageName));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("FAILED TO SAVE FILE", e);
         }
 
-        filesRepository.save(fileInfo);
-        return fileInfo.getStorageFileName();
+        return storagePath + "/" + storageName;
+    }
+
+
+    @Override
+    public IdCard saveIdCard(MultipartFile frontImage, MultipartFile backImage) {
+        String frontUrl = saveFile(frontImage);
+        String backUrl = saveFile(backImage);
+
+        return IdCard.builder()
+                .frontImageUrl(frontUrl)
+                .backImageUrl(backUrl)
+                .build();
     }
 }

@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Builder
@@ -20,5 +21,9 @@ public class UserForm {
     private String lastname;
     private Role role;
     private Gender gender;
-    private IdCard idCard;
+//    private IdCard idCard;
+    private MultipartFile frontImage;
+    private MultipartFile backImage;
+    private String schoolName;
 }
+

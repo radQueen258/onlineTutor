@@ -21,6 +21,7 @@ public class UserDto {
     private String firstname;
     private String lastname;
     private Gender gender;
+    private String schoolName;
 
 
     public static UserDto from(User user){
@@ -30,6 +31,7 @@ public class UserDto {
                 .firstname(user.getFirstName())
                 .lastname(user.getLastName())
                 .gender(user.getGender())
+                .schoolName(user.getSchoolName())
                 .build();
     }
 

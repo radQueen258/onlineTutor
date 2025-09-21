@@ -22,5 +22,4 @@ public class IdCard {
     private String backImageUrl;
     private Long size;
     private String type;
-    private String url;
 }
