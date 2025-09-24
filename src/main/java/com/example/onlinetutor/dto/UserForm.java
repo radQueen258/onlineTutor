@@ -17,8 +17,8 @@ public class UserForm {
 
     private String email;
     private String password;
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String lastName;
     private Role role;
     private Gender gender;
 //    private IdCard idCard;

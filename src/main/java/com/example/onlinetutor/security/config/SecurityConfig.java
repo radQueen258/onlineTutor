@@ -53,7 +53,7 @@ public class SecurityConfig {
         );
 
         http.formLogin(form -> form
-                .loginPage("/login")
+                .loginPage("/signUp")
                 .usernameParameter("username")
                 .defaultSuccessUrl("/profile", true)
                 .failureUrl("/signIn?error")

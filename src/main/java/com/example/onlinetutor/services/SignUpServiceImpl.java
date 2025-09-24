@@ -15,6 +15,7 @@ public class SignUpServiceImpl implements SignUpService{
 
     @Autowired
     private UserRepo userRepo;
+    @Autowired
     private IdCardService idCardService;
 
     @Autowired
@@ -32,13 +33,17 @@ public class SignUpServiceImpl implements SignUpService{
         User user = User.builder()
                 .email(form.getEmail())
                 .password(passwordEncoder.encode(form.getPassword()))
-                .firstName(form.getFirstname())
-                .lastName(form.getLastname())
+                .firstName(form.getFirstName())
+                .lastName(form.getLastName())
                 .gender(form.getGender())
                 .role(form.getRole())
                 .schoolName(form.getSchoolName())
                 .idCard(idCard)
                 .build();
+        System.out.println("Saving User: {}" + user);
+
         userRepo.save(user);
+
+        System.out.println("User saved successfully");
     }
 }
