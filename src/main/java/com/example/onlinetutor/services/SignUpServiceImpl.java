@@ -30,6 +30,8 @@ public class SignUpServiceImpl implements SignUpService{
 
         IdCard  idCard = idCardService.saveIdCard(frontImage, backImage);
 
+        System.out.println("THIS IS THE IDCARD" + idCard);
+
         User user = User.builder()
                 .email(form.getEmail())
                 .password(passwordEncoder.encode(form.getPassword()))

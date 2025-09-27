@@ -9,11 +9,11 @@
 </head>
 <body>
 <form action="/signUp" method="post" enctype="multipart/form-data">
-    <input name="first_name" type="text" placeholder="FIRSTNAME" required>
-    <input name="last_name" type="text" placeholder="LASTNAME" required>
+    <input name="firstName" type="text" placeholder="FIRSTNAME" required>
+    <input name="lastName" type="text" placeholder="LASTNAME" required>
 
 <#--    Choose the school-->
-    <select name="school_name" class="form-select" aria-label="Default select example">
+    <select name="schoolName" class="form-select" aria-label="Default select example">
         <option selected>School Name</option>
         <option value="1"> School One</option>
         <option value="2"> School Two</option>
@@ -21,19 +21,27 @@
     </select>
 <#--    Gender-->
     <label>
-        <input type="radio" name="gender" value="Female" required> Female
+        <input type="radio" name="gender" value="FEMALE" required> Female
     </label>
     <label>
-        <input type="radio" name="gender" value="Male" required> Male
+        <input type="radio" name="gender" value="MALE" required> Male
+    </label>
+
+    <#--    Role-->
+    <label>
+        <input type="radio" name="role" value="STUDENT" required> Student
+    </label>
+    <label>
+        <input type="radio" name="role" value="TUTOR" required> Tutor
     </label>
 <#--    To upload the ID card-->
     <div class="input-group mb-3">
-        <input type="file" class="form-control" name="idCardFront" required>
+        <input type="file" class="form-control" name="frontImage" required>
         <label class="input-group-text" for="inputGroupFile02">Upload Front Page</label>
     </div>
 
     <div class="input-group mb-3">
-        <input type="file" class="form-control" name="idCardBack" required>
+        <input type="file" class="form-control" name="backImage" required>
         <label class="input-group-text" for="inputGroupFile02">Upload Back Page</label>
     </div>
 
