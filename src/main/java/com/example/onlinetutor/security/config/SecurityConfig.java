@@ -51,11 +51,12 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/signUp").permitAll()
                 .requestMatchers("/signIn").permitAll()
+                .requestMatchers("dashboard").permitAll()
         );
 
         http.formLogin(form -> form
                 .loginPage("/signIn")
-                .usernameParameter("username")
+                .usernameParameter("email")
                 .defaultSuccessUrl("/dashboard", true)
                 .failureUrl("/signIn?error")
                 .permitAll()
