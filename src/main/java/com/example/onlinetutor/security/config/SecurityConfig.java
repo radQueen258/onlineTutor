@@ -56,7 +56,7 @@ public class SecurityConfig {
         http.formLogin(form -> form
                 .loginPage("/signIn")
                 .usernameParameter("username")
-                .defaultSuccessUrl("/profile", true)
+                .defaultSuccessUrl("/dashboard", true)
                 .failureUrl("/signIn?error")
                 .permitAll()
         );

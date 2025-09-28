@@ -64,6 +64,7 @@ public class SignUpServiceImpl implements SignUpService{
         confirmationTokenService.saveConfirmationToken(confirmationToken);
 
 //        TODO: SEND EMAIL
+//        TODO: ADD CONFIMRATION AFTER ALL THE BACKEND IS DONE
 
         System.out.println("User saved successfully: " + confirmationToken);
     }
