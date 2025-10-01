@@ -3,9 +3,11 @@ package com.example.onlinetutor.controllers;
 import com.example.onlinetutor.models.AptitudeTest;
 import com.example.onlinetutor.models.TestQuestion;
 import com.example.onlinetutor.services.AptitudeTestService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +28,14 @@ public class AptitudeTestController {
         AptitudeTest test = testService.startTest(userId, questions);
 
         return ResponseEntity.ok(test);
+    }
+
+    @GetMapping("/aptitude-test/start")
+    public String startTest(HttpSession session, Model model) {
+        Long userId = (Long) session.getAttribute("userId");
+        AptitudeTest test = testService.startTest(userId, generateSampleQuestions());
+        model.addAttribute("test", test);
+        return "aptitude-test.ftlh";
     }
 
 

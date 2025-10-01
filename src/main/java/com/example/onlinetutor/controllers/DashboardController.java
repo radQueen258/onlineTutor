@@ -1,9 +1,13 @@
 package com.example.onlinetutor.controllers;
 
 
+import com.example.onlinetutor.enums.AptitudeTestStatus;
 import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.UserRepo;
+import com.example.onlinetutor.services.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,19 +19,27 @@ public class DashboardController {
 
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private UserService userService;
 
     public DashboardController(UserRepo userRepo) {
         this.userRepo = userRepo;
     }
 
     @GetMapping("/dashboard")
-    public String dashboard(Model model, Principal principal) {
+    public String dashboard(Model model, Principal principal, HttpSession session) {
         String email = principal.getName();
+        Long userId = (Long) session.getAttribute("userId");
+        User user = userService.findById(userId);
 
-        User user = userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+        boolean needsTest = user.getAptitudeTestStatus() == AptitudeTestStatus.NOT_STARTED;
+        model.addAttribute("needsTest", needsTest);
 
-        model.addAttribute("userId", user.getId());
-        model.addAttribute("firstName", user.getFirstName());
+        User user1 = userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+
+        model.addAttribute("userId", user1.getId());
+        model.addAttribute("firstName", user1.getFirstName());
+        //TODO: These below need to be changed by the real logic
         model. addAttribute("progress", "60%");
         model.addAttribute("upcoming", "Continue Algebraic Expressions");
 

@@ -6,6 +6,7 @@ import com.example.onlinetutor.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -15,7 +16,7 @@ public class UserServiceImpl implements UserService{
     private UserRepo userRepo;
 
     @Override
-    public User updateOnboarding(Long userId, String examLevel, Set<String> subjects) {
+    public User updateOnboarding(Long userId, String examLevel, List<String> subjects) {
         User user = userRepo.findById(userId)
                 .orElseThrow(()-> new RuntimeException("User not found!!")) ;
 
@@ -31,6 +32,14 @@ public class UserServiceImpl implements UserService{
                 .orElseThrow(()-> new RuntimeException("User not found!!")) ;
         user.setAptitudeTestStatus(status);
         userRepo.save(user);
+        return user;
+    }
+
+    @Override
+    public User findById(Long userId) {
+        User user = userRepo.findById(userId)
+                .orElseThrow(()-> new RuntimeException("User not found!!")) ;
+
         return user;
     }
 }

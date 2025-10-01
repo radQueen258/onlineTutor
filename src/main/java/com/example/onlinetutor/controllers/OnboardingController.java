@@ -33,14 +33,21 @@ public class OnboardingController {
     }
 
     @PostMapping("/setGoals")
-    public String setGoals(HttpSession session, @RequestParam String examLevel, @RequestParam Set<String> subjects) {
+    public String setGoals(HttpSession session,
+                           @RequestParam String examLevel,
+                           @RequestParam List<String> subjects) {
         Long userId = (Long) session.getAttribute("userId");
         userService.updateOnboarding(userId, examLevel, subjects);
 
         session.setAttribute("examLevel", examLevel);
         session.setAttribute("subjects", subjects);
 
-        return "redirect:/dashboard";
+        return "redirect:/choose-test";
+    }
+
+    @GetMapping("/choose-test")
+    public String chooseTest() {
+        return "choose-test";
     }
 
     @PostMapping("/markTestStatus")

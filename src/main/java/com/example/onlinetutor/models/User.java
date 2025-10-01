@@ -9,7 +9,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -50,7 +52,7 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_subjects", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "subjects")
-    private Set<String> preferredSubjects = new HashSet<>();
+    private List<String> preferredSubjects = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private AptitudeTestStatus aptitudeTestStatus = AptitudeTestStatus.NOT_STARTED;

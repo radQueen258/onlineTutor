@@ -1,7 +1,9 @@
 package com.example.onlinetutor.controllers;
 
 import com.example.onlinetutor.dto.UserForm;
+import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.services.SignUpService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +22,13 @@ public class SignUpController {
     }
 
     @PostMapping("/signUp")
-    public String signUp (@ModelAttribute UserForm form) {
-        signUpService.addUser(form);
-        return "redirect:/signIn";
+    public String signUp (@ModelAttribute UserForm form,
+                          HttpSession session) {
+        User savedUser = signUpService.addUser(form);
+
+        session.setAttribute("userId", savedUser.getId());
+        session.setAttribute("testTaken", false);
+
+        return "redirect:/onboarding";
     }
 }

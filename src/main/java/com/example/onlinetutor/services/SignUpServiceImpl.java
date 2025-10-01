@@ -29,7 +29,7 @@ public class SignUpServiceImpl implements SignUpService{
 
 
     @Override
-    public void addUser(UserForm form) {
+    public User addUser(UserForm form) {
 
         MultipartFile frontImage = form.getFrontImage();
         MultipartFile backImage = form.getBackImage();
@@ -66,5 +66,6 @@ public class SignUpServiceImpl implements SignUpService{
 //        TODO: ADD CONFIMRATION AFTER ALL THE BACKEND IS DONE
 
         System.out.println("User saved successfully: " + confirmationToken);
+        return user;
     }
 }
