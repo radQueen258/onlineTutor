@@ -51,13 +51,15 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/signUp").permitAll()
                 .requestMatchers("/signIn").permitAll()
-                .requestMatchers("dashboard").permitAll()
+                .requestMatchers("/dashboard/**").hasAnyRole("STUDENT", "TEACHER", "ADMIN")
+                .requestMatchers("/onboarding/**").hasAnyRole("STUDENT", "TEACHER", "ADMIN")
+                .anyRequest().authenticated()
         );
 
         http.formLogin(form -> form
                 .loginPage("/signIn")
                 .usernameParameter("email")
-                .defaultSuccessUrl("/dashboard", true)
+                .defaultSuccessUrl("/onboarding", true)
                 .failureUrl("/signIn?error")
                 .permitAll()
         );
