@@ -1,4 +1,4 @@
-package com.example.onlinetutor.models;
+package com.example.onlinetutor.enums;
 
 public enum Role {
 

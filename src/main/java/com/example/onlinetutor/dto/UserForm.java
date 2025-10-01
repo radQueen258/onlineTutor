@@ -1,8 +1,7 @@
 package com.example.onlinetutor.dto;
 
-import com.example.onlinetutor.models.Gender;
-import com.example.onlinetutor.models.IdCard;
-import com.example.onlinetutor.models.Role;
+import com.example.onlinetutor.enums.Gender;
+import com.example.onlinetutor.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.example.onlinetutor.dto;
 
-import com.example.onlinetutor.models.Gender;
+import com.example.onlinetutor.enums.Gender;
 import com.example.onlinetutor.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

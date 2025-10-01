@@ -1,10 +1,16 @@
 package com.example.onlinetutor.models;
 
+import com.example.onlinetutor.enums.AptitudeTestStatus;
+import com.example.onlinetutor.enums.Gender;
+import com.example.onlinetutor.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Data
@@ -27,6 +33,7 @@ public class User {
     private String lastName;
     private String schoolName;
 
+
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
@@ -36,6 +43,18 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_card_id", referencedColumnName = "id")
     private IdCard idCard;
+
+    //    Fields to be filled after the Aptitude Test
+    private String examLevel;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_subjects", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "subjects")
+    private Set<String> preferredSubjects = new HashSet<>();
+
+    @Enumerated(EnumType.STRING)
+    private AptitudeTestStatus aptitudeTestStatus = AptitudeTestStatus.NOT_STARTED;
+
 
 
 }

@@ -3,7 +3,6 @@ package com.example.onlinetutor.services;
 import com.example.onlinetutor.dto.UserForm;
 import com.example.onlinetutor.models.ConfirmationToken;
 import com.example.onlinetutor.models.IdCard;
-import com.example.onlinetutor.models.Role;
 import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
