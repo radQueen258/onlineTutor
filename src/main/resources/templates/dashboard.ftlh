@@ -12,8 +12,11 @@
 <h1>Welcome,${firstName}</h1>
 <p>User ID: ${userId}</p>
 
-<div th:if="${needsTest}" class="alert alert-warning">
-    You still need to take your aptitude test!
+<div th:if="${needsTest}">
+    <p style="color:red;">⚠️ You still need to take your aptitude test!</p>
+    <form action="/aptitude-test/start" method="get">
+        <button type="submit">Take Test Now</button>
+    </form>
 </div>
 
 
