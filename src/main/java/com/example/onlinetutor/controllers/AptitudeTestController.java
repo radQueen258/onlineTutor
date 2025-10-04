@@ -35,7 +35,8 @@ public class AptitudeTestController {
         Long userId = (Long) session.getAttribute("userId");
         AptitudeTest test = testService.startTest(userId, generateSampleQuestions());
         model.addAttribute("test", test);
-        return "aptitude-test.ftlh";
+
+        return "aptitude_test";
     }
 
 

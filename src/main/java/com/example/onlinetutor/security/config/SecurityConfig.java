@@ -51,13 +51,18 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/signUp").permitAll()
                 .requestMatchers("/signIn").permitAll()
-                .requestMatchers("/dashboard/**").hasAnyRole("STUDENT", "TEACHER", "ADMIN")
-                .requestMatchers("/onboarding/**").hasAnyRole("STUDENT", "TEACHER", "ADMIN")
-                .anyRequest().authenticated()
+                .requestMatchers("/dashboard/**").hasAnyAuthority("STUDENT", "TEACHER", "ADMIN")
+                .requestMatchers("/onboarding/**").permitAll()
+                .requestMatchers("/setGoals/**").permitAll()
+                .requestMatchers("/choose-test/**").permitAll()
+                .requestMatchers("/error").permitAll()
+                .requestMatchers("/aptitude-test/**").permitAll()
+                .anyRequest().permitAll()
         );
 
         http.formLogin(form -> form
                 .loginPage("/signIn")
+                .loginProcessingUrl("/signIn")
                 .usernameParameter("email")
                 .defaultSuccessUrl("/onboarding", true)
                 .failureUrl("/signIn?error")

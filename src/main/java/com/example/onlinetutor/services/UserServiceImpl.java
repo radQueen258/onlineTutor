@@ -4,6 +4,8 @@ import com.example.onlinetutor.enums.AptitudeTestStatus;
 import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,8 +18,12 @@ public class UserServiceImpl implements UserService{
     private UserRepo userRepo;
 
     @Override
-    public User updateOnboarding(Long userId, String examLevel, List<String> subjects) {
-        User user = userRepo.findById(userId)
+    public User updateOnboarding(String examLevel, List<String> subjects) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+
+
+        User user = userRepo.findByEmail(email)
                 .orElseThrow(()-> new RuntimeException("User not found!!")) ;
 
         user.setExamLevel(examLevel);

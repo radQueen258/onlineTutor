@@ -8,7 +8,7 @@ import java.util.Set;
 
 public interface UserService {
 
-    User updateOnboarding (Long userId, String examLevel, List<String> subjects);
+    User updateOnboarding (String examLevel, List<String> subjects);
 
     User updateAptitudeTestStatus(Long userId, AptitudeTestStatus status);
 
