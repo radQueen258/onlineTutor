@@ -12,12 +12,12 @@
 <h1>Welcome,${firstName}</h1>
 <p>User ID: ${userId}</p>
 
-<div #if needsTest>
+<#if needsTest>
     <p style="color:red;">⚠️ You still need to take your aptitude test!</p>
     <form action="/aptitude-test/start" method="get">
         <button type="submit">Take Test Now</button>
     </form>
-</div>
+</#if>
 
 
 <section>

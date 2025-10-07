@@ -13,6 +13,7 @@
 </form>
 
 <form action="/dashboard" method="get">
+    <input type="hidden" name="status" value="NOT_STARTED">
     <button type="submit">Take Test Later</button>
 </form>
 

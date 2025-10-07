@@ -19,9 +19,6 @@ import java.util.stream.Collectors;
 
 import java.util.List;
 
-//@RestController
-//@RequestMapping("/api/aptitude-test")
-//@RequiredArgsConstructor
 @Controller
 public class AptitudeTestController {
 
@@ -51,9 +48,6 @@ public class AptitudeTestController {
 
 //        Long userId = (Long) session.getAttribute("userId");
         AptitudeTest test = testService.startTest(userId, generateSampleQuestions());
-
-//        System.out.println("Generated Test: " + test);
-//        System.out.println("Questions: " + (test != null ? test.getQuestions() : "test is null"));
         model.addAttribute("test", test);
 
         return "aptitude_test";
