@@ -37,8 +37,10 @@ public class OnboardingController {
     public String setGoals(HttpSession session,
                            @RequestParam String examLevel,
                            @RequestParam List<String> subjects) {
-//        Long userId = (Long) session.getAttribute("userId");
+        Long userId = (Long) session.getAttribute("userId");
         userService.updateOnboarding(examLevel, subjects);
+
+        userService.updateAptitudeTestStatus(userId, AptitudeTestStatus.NOT_STARTED);
 
         session.setAttribute("examLevel", examLevel);
         session.setAttribute("subjects", subjects);

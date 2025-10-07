@@ -1,5 +1,8 @@
 package com.example.onlinetutor.security.config;
 
+import com.example.onlinetutor.enums.AptitudeTestStatus;
+import com.example.onlinetutor.models.User;
+import com.example.onlinetutor.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @EnableWebSecurity
 @Configuration
@@ -23,6 +27,9 @@ public class SecurityConfig {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private UserRepo userRepo;
 
 
     public SecurityConfig (PasswordEncoder passwordEncoder,
@@ -45,6 +52,24 @@ public class SecurityConfig {
     }
 
     @Bean
+    public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
+        return (request, response, authentication) -> {
+            String email = authentication.getName();
+
+            User user = userRepo.findByEmail(email)
+                    .orElseThrow(()-> new RuntimeException("User not found"));
+
+            request.getSession().setAttribute("userId", user.getId());
+
+            if (user.getAptitudeTestStatus() == AptitudeTestStatus.COMPLETED) {
+                response.sendRedirect("/dashboard");
+            } else {
+                response.sendRedirect("/onboarding");
+            }
+        };
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable());
 
@@ -64,7 +89,8 @@ public class SecurityConfig {
                 .loginPage("/signIn")
                 .loginProcessingUrl("/signIn")
                 .usernameParameter("email")
-                .defaultSuccessUrl("/onboarding", true)
+//                .defaultSuccessUrl("/onboarding", true)
+                .successHandler(customAuthenticationSuccessHandler())
                 .failureUrl("/signIn?error")
                 .permitAll()
         );
