@@ -11,16 +11,18 @@
 <body>
 <h1>Aptitude Test</h1>
 
-<form action="/api/aptitude-test/submit/${test.id}" method="post">
-    <div th:each="q : ${test.questions}">
-        <p th:text="${q.questionText}"></p>
-        <div th:each="opt : ${q.options}">
-            <label>
-                <input type="radio" th:name="${q.id}" th:value="${opt}">
-                <span th:text="${opt}"></span>
-            </label><br>
+<form action="/aptitude-test/submit/${test.id}" method="post">
+    <#list test.questions as question>
+        <div style="margin-bottom: 20px;">
+            <p><strong>Question ${question?index + 1}:</strong> ${question.questionText}</p>
+            <#list question.options as option>
+                <label>
+                    <input type="radio" name="answer_${question.id}" value="${option}" required>
+                    ${option}
+                </label><br>
+            </#list>
         </div>
-    </div>
+    </#list>
 
     <button type="submit">Submit Test</button>
 </form>

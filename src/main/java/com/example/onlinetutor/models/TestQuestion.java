@@ -1,10 +1,7 @@
 package com.example.onlinetutor.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -28,6 +25,7 @@ public class TestQuestion {
     private String correctAnswer;
     private String userAnswer;
 
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "aptitude_test_id")
     private AptitudeTest aptitudeTest;

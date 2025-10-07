@@ -2,10 +2,7 @@ package com.example.onlinetutor.models;
 
 import com.example.onlinetutor.enums.AptitudeTestStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +25,7 @@ public class AptitudeTest {
 
     private Integer score;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "aptitudeTest", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<TestQuestion> questios = new ArrayList<>();
+    private List<TestQuestion> questions = new ArrayList<>();
 }

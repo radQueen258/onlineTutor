@@ -2,24 +2,33 @@ package com.example.onlinetutor.controllers;
 
 import com.example.onlinetutor.models.AptitudeTest;
 import com.example.onlinetutor.models.TestQuestion;
+import com.example.onlinetutor.models.User;
+import com.example.onlinetutor.repositories.UserRepo;
 import com.example.onlinetutor.services.AptitudeTestService;
 import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-@RestController
-@RequestMapping("/api/aptitude-test")
-@RequiredArgsConstructor
+import java.util.List;
+
+//@RestController
+//@RequestMapping("/api/aptitude-test")
+//@RequiredArgsConstructor
+@Controller
 public class AptitudeTestController {
 
     @Autowired
     private AptitudeTestService testService;
+
+    @Autowired
+    private UserRepo userRepo;
 
     @PostMapping("/start/{userId}")
     public ResponseEntity<AptitudeTest> startTest(@PathVariable Long userId) {
@@ -31,25 +40,43 @@ public class AptitudeTestController {
     }
 
     @GetMapping("/aptitude-test/start")
-    public String startTest(HttpSession session, Model model) {
-        Long userId = (Long) session.getAttribute("userId");
+    public String startTest(HttpSession session, Model model, Authentication authentication) {
+        String email = authentication.getName();
+
+        User user = userRepo.findByEmail(email).orElseThrow(() ->
+                new RuntimeException("User not found"));
+
+        Long userId = user.getId();
+
+//        Long userId = (Long) session.getAttribute("userId");
         AptitudeTest test = testService.startTest(userId, generateSampleQuestions());
+
+//        System.out.println("Generated Test: " + test);
+//        System.out.println("Questions: " + (test != null ? test.getQuestions() : "test is null"));
         model.addAttribute("test", test);
 
         return "aptitude_test";
     }
 
 
-    @PostMapping("/submit/{testId}")
-    public ResponseEntity<AptitudeTest> submitTest(
+    @PostMapping("/aptitude-test/submit/{testId}")
+    public String submitTestForm(
             @PathVariable Long testId,
-            @RequestBody Map<Long, String> answers) {
+            @RequestParam Map<String, String> params,
+            Model model) {
 
+        Map<Long, String> answers = params.entrySet().stream()
+                .filter(entry -> entry.getKey().startsWith("answer_"))
+                .collect(Collectors.toMap(
+                        entry -> Long.parseLong(entry.getKey().substring("answer_".length())),
+                        Map.Entry::getValue
+                ));
         AptitudeTest completed = testService.submitTest(testId, answers);
-        return ResponseEntity.ok(completed);
+        model.addAttribute("test", completed);
+        return "aptitude_thankyou";
     }
 
-//    This is a temporary method later will brainstorm how to do the real questions generator
+//    TODO: This is a temporary method later will brainstorm how to do the real questions generator
 
     private List<TestQuestion> generateSampleQuestions() {
         TestQuestion q1 = new TestQuestion();

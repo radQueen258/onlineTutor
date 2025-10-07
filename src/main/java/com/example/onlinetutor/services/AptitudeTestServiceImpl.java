@@ -31,7 +31,7 @@ public class AptitudeTestServiceImpl implements AptitudeTestService {
         for (TestQuestion q: generatedQuestions) {
             q.setAptitudeTest(test);
         }
-        test.setQuestios(generatedQuestions);
+        test.setQuestions(generatedQuestions);
 
         return testRepository.save(test);
     }
@@ -42,7 +42,7 @@ public class AptitudeTestServiceImpl implements AptitudeTestService {
                 .orElseThrow(()->new RuntimeException("test not found"));
 
         int score = 0;
-        for (TestQuestion q: test.getQuestios()) {
+        for (TestQuestion q: test.getQuestions()) {
             String userAnswer = answers.get(q.getId());
             q.setUserAnswer(userAnswer);
 
