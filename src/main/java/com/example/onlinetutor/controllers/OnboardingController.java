@@ -63,7 +63,7 @@ public class OnboardingController {
         response.addCookie(testStatusCookie);
 
         session.setAttribute("testTaken", status == AptitudeTestStatus.COMPLETED);
-        return ResponseEntity.ok("Test status updated");
+        return ResponseEntity.ok("Test status updated " + status.name());
     }
 
 

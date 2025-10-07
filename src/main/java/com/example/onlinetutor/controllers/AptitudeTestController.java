@@ -1,5 +1,6 @@
 package com.example.onlinetutor.controllers;
 
+import com.example.onlinetutor.enums.AptitudeTestStatus;
 import com.example.onlinetutor.models.AptitudeTest;
 import com.example.onlinetutor.models.TestQuestion;
 import com.example.onlinetutor.models.User;
@@ -73,6 +74,11 @@ public class AptitudeTestController {
                 ));
         AptitudeTest completed = testService.submitTest(testId, answers);
         model.addAttribute("test", completed);
+
+        userRepo.findById(completed.getUserId()).ifPresent(user -> {
+            user.setAptitudeTestStatus(AptitudeTestStatus.COMPLETED);
+            userRepo.save(user);
+        });
         return "aptitude_thankyou";
     }
 

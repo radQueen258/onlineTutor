@@ -53,6 +53,8 @@ public class AptitudeTestServiceImpl implements AptitudeTestService {
 
         test.setScore(score);
         test.setStatus(AptitudeTestStatus.COMPLETED);
-        return testRepository.save(test);
+        testRepository.save(test);
+
+        return test;
     }
 }
