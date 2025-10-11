@@ -12,6 +12,7 @@
 <h1>Aptitude Test</h1>
 
 <form action="/aptitude-test/submit/${test.id}" method="post">
+    <input type="hidden" name="status" value="COMPLETED">
     <#list test.questions as question>
         <div style="margin-bottom: 20px;">
             <p><strong>Question ${question?index + 1}:</strong> ${question.questionText}</p>

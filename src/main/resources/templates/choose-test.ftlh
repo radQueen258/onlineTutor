@@ -9,6 +9,7 @@
 <p>Here is the aptitude test. It will take about 1 hour. Please ensure you have a stable internet connection.</p>
 
 <form action="/aptitude-test/start" method="get">
+    <input type="hidden" name="status" value="IN_PROGRESS">
     <button type="submit">Take Test Now</button>
 </form>
 

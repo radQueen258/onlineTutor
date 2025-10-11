@@ -39,14 +39,14 @@ public class AptitudeTestController {
 
     @GetMapping("/aptitude-test/start")
     public String startTest(HttpSession session, Model model, Authentication authentication) {
-        String email = authentication.getName();
+//        String email = authentication.getName();
+//
+//        User user = userRepo.findByEmail(email).orElseThrow(() ->
+//                new RuntimeException("User not found"));
+//
+//        Long userId = user.getId();
 
-        User user = userRepo.findByEmail(email).orElseThrow(() ->
-                new RuntimeException("User not found"));
-
-        Long userId = user.getId();
-
-//        Long userId = (Long) session.getAttribute("userId");
+        Long userId = (Long) session.getAttribute("userId");
         AptitudeTest test = testService.startTest(userId, generateSampleQuestions());
         model.addAttribute("test", test);
 
@@ -58,7 +58,7 @@ public class AptitudeTestController {
     public String submitTestForm(
             @PathVariable Long testId,
             @RequestParam Map<String, String> params,
-            Model model) {
+            Model model, HttpSession session) {
 
         Map<Long, String> answers = params.entrySet().stream()
                 .filter(entry -> entry.getKey().startsWith("answer_"))
@@ -68,6 +68,8 @@ public class AptitudeTestController {
                 ));
         AptitudeTest completed = testService.submitTest(testId, answers);
         model.addAttribute("test", completed);
+
+        session.setAttribute("testTaken", true);
 
         userRepo.findById(completed.getUserId()).ifPresent(user -> {
             user.setAptitudeTestStatus(AptitudeTestStatus.COMPLETED);

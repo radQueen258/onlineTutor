@@ -38,7 +38,7 @@ public class OnboardingController {
                            @RequestParam String examLevel,
                            @RequestParam List<String> subjects) {
         Long userId = (Long) session.getAttribute("userId");
-        userService.updateOnboarding(examLevel, subjects);
+        userService.updateOnboarding(userId,examLevel, subjects);
 
         userService.updateAptitudeTestStatus(userId, AptitudeTestStatus.NOT_STARTED);
 
@@ -54,7 +54,9 @@ public class OnboardingController {
     }
 
     @PostMapping("/markTestStatus")
-    public ResponseEntity<?> markTestStatus(HttpServletResponse response, HttpSession session, @RequestParam AptitudeTestStatus status) {
+    public ResponseEntity<?> markTestStatus(HttpServletResponse response,
+                                            HttpSession session,
+                                            @RequestParam(required = false) AptitudeTestStatus status) {
         Long userId = (Long) session.getAttribute("userId");
 
         userService.updateAptitudeTestStatus(userId, status);

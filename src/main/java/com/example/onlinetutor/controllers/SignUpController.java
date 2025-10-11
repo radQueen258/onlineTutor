@@ -5,6 +5,10 @@ import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.services.SignUpService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,6 +19,8 @@ public class SignUpController {
 
     @Autowired
     private SignUpService signUpService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @GetMapping("/signUp")
     public String signUpPage () {
@@ -25,6 +31,13 @@ public class SignUpController {
     public String signUp (@ModelAttribute UserForm form,
                           HttpSession session) {
         User savedUser = signUpService.addUser(form);
+
+//        Authentication authentication = authenticationManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(savedUser.getEmail(), savedUser.getPassword())
+//        );
+//
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+
 
         session.setAttribute("userId", savedUser.getId());
         session.setAttribute("testTaken", false);

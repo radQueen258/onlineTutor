@@ -18,12 +18,12 @@ public class UserServiceImpl implements UserService{
     private UserRepo userRepo;
 
     @Override
-    public User updateOnboarding(String examLevel, List<String> subjects) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String email = auth.getName();
+    public User updateOnboarding(Long userId, String examLevel, List<String> subjects) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String email = auth.getName();
 
 
-        User user = userRepo.findByEmail(email)
+        User user = userRepo.findById(userId)
                 .orElseThrow(()-> new RuntimeException("User not found!!")) ;
 
         user.setExamLevel(examLevel);
