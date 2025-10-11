@@ -13,5 +13,6 @@ public interface UserService {
     User updateAptitudeTestStatus(Long userId, AptitudeTestStatus status);
 
     User findById(Long userId);
+    User findByEmail(String email);
 
 }

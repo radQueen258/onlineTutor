@@ -29,6 +29,14 @@
     <h2>Upcoming</h2>
     <p>${upcoming}</p>
 </section>
+
+<br>
+
+<p>
+    <a href="/profile">
+        <button>Profile</button>
+    </a>
+</p>
 </body>
 
 </html>
