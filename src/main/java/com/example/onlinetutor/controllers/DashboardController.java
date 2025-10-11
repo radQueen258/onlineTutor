@@ -31,14 +31,13 @@ public class DashboardController {
     @GetMapping("/dashboard")
     public String dashboard(Model model, Principal principal,
                             HttpSession session, Authentication authentication,
-                            @RequestParam AptitudeTestStatus status) {
+                            @RequestParam(value = "status", required = false) AptitudeTestStatus status) {
         System.out.println("Logged in user is: " + authentication.getName());
         String email = authentication.getName();
         User user1 = userRepo.findByEmail(email).orElseThrow(() ->
                 new RuntimeException("User not found"));
 
         Long userId = user1.getId();
-        status = AptitudeTestStatus.NOT_STARTED;
 
         if (user1.getAptitudeTestStatus() !=  AptitudeTestStatus.COMPLETED) {
             userService.updateAptitudeTestStatus(userId, status);

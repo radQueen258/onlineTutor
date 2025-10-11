@@ -2,6 +2,7 @@ package com.example.onlinetutor.controllers;
 
 import com.example.onlinetutor.enums.AptitudeTestStatus;
 import com.example.onlinetutor.models.User;
+import com.example.onlinetutor.repositories.UserRepo;
 import com.example.onlinetutor.services.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -9,6 +10,8 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +24,9 @@ public class OnboardingController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepo userRepo;
 
     @GetMapping("/onboarding")
     public String onboarding(HttpSession session, Model model) {
@@ -54,10 +60,22 @@ public class OnboardingController {
     }
 
     @PostMapping("/markTestStatus")
-    public ResponseEntity<?> markTestStatus(HttpServletResponse response,
+    public String markTestStatus(HttpServletResponse response,
                                             HttpSession session,
-                                            @RequestParam(required = false) AptitudeTestStatus status) {
+                                            @RequestParam(value = "status", required = false) AptitudeTestStatus status) {
         Long userId = (Long) session.getAttribute("userId");
+
+        if (userId == null) {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if (auth != null && !auth.getName().equals("anonymousUser")) {
+                User user = userRepo.findByEmail(auth.getName()).orElse(null);
+                if (user != null) userId = user.getId();
+            }
+        }
+
+        if (status == null) {
+            status = AptitudeTestStatus.NOT_STARTED;
+        }
 
         userService.updateAptitudeTestStatus(userId, status);
 
@@ -68,8 +86,10 @@ public class OnboardingController {
         response.addCookie(testStatusCookie);
 
         session.setAttribute("testTaken", status == AptitudeTestStatus.COMPLETED);
-        return ResponseEntity.ok("Test status updated " + status.name());
+        ResponseEntity.ok("Test status updated " + status.name());
+        return "redirect:/dashboard";
     }
+
 
 
 }
