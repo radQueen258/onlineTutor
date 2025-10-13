@@ -19,9 +19,12 @@ public class Article {
 
     private String articleTitle;
     private String articleContent;
-    private String contentUrl;
+    private String imageUrl;
 
     @OneToOne
     @JoinColumn(name = "resource_id")
     private Resource resource;
+
+    @OneToOne(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Video video;
 }

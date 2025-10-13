@@ -9,34 +9,59 @@
 </head>
 
 <body>
-<h1>Welcome,${firstName}</h1>
-<p>User ID: ${userId}</p>
+<div style="display: flex; height: 100vh;">
 
-<#if needsTest>
-    <p style="color:red;">⚠️ You still need to take your aptitude test!</p>
-    <form action="/aptitude-test/start" method="get">
-        <button type="submit">Take Test Now</button>
-    </form>
-</#if>
+    <!-- NAVIGATION BAR -->
+    <nav style="width: 200px; background-color: #1f3a5f; color: white; padding: 20px;">
+        <h3>Website Name</h3>
+        <ul style="list-style: none; padding: 0;">
+            <li style="margin-bottom: 10px;">
+                <a href="/dashboard" style="color: burlywood; text-decoration: none;">Dashboard</a>
+            </li>
+            <li style="margin-bottom: 10px;">
+                <a href="/study-plan" style="color: white; text-decoration: none;">Study Plan</a>
+            </li>
+            <li style="margin-bottom: 10px;">
+                <a href="/resources" style="color: white; text-decoration: none;">Resources</a>
+            </li>
+            <li style="margin-bottom: 10px;">
+                <a href="/exam-trends" style="color: white; text-decoration: none;">Exam Trends</a>
+            </li>
+        </ul>
 
+        <div style="margin-top: auto;">
+            <a href="/profile" style="color: white;">Profile</a>
+        </div>
+    </nav>
 
-<section>
-    <h2>Progress</h2>
-    <p>${progress}</p>
-</section>
+    <!-- MAIN CONTENT -->
+    <main style="flex: 1; padding: 30px;">
+        <h1>Welcome, ${firstName}</h1>
+        <p>User ID: ${userId}</p>
 
-<section>
-    <h2>Upcoming</h2>
-    <p>${upcoming}</p>
-</section>
+        <#if needsTest>
+            <p style="color:red;">⚠️ You still need to take your aptitude test!</p>
+            <form action="/aptitude-test/start" method="get">
+                <button type="submit">Take Test Now</button>
+            </form>
+        </#if>
 
-<br>
+        <section style="margin-top: 30px;">
+            <h2>Progress</h2>
+            <p>${progress}</p>
+        </section>
 
-<p>
-    <a href="/profile">
-        <button>Profile</button>
-    </a>
-</p>
+        <section style="margin-top: 20px;">
+            <h2>Upcoming</h2>
+            <p>${upcoming}</p>
+        </section>
+
+        <br>
+
+        <a href="/profile">
+            <button>Profile</button>
+        </a>
+    </main>
+</div>
 </body>
-
 </html>

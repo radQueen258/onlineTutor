@@ -24,4 +24,8 @@ public class Video {
     @OneToOne
     @JoinColumn(name = "resource_id")
     private Resource resource;
+
+    @OneToOne
+    @JoinColumn(name = "article_id")
+    private Article article;
 }
