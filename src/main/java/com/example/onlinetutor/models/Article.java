@@ -27,4 +27,28 @@ public class Article {
 
     @OneToOne(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Video video;
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getArticleTitle() {
+        return articleTitle;
+    }
+
+    public String getArticleContent() {
+        return articleContent;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public Resource getResource() {
+        return resource;
+    }
+
+    public Video getVideo() {
+        return video;
+    }
 }

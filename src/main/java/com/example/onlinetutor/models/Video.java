@@ -28,4 +28,28 @@ public class Video {
     @OneToOne
     @JoinColumn(name = "article_id")
     private Article article;
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getVideoTitle() {
+        return videoTitle;
+    }
+
+    public String getVideoDescription() {
+        return videoDescription;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public Resource getResource() {
+        return resource;
+    }
+
+    public Article getArticle() {
+        return article;
+    }
 }

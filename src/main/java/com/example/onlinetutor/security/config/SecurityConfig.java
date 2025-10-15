@@ -79,7 +79,8 @@ public class SecurityConfig {
                 .requestMatchers("/dashboard/**").hasAnyAuthority("STUDENT", "TEACHER", "ADMIN")
                 .requestMatchers("/onboarding/**").permitAll()
                 .requestMatchers("/setGoals/**").permitAll()
-                .requestMatchers("/choose-test/**").permitAll()
+                .requestMatchers("/choose-test/**", "/videos/**"
+                ,"/resources/**", "/article/**").permitAll()
                 .requestMatchers("/error").permitAll()
                 .requestMatchers("/aptitude-test/**").permitAll()
                 .anyRequest().permitAll()
@@ -89,7 +90,6 @@ public class SecurityConfig {
                 .loginPage("/signIn")
                 .loginProcessingUrl("/signIn")
                 .usernameParameter("email")
-//                .defaultSuccessUrl("/onboarding", true)
                 .successHandler(customAuthenticationSuccessHandler())
                 .failureUrl("/signIn?error")
                 .permitAll()

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Resources</title>
@@ -32,16 +32,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="resource : ${resources}">
-                    <td>
-                        <a th:href="@{/resources/article/{id}(id=${resource.id})}"
-                           th:text="${resource.articleTitle}" style="color: black; text-decoration: none;"></a>
-                    </td>
-                    <td>
-                        <a th:href="@{/resources/video/{id}(id=${resource.id})}"
-                           style="color: blue;">Click Here</a>
-                    </td>
-                </tr>
+                <#list resources as resource>
+                    <tr>
+                        <td>
+                            <a href="/resources/article/${resource.id}"
+                               style="color: black; text-decoration: none;">
+                                ${resource.article.articleTitle}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/resources/video/${resource.id}"
+                               style="color: blue;">Click Here</a>
+                        </td>
+                    </tr>
+                </#list>
                 </tbody>
             </table>
         </div>

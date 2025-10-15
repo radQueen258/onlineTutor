@@ -19,10 +19,10 @@ public class Resource {
 
     private String topicName;
 
-    @OneToOne(mappedBy = "resource", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "resource", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Article article;
 
-    @OneToOne(mappedBy = "resource", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "resource", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Video video;
 
 }
