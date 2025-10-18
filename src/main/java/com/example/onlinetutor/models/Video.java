@@ -8,7 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-//@ToString(exclude = {"user", "article", "resource"})
 @Table(name = "videos")
 public class Video {
     @Id
@@ -20,6 +19,7 @@ public class Video {
     private String videoUrl;
     private String subject;
 
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User tutorName;

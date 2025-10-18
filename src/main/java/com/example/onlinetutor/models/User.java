@@ -17,7 +17,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-//@ToString(exclude = {"idCard", "videos", "articles", "resources"})
 @Table(name = "account")
 public class User {
 

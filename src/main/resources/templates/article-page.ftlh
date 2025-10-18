@@ -29,7 +29,7 @@
         <!-- Article Title and Tutor Info -->
         <h1>${article.articleTitle}</h1>
         <p>
-            <strong>${article.tutorName}</strong> -
+            <strong>${article.tutorName.firstName}</strong> -
             <span>${article.subject}</span>
         </p>
 
