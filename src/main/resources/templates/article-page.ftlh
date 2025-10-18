@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${article.title}">Article Page</title>
+    <title>${article.articleTitle}</title>
 </head>
 <body>
 <div style="display: flex; height: 100vh;">
@@ -20,23 +20,22 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
+<#--    Main Content -->
     <main style="flex: 1; padding: 30px; position: relative;">
-        <!-- Back button -->
         <div>
             <a href="/resources" style="text-decoration: none; color: black;">← Back</a>
         </div>
 
         <!-- Article Title and Tutor Info -->
-        <h1 th:text="${article.title}">Article’s Topic</h1>
-        <p><strong th:text="${article.tutorName}">Tutor Name</strong> -
-            <span th:text="${article.subject}">Subject</span></p>
+        <h1>${article.articleTitle}</h1>
+        <p>
+            <strong>${article.tutorName}</strong> -
+            <span>${article.subject}</span>
+        </p>
 
         <!-- Article Body -->
         <section style="max-width: 800px;">
-            <p th:text="${article.content}">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dictum...
-            </p>
+            <p>${article.articleContent}</p>
 
             <!-- Example image -->
             <div style="text-align: center; margin: 20px 0;">
@@ -50,13 +49,14 @@
 
         <!-- Watch Related Video Button -->
         <div style="position: absolute; right: 60px; top: 150px;">
-            <a th:href="@{/resources/video/{id}(id=${article.video.id})}"
+            <a href="/resources/video/${article.video.id}"
                style="display: inline-block; background-color: goldenrod; color: black;
-                      padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold;">
+                  padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold;">
                 Watch Related Video
             </a>
         </div>
     </main>
+
 </div>
 </body>
 </html>

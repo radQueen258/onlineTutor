@@ -1,16 +1,14 @@
 package com.example.onlinetutor.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+//@ToString(exclude = {"user", "resource", "video"})
 @Table(name = "articles")
 public class Article {
     @Id
@@ -20,6 +18,7 @@ public class Article {
     private String articleTitle;
     private String articleContent;
     private String imageUrl;
+    private String subject; // TODO: This must later be substituted wuth an actual ENUM of subjects
 
     @OneToOne
     @JoinColumn(name = "resource_id")
@@ -28,27 +27,8 @@ public class Article {
     @OneToOne(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Video video;
 
-    public Long getId() {
-        return id;
-    }
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User tutorName;
 
-    public String getArticleTitle() {
-        return articleTitle;
-    }
-
-    public String getArticleContent() {
-        return articleContent;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public Resource getResource() {
-        return resource;
-    }
-
-    public Video getVideo() {
-        return video;
-    }
 }

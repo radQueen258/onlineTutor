@@ -4,10 +4,7 @@ import com.example.onlinetutor.enums.AptitudeTestStatus;
 import com.example.onlinetutor.enums.Gender;
 import com.example.onlinetutor.enums.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -20,6 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+//@ToString(exclude = {"idCard", "videos", "articles", "resources"})
 @Table(name = "account")
 public class User {
 
@@ -57,6 +55,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private AptitudeTestStatus aptitudeTestStatus = AptitudeTestStatus.NOT_STARTED;
 
+    @OneToMany(mappedBy = "tutorName", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Video> video;
 
+    @OneToMany(mappedBy = "tutorName", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Article> article;
 
 }

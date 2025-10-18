@@ -1,11 +1,8 @@
-<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Video Topic</title>
+    <title>Video Page</title>
 </head>
 
 <body>
@@ -40,14 +37,14 @@
 
         <div style="margin-top: 20px;">
             <video width="640" height="360" controls>
-                <source src="${videoUrl}" type="video/mp4">
+                <source src="${video.videoUrl}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
 
         <div style="margin-top: 20px;">
-<#--            <p><strong>${tutorName} - ${subject}</strong></p>-->
-            <p>${description}</p>
+            <p><strong>${video.tutorName.firstName} - ${video.videoTitle}</strong></p>
+            <p>${video.videoDescription}</p>
         </div>
     </main>
 </div>

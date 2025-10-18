@@ -1,16 +1,14 @@
 package com.example.onlinetutor.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@ToString(exclude = {"user"})
 @Table(name = "idCard")
 public class IdCard {
 

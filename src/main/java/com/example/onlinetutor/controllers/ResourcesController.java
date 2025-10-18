@@ -38,7 +38,7 @@ public class ResourcesController {
     }
 
 
-    @GetMapping("/article/{id}")
+    @GetMapping("/resources/article/{id}")
     public String openArticle(@PathVariable Long id, Model model) {
         Resource resource = resourceRepo.findById(id).orElseThrow(null);
         Article article = resource.getArticle();
@@ -47,7 +47,7 @@ public class ResourcesController {
         return "article-page";
     }
 
-    @GetMapping
+    @GetMapping("/resources/video/{id}")
     public String openVideo(@PathVariable Long id, Model model) {
         Resource resource = resourceRepo.findById(id).orElseThrow(null);
         Video video = resource.getVideo();
