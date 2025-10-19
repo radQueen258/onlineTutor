@@ -80,7 +80,8 @@ public class SecurityConfig {
                 .requestMatchers("/onboarding/**").permitAll()
                 .requestMatchers("/setGoals/**").permitAll()
                 .requestMatchers("/choose-test/**", "/videos/**"
-                ,"/resources/**", "/article/**", "/exam-trends/**").permitAll()
+                ,"/resources/**", "/article/**", "/exam-trends/**", "/study/**"
+                , "/study-plan/**", "/submit/**").permitAll()
                 .requestMatchers("/error").permitAll()
                 .requestMatchers("/aptitude-test/**").permitAll()
                 .anyRequest().permitAll()

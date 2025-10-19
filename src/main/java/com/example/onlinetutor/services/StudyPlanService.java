@@ -3,9 +3,11 @@ package com.example.onlinetutor.services;
 import com.example.onlinetutor.models.StudyPlan;
 import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.StudyPlanRepo;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public interface StudyPlanService {
 
     void generatePlanForUser(User user, List<String> weakTopics);

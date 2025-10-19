@@ -7,15 +7,17 @@ import com.example.onlinetutor.repositories.ArticleRepo;
 import com.example.onlinetutor.repositories.StudyPlanRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Service
 public class StudyPlanServiceImpl implements StudyPlanService {
 
     @Autowired
     private ArticleRepo articleRepo;
+
     @Autowired
     private StudyPlanRepo studyPlanRepo;
 
@@ -55,6 +57,6 @@ public class StudyPlanServiceImpl implements StudyPlanService {
 
     @Override
     public StudyPlan getById(Long id) {
-        return studyPlanRepo.findById(id);
+        return studyPlanRepo.findById(id).orElse(null);
     }
 }
