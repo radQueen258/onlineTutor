@@ -32,7 +32,7 @@
 
 
 <h3>Quick Quiz</h3>
-<form method="post" action="/study/submit/${plan.id}">
+<form method="post" action="/submit/${plan.id}">
     <#list quiz as q>
         <p>${q.question}</p>
         <label><input type="radio" name="q${q.id}" value="A"> ${q.optionA}</label><br>

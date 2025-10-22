@@ -20,7 +20,7 @@ public class StudyPlan {
     @ManyToOne
     private Article article;
 
-    @OneToOne
+    @ManyToOne
     private User user;
 
     private double progress;

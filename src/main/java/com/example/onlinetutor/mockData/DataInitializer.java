@@ -32,22 +32,13 @@ public class DataInitializer implements CommandLineRunner {
 
         User user = userRepo.findByEmail("student1@example.com").orElse(null);
 
-        if (user == null) {
-            user = User.builder()
-                    .firstName("student1")
-                    .lastName("student1")
-                    .password("{noop}1234")
-                    .email("student1@example.com")
-                    .schoolName("1")
-                    .gender(Gender.FEMALE)
-                    .build();
+        Article mathBasics = new Article();
+        Article geometryBasics = new Article();
 
-            userRepo.save(user);
-        }
 
         // --- 2. Create some articles ---
         if (articleRepo.count() == 0) {
-            Article mathBasics = Article.builder()
+            mathBasics = Article.builder()
                     .articleTitle("Introduction to Algebra")
                     .articleContent("""
                         Algebra is the branch of mathematics dealing with symbols and the rules for manipulating those symbols.
@@ -55,7 +46,7 @@ public class DataInitializer implements CommandLineRunner {
                     """)
                     .build();
 
-            Article geometryBasics = Article.builder()
+            geometryBasics = Article.builder()
                     .articleTitle("Basic Geometry Concepts")
                     .articleContent("""
                         Geometry is the study of shapes, sizes, and properties of space.
@@ -83,6 +74,9 @@ public class DataInitializer implements CommandLineRunner {
             studyPlanRepo.save(plan1);
             studyPlanRepo.save(plan2);
 
+        }
+
+        if (quizQuestionRepo.count() == 0) {
             // --- 4. Add sample quiz questions ---
 
             // Algebra quiz
@@ -143,6 +137,8 @@ public class DataInitializer implements CommandLineRunner {
 
             quizQuestionRepo.saveAll(List.of(q1, q2, q3, g1, g2, g3));
         }
+
+        System.out.println("✅ Demo Study Plan generated for user: " + user.getEmail());
 
     }
 }

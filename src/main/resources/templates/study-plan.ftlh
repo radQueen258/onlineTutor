@@ -32,16 +32,21 @@
     <p>${message}</p>
 </#if>
 
-<table border="1" cellpadding="5">
-    <tr><th>Topic</th><th>Progress</th><th>Status</th></tr>
-    <#list plans as p>
-        <tr>
-            <td>${p.article.articleTitle}</td>
-            <td>${(p.progress * 100)?string["0.##"]}%</td>
-            <td><#if p.completed>Completed<#else>Pending</#if></td>
-        </tr>
-    </#list>
-</table>
+<#if plans?? && (plans?size > 0)>
+    <table border="1" cellpadding="5">
+        <tr><th>Topic</th><th>Progress</th><th>Status</th></tr>
+        <#list plans as p>
+            <tr>
+                <td>${p.article.articleTitle}</td>
+                <td>${(p.progress * 100)?string["0.##"]}%</td>
+                <td><#if p.completed>Completed<#else>Pending</#if></td>
+            </tr>
+        </#list>
+    </table>
+<#else>
+    <p>No study plan available yet.</p>
+</#if>
+
 
 <br>
 <a href="/study/continue">
