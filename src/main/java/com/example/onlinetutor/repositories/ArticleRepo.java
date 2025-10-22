@@ -9,4 +9,6 @@ import java.util.List;
 @Service
 public interface ArticleRepo extends JpaRepository<Article,Long> {
     List<Article> findByArticleTitle(String topic);
+    List<Article> findByUserId(Long userId);
+//    List<Article> findByUserId(Long userId, Pageable pageable);
 }

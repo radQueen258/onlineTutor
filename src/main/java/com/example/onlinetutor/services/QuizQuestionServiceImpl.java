@@ -1,10 +1,14 @@
 package com.example.onlinetutor.services;
 
+import com.example.onlinetutor.dto.TutorAnalyticsDTO;
+import com.example.onlinetutor.models.Article;
 import com.example.onlinetutor.models.QuizQuestion;
+import com.example.onlinetutor.repositories.ArticleRepo;
 import com.example.onlinetutor.repositories.QuizQuestionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +16,9 @@ import java.util.Map;
 public class QuizQuestionServiceImpl implements QuizQuestionService {
     @Autowired
     private QuizQuestionRepo quizQuestionRepo;
+
+    @Autowired
+    private ArticleRepo articleRepo;
 
 
     @Override
@@ -32,4 +39,16 @@ public class QuizQuestionServiceImpl implements QuizQuestionService {
         }
         return score;
     }
+
+    @Override
+    public List<TutorAnalyticsDTO> getTutorAnalytics(Long tutorId) {
+        List<Article> articles = articleRepo.findByUserId(tutorId);
+        List<TutorAnalyticsDTO> result = new ArrayList<>();
+
+        for (Article article : articles) {
+
+        }
+        return List.of();
+    }
+
 }
