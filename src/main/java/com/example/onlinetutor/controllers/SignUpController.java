@@ -1,6 +1,7 @@
 package com.example.onlinetutor.controllers;
 
 import com.example.onlinetutor.dto.UserForm;
+import com.example.onlinetutor.enums.Role;
 import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.services.SignUpService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -52,6 +53,14 @@ public class SignUpController {
         session.setAttribute("userId", savedUser.getId());
         session.setAttribute("testTaken", false);
 
-        return "redirect:/onboarding";
+        if (savedUser.getRole() == Role.TUTOR) {
+            return "redirect:/tutor/workplace";
+        } else if (savedUser.getRole() == Role.ADMIN) {
+            return "redirect:/admin";
+        } else {
+            return "redirect:/onboarding";
+        }
+
+
     }
 }

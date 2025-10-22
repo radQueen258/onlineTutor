@@ -1,6 +1,7 @@
 package com.example.onlinetutor.security.config;
 
 import com.example.onlinetutor.enums.AptitudeTestStatus;
+import com.example.onlinetutor.enums.Role;
 import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,11 +62,23 @@ public class SecurityConfig {
 
             request.getSession().setAttribute("userId", user.getId());
 
-            if (user.getAptitudeTestStatus() == AptitudeTestStatus.COMPLETED) {
-                response.sendRedirect("/dashboard");
-            } else {
-                response.sendRedirect("/onboarding");
+            if (user.getRole() == Role.TUTOR) {
+                // Tutors always go to their workspace
+                response.sendRedirect("/tutor/workplace");
+                return;
             }
+
+            if (user.getRole() == Role.STUDENT) {
+
+                if (user.getAptitudeTestStatus() == AptitudeTestStatus.COMPLETED) {
+                    response.sendRedirect("/dashboard");
+                } else {
+                    response.sendRedirect("/onboarding");
+                }
+            }
+
+            response.sendRedirect("/login?error=unknown-role");
+
         };
     }
 
