@@ -78,6 +78,7 @@ public class TutorController {
         return "redirect:/tutor/workplace";
     }
 
+//    ANALYSIS OF STUDENT PERFORMANCE
     @GetMapping("/tutor/analytics")
     public String analytics(Model model, Principal principal) {
         User tutor = userRepo.findByEmail(principal.getName()).orElseThrow();

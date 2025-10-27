@@ -6,5 +6,8 @@ public class TutorAnalyticsDTO {
     private String articleTitle;
     private long studentsPassed;
     private long studentsFailed;
-    private Map<String, Long> commonMistakes;
+
+    public TutorAnalyticsDTO(String articleTitle, long passed, long failed) {
+    }
+//    private Map<String, Long> commonMistakes;
 }

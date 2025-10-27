@@ -5,6 +5,8 @@ import com.example.onlinetutor.models.Article;
 import com.example.onlinetutor.models.QuizQuestion;
 import com.example.onlinetutor.repositories.ArticleRepo;
 import com.example.onlinetutor.repositories.QuizQuestionRepo;
+import com.example.onlinetutor.repositories.TestQuestionRepo;
+import com.example.onlinetutor.repositories.TestResultRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +21,9 @@ public class QuizQuestionServiceImpl implements QuizQuestionService {
 
     @Autowired
     private ArticleRepo articleRepo;
+
+    @Autowired
+    private TestResultRepo testResultRepo;
 
 
     @Override
@@ -46,9 +51,14 @@ public class QuizQuestionServiceImpl implements QuizQuestionService {
         List<TutorAnalyticsDTO> result = new ArrayList<>();
 
         for (Article article : articles) {
+            long passed = testResultRepo.countByArticleAndPassed(article, true);
+            long failed = testResultRepo.countByArticleAndPassed(article, false);
 
+//            TODO: Later I must have a method to tell me which are the most failed questions
+
+            result.add(new TutorAnalyticsDTO(article.getArticleTitle(), passed, failed));
         }
-        return List.of();
+        return result;
     }
 
 }
