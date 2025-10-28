@@ -50,7 +50,7 @@ public class TutorController {
     }
 
 
-    @PostMapping("/tutor/article")
+    @PostMapping("/tutor/article/save")
     public String createArticle(@ModelAttribute Article article, Principal principal) {
         User tutor = userRepo.findByEmail(principal.getName()).orElseThrow();
         article.setTutorName(tutor);
