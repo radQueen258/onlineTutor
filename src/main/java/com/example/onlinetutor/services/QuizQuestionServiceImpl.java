@@ -47,7 +47,7 @@ public class QuizQuestionServiceImpl implements QuizQuestionService {
 
     @Override
     public List<TutorAnalyticsDTO> getTutorAnalytics(Long tutorId) {
-        List<Article> articles = articleRepo.findByUserId(tutorId);
+        List<Article> articles = articleRepo.findByTutorName_Id(tutorId);
         List<TutorAnalyticsDTO> result = new ArrayList<>();
 
         for (Article article : articles) {

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
+
 public interface StudyPlanService {
 
     void generatePlanForUser(User user, List<String> weakTopics);

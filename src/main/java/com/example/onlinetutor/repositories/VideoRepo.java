@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+
 public interface VideoRepo extends JpaRepository<Video,Long> {
     List<Video> findVideoByArticle(Article article);
-    List<Video> findVideoByAuthor(User author);
+    List<Video> findVideoByTutorName(User author);
 }

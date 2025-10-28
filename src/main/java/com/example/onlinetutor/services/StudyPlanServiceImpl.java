@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Component
 public class StudyPlanServiceImpl implements StudyPlanService {
 
     @Autowired

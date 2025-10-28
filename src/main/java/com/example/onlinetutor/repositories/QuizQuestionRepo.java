@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+
 public interface QuizQuestionRepo extends JpaRepository<QuizQuestion,Long> {
     List<QuizQuestion> findByArticleId(Long articleId);
 }

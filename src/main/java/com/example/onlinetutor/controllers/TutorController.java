@@ -1,5 +1,6 @@
 package com.example.onlinetutor.controllers;
 
+import com.example.onlinetutor.dto.TutorAnalyticsDTO;
 import com.example.onlinetutor.models.Article;
 import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.models.Video;
@@ -35,15 +36,17 @@ public class TutorController {
     public String workplace(Model model, Principal principal) {
         User tutor = userRepo.findByEmail(principal.getName()).orElseThrow();
         Long tutorId = tutor.getId();
-        List<Article> articles = articleRepo.findByUserId(tutorId);
+        String tutorName = tutor.getFirstName() + " " + tutor.getLastName();
+        List<Article> articles = articleRepo.findByTutorName_Id(tutorId);
         model.addAttribute("articles", articles);
-        return "tutor/workplace";
+        model.addAttribute("tutorName", tutorName);
+        return "workplace";
     }
 
     @GetMapping("/tutor/article/new")
     public String newArticleForm(Model model) {
         model.addAttribute("article", new Article());
-        return "tutor/new-article";
+        return "new-article";
     }
 
 
@@ -55,23 +58,35 @@ public class TutorController {
         return "redirect:/tutor/workplace";
     }
 
+    @GetMapping("/tutor/article/{articleId}/upload-video")
+    public String showUploadVideoForm(@PathVariable Long articleId, Model model) {
+        Article article = articleRepo.getById(articleId);
+        model.addAttribute("article", article);
+        model.addAttribute("video", new Video());
+        return "upload-video";
+    }
+
+
     @PostMapping("/tutor/article/{id}/upload-video")
     public String uploadVideo(@PathVariable Long id,
                               @RequestParam("videoTitle") String videoTitle,
                               @RequestParam("videoDescription") String videoDescription,
                               @RequestParam("videoUrl") String videoUrl,
-                              @RequestParam("subject") String subject,
-                              Principal principal) {
+                              Principal principal,
+                              Model model) {
         User tutor = userRepo.findByEmail(principal.getName()).orElseThrow();
         Article article = articleRepo.getById(id);
+
+        model.addAttribute("article", article);
 
         Video video = new Video();
         video.setVideoTitle(videoTitle);
         video.setVideoDescription(videoDescription);
         video.setVideoUrl(videoUrl);
-        video.setSubject(subject);
+        video.setSubject(article.getSubject());
         video.setTutorName(tutor);
         video.setArticle(article);
+        video.setResource(article.getResource());
 
         videoRepo.save(video);
 
@@ -82,9 +97,9 @@ public class TutorController {
     @GetMapping("/tutor/analytics")
     public String analytics(Model model, Principal principal) {
         User tutor = userRepo.findByEmail(principal.getName()).orElseThrow();
-        var stats = quizQuestionService.getTutorAnalytics(tutor.getId());
-
+        List<TutorAnalyticsDTO> stats = quizQuestionService.getTutorAnalytics(tutor.getId());
+        System.out.println("HERE IS THE DATA: " +stats);
         model.addAttribute("stats", stats);
-        return "tutor/analytics";
+        return "analytics";
     }
 }

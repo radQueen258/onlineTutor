@@ -18,11 +18,11 @@ import java.util.List;
 @Controller
 public class ResourcesController {
 
-    @Autowired
-    private ArticleRepo articleRepo;
-
-    @Autowired
-    private VideoRepo videoRepo;
+//    @Autowired
+//    private ArticleRepo articleRepo;
+//
+//    @Autowired
+//    private VideoRepo videoRepo;
 
     @Autowired
     ResourceRepo resourceRepo;

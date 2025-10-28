@@ -5,6 +5,7 @@ import com.example.onlinetutor.models.IdCard;
 import com.example.onlinetutor.repositories.IdCardRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,7 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.UUID;
 
-@Service
+@Component
 public class IdCardServiceImpl implements IdCardService {
 
     @Value("${storage.path}")
