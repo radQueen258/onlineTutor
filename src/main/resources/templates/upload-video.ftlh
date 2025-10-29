@@ -34,7 +34,7 @@
     </p>
 </form>
 
-<p><a href="/workplace">← Back to Workplace</a></p>
+<p><a href="/tutor/workplace">← Back to Workplace</a></p>
 
 </body>
 </html>
