@@ -12,4 +12,7 @@ import java.util.List;
 public interface VideoRepo extends JpaRepository<Video,Long> {
     List<Video> findVideoByArticle(Article article);
     List<Video> findVideoByTutorName(User author);
+//    Long countAllVideos();
+
+//    List <Video> getAll();
 }

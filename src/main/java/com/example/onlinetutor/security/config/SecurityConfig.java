@@ -63,8 +63,12 @@ public class SecurityConfig {
             request.getSession().setAttribute("userId", user.getId());
 
             if (user.getRole() == Role.TUTOR) {
-                // Tutors always go to their workspace
                 response.sendRedirect("/tutor/workplace");
+                return;
+            }
+
+            if (user.getRole() == Role.ADMIN) {
+                response.sendRedirect("/admin/dashboard");
                 return;
             }
 
@@ -94,7 +98,7 @@ public class SecurityConfig {
                 .requestMatchers("/setGoals/**").permitAll()
                 .requestMatchers("/choose-test/**", "/videos/**"
                 ,"/resources/**", "/article/**", "/exam-trends/**", "/study/**"
-                , "/study-plan/**", "/submit/**", "/tutor/**").permitAll()
+                , "/study-plan/**", "/submit/**", "/tutor/**","/admin/**", "/statistics").permitAll()
                 .requestMatchers("/error").permitAll()
                 .requestMatchers("/aptitude-test/**").permitAll()
                 .anyRequest().permitAll()
