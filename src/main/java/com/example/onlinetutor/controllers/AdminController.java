@@ -110,7 +110,7 @@ public class AdminController {
     }
 
 //    ---------------STATISTICS----------------------
-    @GetMapping("/statistics")
+    @GetMapping("/admin/statistics")
     public String showStatistics(Model model) {
         model.addAttribute("stats", statisticsService.getOverallStatistics());
         return "adminStatistics";
