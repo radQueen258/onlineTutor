@@ -10,11 +10,11 @@
 <div style="width:220px;float:left;background:#0f2b4c;color:white;height:100vh;">
     <h3 style="padding:10px;">Website Name</h3>
     <ul style="list-style:none;padding:0;">
-        <li><a href="/admin/dashboard" style="color:white;text-decoration:none;">Tutor Dashboard</a></li>
-        <li><a href="/admin/articles" style="color:white;text-decoration:none;">Uploaded Articles</a></li>
-        <li><a href="/admin/videos" style="color:white;text-decoration:none;">Uploaded Videos</a></li>
-        <li><a href="/admin/statistics" style="color:white;text-decoration:none;">General Statistics</a></li>
-        <li><a href="/admin/users" style="color:white;text-decoration:none;">Registered Users</a></li>
+<#--        <li><a href="/admin/dashboard" style="color:white;text-decoration:none;">Tutor Dashboard</a></li>-->
+        <li><a href="/admin/article/new" style="color:white;text-decoration:none;">Create New Article</a></li>
+        <li><a href="/admin/aptitudeResults" style="color:white;text-decoration:none;">General Aptitude Results</a></li>
+<#--        <li><a href="/admin/statistics" style="color:white;text-decoration:none;">General Statistics</a></li>-->
+<#--        <li><a href="/admin/users" style="color:white;text-decoration:none;">Registered Users</a></li>-->
     </ul>
 </div>
 

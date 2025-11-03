@@ -8,8 +8,6 @@
 
 <h1>Manage Videos</h1>
 
-<a href="/admin/videos/create">Upload New Video</a>
-
 <table border="1" cellpadding="8">
     <tr>
         <th>ID</th>

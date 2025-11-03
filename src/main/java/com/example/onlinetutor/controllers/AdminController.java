@@ -1,6 +1,8 @@
 package com.example.onlinetutor.controllers;
 
+import com.example.onlinetutor.models.Article;
 import com.example.onlinetutor.models.User;
+import com.example.onlinetutor.models.Video;
 import com.example.onlinetutor.repositories.ArticleRepo;
 import com.example.onlinetutor.repositories.UserRepo;
 import com.example.onlinetutor.repositories.VideoRepo;
@@ -12,9 +14,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
@@ -92,6 +92,20 @@ public class AdminController {
         return "redirect:/admin/articles";
     }
 
+    @GetMapping("/admin/article/new")
+    public String newArticleForm(Model model) {
+        model.addAttribute("article", new Article());
+        return "admin-new-article";
+    }
+
+    @PostMapping("/admin/article/save")
+    public String createArticle(@ModelAttribute Article article, Principal principal) {
+        User admin = userRepo.findByEmail(principal.getName()).orElseThrow();
+        article.setTutorName(admin);
+        articleRepo.save(article);
+        return "redirect:/admin/articles";
+    }
+
 //    -----------------METHODS FOR VIDEOS---------------------
     @GetMapping("/admin/videos")
     public String viewVideos(Model model) {
@@ -102,10 +116,44 @@ public class AdminController {
 
     @PostMapping("/admin/videos/delete/{id}")
     public String deleteVideo(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
-        System.out.println("🧹 Deleting video ID = " + id);
+//        System.out.println("🧹 Deleting video ID = " + id);
         videoService.safeDeleteVideoById(id);
 //        videoRepo.deleteVideoById(id);
         redirectAttributes.addFlashAttribute("successMessage", "Video deleted successfully!");
+        return "redirect:/admin/videos";
+    }
+
+    @GetMapping("/admin/article/{articleId}/upload-video")
+    public String showUploadVideoForm(@PathVariable Long articleId, Model model) {
+        Article article = articleRepo.getById(articleId);
+        model.addAttribute("article", article);
+        model.addAttribute("video", new Video());
+        return "admin-upload-video";
+    }
+
+    @PostMapping("/admin/article/{id}/upload-video")
+    public String uploadVideo(@PathVariable Long id,
+                              @RequestParam("videoTitle") String videoTitle,
+                              @RequestParam("videoDescription") String videoDescription,
+                              @RequestParam("videoUrl") String videoUrl,
+                              Principal principal,
+                              Model model) {
+        User admin = userRepo.findByEmail(principal.getName()).orElseThrow();
+        Article article = articleRepo.getById(id);
+
+        model.addAttribute("article", article);
+
+        Video video = new Video();
+        video.setVideoTitle(videoTitle);
+        video.setVideoDescription(videoDescription);
+        video.setVideoUrl(videoUrl);
+        video.setSubject(article.getSubject());
+        video.setTutorName(admin);
+        video.setArticle(article);
+        video.setResource(article.getResource());
+
+        videoRepo.save(video);
+
         return "redirect:/admin/videos";
     }
 

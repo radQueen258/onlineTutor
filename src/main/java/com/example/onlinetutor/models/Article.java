@@ -17,7 +17,7 @@ public class Article {
     private String articleTitle;
     private String articleContent;
     private String imageUrl;
-    private String subject; // TODO: This must later be substituted wuth an actual ENUM of subjects
+    private String subject; // TODO: This must later be substituted with an actual ENUM of subjects
 
     @OneToOne
     @JoinColumn(name = "resource_id")

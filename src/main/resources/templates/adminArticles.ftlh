@@ -8,14 +8,14 @@
 
 <h1>Manage Articles</h1>
 
-<a href="/admin/articles/create">Create New Article</a>
+<a href="/admin/article/new">Create New Article</a>
 
 <table border="1" cellpadding="8">
     <tr>
         <th>ID</th>
         <th>Title</th>
         <th>Author</th>
-        <th>Created At</th>
+<#--        <th>Created At</th>-->
         <th>Actions</th>
     </tr>
 
@@ -26,8 +26,8 @@
             <td>${article.tutorName.firstName}</td>
 <#--            <td>${article.createdAt?string("yyyy-MM-dd")}</td>-->
             <td>
-<#--                <a href="/admin/articles/edit/${article.id}">Edit</a>-->
-                |
+                <a href="/admin/article/${article.id}/upload-video">Upload</a> |
+
                 <form action="/admin/articles/delete/${article.id}" method="post" style="display:inline;">
                     <input type="submit" value="Delete"
                            onclick="return confirm('Are you sure you want to delete this article?');"/>
