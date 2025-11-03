@@ -8,4 +8,5 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface IdCardService {
     IdCard saveIdCard(MultipartFile frontImage, MultipartFile backImage);
+//    void deleteIdCard(Long id);
 }

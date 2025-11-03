@@ -17,4 +17,6 @@ public interface TestResultRepo extends JpaRepository<TestResult, Long> {
     @Query("SELECT qr FROM TestResult qr WHERE qr.article.tutorName = :tutor ")
     List<TestResult> findAllByTutor(@Param("tutor") User tutor);
 
+    void deleteByStudent_Id(Long id);
+
 }

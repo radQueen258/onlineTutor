@@ -15,7 +15,7 @@
         <th>ID</th>
         <th>Title</th>
         <th>Uploaded By</th>
-        <th>Uploaded On</th>
+<#--        <th>Uploaded On</th>-->
         <th>Actions</th>
     </tr>
 

@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@ToString(exclude = {"user"})
+//@ToString(exclude = {"user"})
 @Table(name = "idCard")
 public class IdCard {
 

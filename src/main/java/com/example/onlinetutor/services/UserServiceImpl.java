@@ -1,8 +1,10 @@
 package com.example.onlinetutor.services;
 
 import com.example.onlinetutor.enums.AptitudeTestStatus;
+import com.example.onlinetutor.models.IdCard;
 import com.example.onlinetutor.models.User;
-import com.example.onlinetutor.repositories.UserRepo;
+import com.example.onlinetutor.repositories.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +18,25 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private ConfirmationTokenRepo confirmationTokenRepo;
+
+    @Autowired
+    private VideoRepo videoRepo;
+
+    @Autowired
+    private ArticleRepo articleRepo;
+
+    @Autowired
+    private IdCardRepo idCardRepo;
+
+    @Autowired
+    private TestResultRepo testResultRepo;
+
+    @Autowired
+    private AptitudeTestRepo aptitudeTestRepo;
+    @Autowired
+    private QuizQuestionRepo quizQuestionRepo;
 
     @Override
     public User updateOnboarding(Long userId, String examLevel, List<String> subjects) {
@@ -54,5 +75,37 @@ public class UserServiceImpl implements UserService{
         User user = userRepo.findByEmail(email)
                 .orElseThrow(()-> new RuntimeException("User not found!!")) ;
         return user;
+    }
+
+    @Override
+    public void deleteIdCardById(Long userId) {
+        User user = userRepo.findById(userId).orElseThrow();
+        IdCard idCard = user.getIdCard();
+        idCardRepo.delete(idCard);
+    }
+
+    @Transactional
+    @Override
+    public void deleteUserAndDependencies(Long userId) {
+        User user = userRepo.findById(userId).orElse(null);
+        if (user == null) return;
+
+        confirmationTokenRepo.deleteByUserId(userId);
+        aptitudeTestRepo.deleteByUserId(userId);
+        userRepo.deleteIdCardById(userId);
+//        idCardRepo.deleteByUserId(userId);
+        testResultRepo.deleteByStudent_Id(userId);
+//        TODO: User subjects are not being deleted yet
+
+        if (user.getRole().equals("TUTOR")) {
+            var articles = articleRepo.findByTutorName_Id(userId);
+            for (var article : articles) {
+                quizQuestionRepo.deleteByArticleId(article.getId());
+            }
+            articleRepo.deleteArticleByTutorName_Id(userId);
+            videoRepo.deleteVideoByTutorName_Id(userId);
+        }
+
+        userRepo.delete(user);
     }
 }

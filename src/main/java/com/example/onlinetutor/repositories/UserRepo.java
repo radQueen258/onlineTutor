@@ -9,8 +9,7 @@ import java.util.Optional;
 public interface UserRepo extends JpaRepository<User,Long> {
 
     Optional <User> findByEmail(String email);
-//    List <User> getAllUsers();
-//    Long  countAllUsers();
-//    User findByUsername(String username);
+
+    void deleteIdCardById(Long id);
 
 }

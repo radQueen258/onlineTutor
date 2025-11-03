@@ -5,6 +5,7 @@ import com.example.onlinetutor.repositories.ArticleRepo;
 import com.example.onlinetutor.repositories.UserRepo;
 import com.example.onlinetutor.repositories.VideoRepo;
 import com.example.onlinetutor.services.StatisticsService;
+import com.example.onlinetutor.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +29,9 @@ public class AdminController {
 
     @Autowired
     private StatisticsService statisticsService;
+
+    @Autowired
+    private UserService userService;
 
 
 
@@ -54,9 +58,7 @@ public class AdminController {
         User current = userRepo.findByEmail(principal.getName()).orElseThrow();
 
         if (!current.getId().equals(id)) {
-//            TODO: Solve the constrait issue that I can not delete the user without deleting some things before
-            articleRepo.deleteArticleByTutorName_Id(id);
-            userRepo.deleteById(id);
+            userService.deleteUserAndDependencies(current.getId());
         }
         return "redirect:/admin/users";
     }

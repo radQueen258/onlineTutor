@@ -15,4 +15,7 @@ public interface UserService {
     User findById(Long userId);
     User findByEmail(String email);
 
+    void deleteIdCardById(Long userId);
+    void deleteUserAndDependencies(Long userId);
+
 }

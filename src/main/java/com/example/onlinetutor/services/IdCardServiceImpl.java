@@ -50,4 +50,9 @@ public class IdCardServiceImpl implements IdCardService {
                 .backImageUrl(backUrl)
                 .build();
     }
+
+//    @Override
+//    public void deleteIdCard(Long id) {
+//
+//    }
 }
