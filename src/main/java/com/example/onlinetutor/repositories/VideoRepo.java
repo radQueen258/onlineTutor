@@ -13,4 +13,5 @@ public interface VideoRepo extends JpaRepository<Video,Long> {
     List<Video> findVideoByArticle(Article article);
     List<Video> findVideoByTutorName(User author);
     void deleteVideoByTutorName_Id(Long tutor_id);
+    void deleteVideoById(Long id);
 }

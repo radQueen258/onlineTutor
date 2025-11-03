@@ -26,7 +26,7 @@
             <td>${video.article.tutorName.firstName}</td>
 <#--            <td>${video.uploadedAt?string("yyyy-MM-dd")}</td>-->
             <td>
-                <a href="/admin/videos/edit/${video.id}">Edit</a> |
+<#--                <a href="/admin/videos/edit/${video.id}">Edit</a> |-->
                 <a href="/admin/videos/delete/${video.id}"
                    onclick="return confirm('Delete this video?');">Delete</a>
             </td>

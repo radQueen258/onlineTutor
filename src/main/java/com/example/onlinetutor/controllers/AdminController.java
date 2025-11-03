@@ -4,6 +4,7 @@ import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.ArticleRepo;
 import com.example.onlinetutor.repositories.UserRepo;
 import com.example.onlinetutor.repositories.VideoRepo;
+import com.example.onlinetutor.services.ArticleService;
 import com.example.onlinetutor.services.StatisticsService;
 import com.example.onlinetutor.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,8 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private ArticleService articleService;
 
 
     @GetMapping("/admin/dashboard")
@@ -79,11 +81,23 @@ public class AdminController {
         return "adminArticles";
     }
 
+    @PostMapping("/admin/articles/delete/{id}")
+    public String deleteArticle(@PathVariable("id") Long id) {
+        articleService.safeDeleteArticle(id);
+        return "redirect:/admin/articles";
+    }
+
 //    -----------------METHODS FOR VIDEOS---------------------
     @GetMapping("/admin/videos")
     public String viewVideos(Model model) {
         model.addAttribute("videos", videoRepo.findAll());
         return "adminVideos";
+    }
+
+    @PostMapping("/admin/videos/delete/{id}")
+    public String deleteVideo(@PathVariable("id") Long id) {
+        videoRepo.deleteById(id);
+        return "redirect:/admin/videos";
     }
 
 //    ---------------STATISTICS----------------------
