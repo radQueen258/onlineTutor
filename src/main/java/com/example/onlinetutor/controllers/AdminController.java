@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 
@@ -54,11 +55,18 @@ public class AdminController {
     }
 
     @PostMapping("/admin/users/delete/{id}")
-    public String deleteUser(@PathVariable("id") Long id, Principal principal) {
-        User current = userRepo.findByEmail(principal.getName()).orElseThrow();
+    public String deleteUser(@PathVariable("id") Long id,
+                             Principal principal,
+                             RedirectAttributes redirectAttributes) {
+        User current = userRepo.findByEmail(principal.getName()).orElse(null);
 
+        if (current == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Your session is invalid. Please log in again.");
+            return "redirect:/login";
+        }
         if (!current.getId().equals(id)) {
-            userService.deleteUserAndDependencies(current.getId());
+            userService.deleteUserAndDependencies(id);
+            redirectAttributes.addFlashAttribute("successMessage", "User deleted successfully.");
         }
         return "redirect:/admin/users";
     }

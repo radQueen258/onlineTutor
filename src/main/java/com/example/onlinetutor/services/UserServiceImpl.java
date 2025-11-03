@@ -38,6 +38,9 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private QuizQuestionRepo quizQuestionRepo;
 
+    @Autowired
+    private StudyPlanRepo studyPlanRepo;
+
     @Override
     public User updateOnboarding(Long userId, String examLevel, List<String> subjects) {
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -90,12 +93,11 @@ public class UserServiceImpl implements UserService{
         User user = userRepo.findById(userId).orElse(null);
         if (user == null) return;
 
+        studyPlanRepo.deleteByUserId(userId);
         confirmationTokenRepo.deleteByUserId(userId);
         aptitudeTestRepo.deleteByUserId(userId);
         userRepo.deleteIdCardById(userId);
-//        idCardRepo.deleteByUserId(userId);
         testResultRepo.deleteByStudent_Id(userId);
-//        TODO: User subjects are not being deleted yet
 
         if (user.getRole().equals("TUTOR")) {
             var articles = articleRepo.findByTutorName_Id(userId);
