@@ -1,15 +1,13 @@
 package com.example.onlinetutor.controllers;
 
+import com.example.onlinetutor.models.AptitudeTest;
 import com.example.onlinetutor.models.Article;
 import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.models.Video;
 import com.example.onlinetutor.repositories.ArticleRepo;
 import com.example.onlinetutor.repositories.UserRepo;
 import com.example.onlinetutor.repositories.VideoRepo;
-import com.example.onlinetutor.services.ArticleService;
-import com.example.onlinetutor.services.StatisticsService;
-import com.example.onlinetutor.services.UserService;
-import com.example.onlinetutor.services.VideoService;
+import com.example.onlinetutor.services.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class AdminController {
@@ -41,6 +40,9 @@ public class AdminController {
     private UserService userService;
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private AptitudeTestService aptitudeTestService;
 
 
     @GetMapping("/admin/dashboard")
@@ -162,5 +164,25 @@ public class AdminController {
     public String showStatistics(Model model) {
         model.addAttribute("stats", statisticsService.getOverallStatistics());
         return "adminStatistics";
+    }
+
+    @GetMapping("/admin/aptitude-results")
+    public String viewAptitudeResults(Model model) {
+        List<AptitudeTest> tests = aptitudeTestService.getAllResults();
+//        var results = aptitudeTestService.getAllResults();
+        model.addAttribute("tests", tests);
+        return "admin-aptitude-results";
+    }
+
+    @GetMapping("/admin/aptitude-results/{id}")
+    public String viewAptitudeResultDetails(@PathVariable Long id, Model model) {
+        var test = aptitudeTestService.getById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Test not found"));
+
+        var user = aptitudeTestService.getUserById(test.getUserId()).orElse(null);
+
+        model.addAttribute("test", test);
+        model.addAttribute("user", user);
+        return "admin-aptitude-result-details";
     }
 }

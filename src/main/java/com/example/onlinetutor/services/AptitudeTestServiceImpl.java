@@ -3,14 +3,16 @@ package com.example.onlinetutor.services;
 import com.example.onlinetutor.enums.AptitudeTestStatus;
 import com.example.onlinetutor.models.AptitudeTest;
 import com.example.onlinetutor.models.TestQuestion;
+import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.AptitudeTestRepo;
 import com.example.onlinetutor.repositories.TestQuestionRepo;
+import com.example.onlinetutor.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Component
 public class AptitudeTestServiceImpl implements AptitudeTestService {
@@ -20,6 +22,9 @@ public class AptitudeTestServiceImpl implements AptitudeTestService {
 
     @Autowired
     private TestQuestionRepo questionRepository;
+
+    @Autowired
+    private UserRepo userRepository;
 
 
     @Override
@@ -56,5 +61,25 @@ public class AptitudeTestServiceImpl implements AptitudeTestService {
         testRepository.save(test);
 
         return test;
+    }
+
+    @Override
+    public List<AptitudeTest> getAllResults() {
+        return testRepository.findAllByOrderByIdDesc();
+    }
+
+    @Override
+    public Optional<AptitudeTest> getById(Long id) {
+        return testRepository.findById(id);
+    }
+
+    @Override
+    public List<AptitudeTest> getAllTests() {
+        return testRepository.findAllByOrderByIdDesc();
+    }
+
+    @Override
+    public Optional<User> getUserById(Long userId) {
+        return userRepository.findById(userId);
     }
 }
