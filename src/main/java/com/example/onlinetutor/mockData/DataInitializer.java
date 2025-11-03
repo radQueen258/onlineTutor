@@ -30,7 +30,7 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        User user = userRepo.findByEmail("student1@example.com").orElse(null);
+        User user = userRepo.findByEmail("student2@example.com").orElse(null);
 
         Article mathBasics = new Article();
         Article geometryBasics = new Article();

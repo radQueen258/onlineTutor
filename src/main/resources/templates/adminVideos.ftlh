@@ -26,9 +26,12 @@
             <td>${video.article.tutorName.firstName}</td>
 <#--            <td>${video.uploadedAt?string("yyyy-MM-dd")}</td>-->
             <td>
-<#--                <a href="/admin/videos/edit/${video.id}">Edit</a> |-->
-                <a href="/admin/videos/delete/${video.id}"
-                   onclick="return confirm('Delete this video?');">Delete</a>
+                <form action="/admin/videos/delete/${video.id}" method="post" style="display:inline;" onsubmit="alert('Submitting delete for ${video.id}')">
+                    <input type="submit" value="Delete"
+                           onclick="return confirm('Are you sure you want to delete this video?');"/>
+                </form>
+<#--                <a href="/admin/videos/delete/${video.id}"-->
+<#--                   onclick="return confirm('Delete this video?');">Delete</a>-->
             </td>
         </tr>
     </#list>

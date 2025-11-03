@@ -28,8 +28,10 @@
             <td>
 <#--                <a href="/admin/articles/edit/${article.id}">Edit</a>-->
                 |
-                <a href="/admin/articles/delete/${article.id}"
-                   onclick="return confirm('Delete this article?');">Delete</a>
+                <form action="/admin/articles/delete/${article.id}" method="post" style="display:inline;">
+                    <input type="submit" value="Delete"
+                           onclick="return confirm('Are you sure you want to delete this article?');"/>
+                </form>
             </td>
         </tr>
     </#list>

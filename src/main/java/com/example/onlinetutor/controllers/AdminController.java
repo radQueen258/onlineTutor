@@ -7,6 +7,8 @@ import com.example.onlinetutor.repositories.VideoRepo;
 import com.example.onlinetutor.services.ArticleService;
 import com.example.onlinetutor.services.StatisticsService;
 import com.example.onlinetutor.services.UserService;
+import com.example.onlinetutor.services.VideoService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +27,9 @@ public class AdminController {
 
     @Autowired
     private VideoRepo videoRepo;
+
+    @Autowired
+    private VideoService videoService;
 
     @Autowired
     private UserRepo userRepo;
@@ -94,9 +99,13 @@ public class AdminController {
         return "adminVideos";
     }
 
+
     @PostMapping("/admin/videos/delete/{id}")
-    public String deleteVideo(@PathVariable("id") Long id) {
-        videoRepo.deleteById(id);
+    public String deleteVideo(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        System.out.println("🧹 Deleting video ID = " + id);
+        videoService.safeDeleteVideoById(id);
+//        videoRepo.deleteVideoById(id);
+        redirectAttributes.addFlashAttribute("successMessage", "Video deleted successfully!");
         return "redirect:/admin/videos";
     }
 
