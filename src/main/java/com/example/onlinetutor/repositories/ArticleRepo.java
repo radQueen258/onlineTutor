@@ -11,7 +11,7 @@ import java.util.List;
 public interface ArticleRepo extends JpaRepository<Article,Long> {
     List<Article> findByArticleTitle(String topic);
     List<Article> findByTutorName_Id(Long userId);
-//    Long count();
+    Long countArticlesByResource_Id(Long resourceId);
 
     List<Article> findAll();
 

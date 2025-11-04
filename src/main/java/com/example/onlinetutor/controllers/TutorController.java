@@ -2,14 +2,14 @@ package com.example.onlinetutor.controllers;
 
 import com.example.onlinetutor.dto.TutorAnalyticsDTO;
 import com.example.onlinetutor.models.Article;
+import com.example.onlinetutor.models.Resource;
 import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.models.Video;
-import com.example.onlinetutor.repositories.ArticleRepo;
-import com.example.onlinetutor.repositories.QuizQuestionRepo;
-import com.example.onlinetutor.repositories.UserRepo;
-import com.example.onlinetutor.repositories.VideoRepo;
+import com.example.onlinetutor.repositories.*;
 import com.example.onlinetutor.services.QuizQuestionService;
+import com.example.onlinetutor.services.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,30 +32,65 @@ public class TutorController {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    private ResourceRepo resourceRepo;
+
+    @Autowired
+    private ResourceService resourceService;
+
     @GetMapping("/tutor/workplace")
     public String workplace(Model model, Principal principal) {
         User tutor = userRepo.findByEmail(principal.getName()).orElseThrow();
         Long tutorId = tutor.getId();
         String tutorName = tutor.getFirstName() + " " + tutor.getLastName();
         List<Article> articles = articleRepo.findByTutorName_Id(tutorId);
+
+        Long numArticles = articleRepo.countArticlesByResource_Id(resourceService.getAllResources().get(0).getId());
         model.addAttribute("articles", articles);
         model.addAttribute("tutorName", tutorName);
+        model.addAttribute("resources", resourceService.getAllResources());
+        model.addAttribute("numArticles", numArticles);
         return "workplace";
     }
 
-    @GetMapping("/tutor/article/new")
-    public String newArticleForm(Model model) {
-        model.addAttribute("article", new Article());
+    @GetMapping("/tutor/resources/{resourceId}/article/new")
+    public String newArticleForm(@PathVariable Long resourceId, Model model) {
+        Resource resource = resourceRepo.getById(resourceId);
+
+        Article article = new Article();
+        article.setResource(resource);
+        model.addAttribute("article", article);
         return "new-article";
     }
 
 
-    @PostMapping("/tutor/article/save")
-    public String createArticle(@ModelAttribute Article article, Principal principal) {
+    @PostMapping("/tutor/resources/{resourceId}article/save")
+    public String createArticle(@ModelAttribute Article article,
+                                Principal principal,
+                                @PathVariable Long resourceId) {
         User tutor = userRepo.findByEmail(principal.getName()).orElseThrow();
+        Resource resource = resourceRepo.getById(resourceId);
         article.setTutorName(tutor);
+        article.setResource(resource);
+
         articleRepo.save(article);
         return "redirect:/tutor/workplace";
+    }
+
+    @GetMapping("/tutor/resources/{resourceId}/articles")
+    public String viewAllArticles (@PathVariable Long resourceId, Model model
+    , Principal principal) {
+        User tutor = userRepo.findByEmail(principal.getName()).orElseThrow();
+        Long tutorId = tutor.getId();
+
+        List<Resource> resources = resourceRepo.findResourceById(resourceId);
+        Long numArticles = articleRepo.countArticlesByResource_Id(resourceId);
+
+        List<Article> articles = articleRepo.findByTutorName_Id(tutorId);
+        model.addAttribute("articles", articles);
+        model.addAttribute("resources", resources);
+        model.addAttribute("numArticles", numArticles);
+        return "view-all-articles";
     }
 
     @GetMapping("/tutor/article/{articleId}/upload-video")
@@ -69,6 +104,7 @@ public class TutorController {
 
     @PostMapping("/tutor/article/{id}/upload-video")
     public String uploadVideo(@PathVariable Long id,
+                              @PathVariable Long resourceId,
                               @RequestParam("videoTitle") String videoTitle,
                               @RequestParam("videoDescription") String videoDescription,
                               @RequestParam("videoUrl") String videoUrl,
@@ -90,7 +126,7 @@ public class TutorController {
 
         videoRepo.save(video);
 
-        return "redirect:/tutor/workplace";
+        return "redirect:/tutor/resources/"+resourceId+"/articles";
     }
 
 //    ANALYSIS OF STUDENT PERFORMANCE
