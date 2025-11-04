@@ -60,4 +60,7 @@ public class User {
     @OneToMany(mappedBy = "tutorName", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Article> article;
 
+    @OneToMany(mappedBy = "tutor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Resource> resources = new ArrayList<>();
+
 }

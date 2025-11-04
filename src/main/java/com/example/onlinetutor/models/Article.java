@@ -19,7 +19,7 @@ public class Article {
     private String imageUrl;
     private String subject; // TODO: This must later be substituted with an actual ENUM of subjects
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "resource_id")
     private Resource resource;
 

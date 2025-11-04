@@ -41,7 +41,7 @@ public class ResourcesController {
     @GetMapping("/resources/article/{id}")
     public String openArticle(@PathVariable Long id, Model model) {
         Resource resource = resourceRepo.findById(id).orElseThrow(null);
-        Article article = resource.getArticle();
+        Article article = (Article) resource.getArticles();
 
         model.addAttribute("article", article);
         return "article-page";

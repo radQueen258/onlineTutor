@@ -12,6 +12,8 @@
     <ul style="list-style:none;padding:0;">
         <li><a href="/tutor/article/new" style="color:white;text-decoration:none;">Create New Article</a></li>
         <li><a href="/tutor/analytics" style="color:white;text-decoration:none;">View Analytics</a></li>
+
+        <li><a href="/tutor/resources/new" style="color:white;text-decoration:none;">Create Resource</a></li>
     </ul>
 
     <form action="/logout" method="post">
@@ -31,6 +33,7 @@
 
     <#if resources?size == 0>
         <p>You don’t have any resources yet.</p>
+        <li><a href="/tutor/resources/new" style="color:white;text-decoration:none;">Create Resource</a></li>
     <#else>
         <#list resources as resource>
             <div style="margin-bottom: 30px;">

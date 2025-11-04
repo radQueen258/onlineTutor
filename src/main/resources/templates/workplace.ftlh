@@ -18,7 +18,6 @@
     </ul>
 
     <form action="/logout" method="post">
-        <#--            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">-->
         <button type="submit" style="
             background-color: #dc3545;
             color: white;
@@ -36,6 +35,7 @@
 <h2>Welcome, ${tutorName}!</h2>
 
     <h2>Resources</h2>
+    <li><a href="/tutor/resources/new" style="color:black;text-decoration:none;">Create Resource</a></li>
     <table border="1" cellpadding="5" style="width:100%; border-collapse: collapse;">
         <tr>
             <th>Resource Name</th>

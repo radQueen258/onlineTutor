@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class TutorController {
@@ -137,5 +138,22 @@ public class TutorController {
         System.out.println("HERE IS THE DATA: " +stats);
         model.addAttribute("stats", stats);
         return "analytics";
+    }
+
+
+//    -----------------------FIELD THAT DEALS WITH RESOURCES--------------
+
+    @GetMapping("/tutor/resources/new")
+    public String showCreateResourceForm(Model model) {
+        model.addAttribute("resource", new Resource());
+        return "tutor-create-resource";
+    }
+
+    @PostMapping("/tutor/resources")
+    public String createResource(@ModelAttribute Resource resource, Principal principal) {
+        User tutor = userRepo.findUserByEmail(principal.getName());
+        resource.setTutor(tutor);
+        resourceRepo.save(resource);
+        return "redirect:/tutor/workplace";
     }
 }

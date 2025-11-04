@@ -19,14 +19,14 @@ public class ResourceDto {
 
     private Long id;
     private String topicName;
-    private Article article;
+    private List<Article> articles;
     private Video video;
 
     public static ResourceDto from(Resource resource) {
         return ResourceDto.builder()
                 .id(resource.getId())
                 .topicName(resource.getTopicName())
-                .article(resource.getArticle())
+                .articles(resource.getArticles())
                 .video(resource.getVideo())
                 .build();
     }
