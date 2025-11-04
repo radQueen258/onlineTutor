@@ -12,8 +12,8 @@
     <label>Topic Name:</label><br>
     <input type="text" name="topicName" required><br><br>
 
-    <label>Description:</label><br>
-    <textarea name="description" rows="4" cols="50"></textarea><br><br>
+    <label>Subject:</label><br>
+    <textarea name="subject" rows="4" cols="50"></textarea><br><br>
 
     <button type="submit">Create Resource</button>
 </form>

@@ -47,9 +47,15 @@ public class TutorController {
         List<Article> articles = articleRepo.findByTutorName_Id(tutorId);
 
         Long numArticles = articleRepo.countArticlesByResource_Id(resourceService.getAllResources().get(0).getId());
+        boolean exists = false;
+
+        if (numArticles > 0) {
+            exists = true;
+        }
         model.addAttribute("articles", articles);
         model.addAttribute("tutorName", tutorName);
         model.addAttribute("resources", resourceService.getAllResources());
+        model.addAttribute("exists", exists);
         model.addAttribute("numArticles", numArticles);
         return "workplace";
     }
@@ -68,11 +74,15 @@ public class TutorController {
     @PostMapping("/tutor/resources/{resourceId}article/save")
     public String createArticle(@ModelAttribute Article article,
                                 Principal principal,
-                                @PathVariable Long resourceId) {
+                                @PathVariable Long resourceId,
+                                Model model) {
         User tutor = userRepo.findByEmail(principal.getName()).orElseThrow();
         Resource resource = resourceRepo.getById(resourceId);
         article.setTutorName(tutor);
         article.setResource(resource);
+        article.setSubject(resource.getSubject());
+
+        model.addAttribute("resourceId", resourceId);
 
         articleRepo.save(article);
         return "redirect:/tutor/workplace";
@@ -87,15 +97,22 @@ public class TutorController {
         List<Resource> resources = resourceRepo.findResourceById(resourceId);
         Long numArticles = articleRepo.countArticlesByResource_Id(resourceId);
 
+        boolean exists = false;
+
+        if (numArticles > 0) {
+            exists = true;
+        }
+
         List<Article> articles = articleRepo.findByTutorName_Id(tutorId);
         model.addAttribute("articles", articles);
         model.addAttribute("resources", resources);
-        model.addAttribute("numArticles", numArticles);
+        model.addAttribute("exists", exists);
         return "view-all-articles";
     }
 
-    @GetMapping("/tutor/article/{articleId}/upload-video")
-    public String showUploadVideoForm(@PathVariable Long articleId, Model model) {
+    @GetMapping("/tutor/resources/{resourceId}/article/{articleId}/upload-video")
+    public String showUploadVideoForm(@PathVariable Long articleId,
+                                      @PathVariable Long resourceId, Model model) {
         Article article = articleRepo.getById(articleId);
         model.addAttribute("article", article);
         model.addAttribute("video", new Video());
@@ -103,7 +120,7 @@ public class TutorController {
     }
 
 
-    @PostMapping("/tutor/article/{id}/upload-video")
+    @PostMapping("/tutor/resources/{resourceId}/article/{id}/upload-video")
     public String uploadVideo(@PathVariable Long id,
                               @PathVariable Long resourceId,
                               @RequestParam("videoTitle") String videoTitle,

@@ -8,16 +8,16 @@
 
 <h2>Create a New Article</h2>
 
-<form action="/tutor/article/save" method="post" style="max-width: 600px;">
+<form action="/tutor/resources/${resourceId}article/save" method="post" style="max-width: 600px;">
     <label for="title"><strong>Title:</strong></label><br>
     <input type="text" id="title" name="articleTitle" value="${article.articleTitle!}"
            placeholder="Enter the article title" required
            style="width: 100%; padding: 8px; margin: 8px 0;"><br>
 
-    <label for="subject"><strong>Subject:</strong></label><br>
-    <input type="text" id="subject" name="subject" value="${article.subject!}"
-           placeholder="E.g., Mathematics, Physics, etc." required
-           style="width: 100%; padding: 8px; margin: 8px 0;"><br>
+<#--    <label for="subject"><strong>Subject:</strong></label><br>-->
+<#--    <input type="text" id="subject" name="subject" value="${article.subject!}"-->
+<#--           placeholder="E.g., Mathematics, Physics, etc." required-->
+<#--           style="width: 100%; padding: 8px; margin: 8px 0;"><br>-->
 
     <label for="content"><strong>Content:</strong></label><br>
     <textarea id="content" name="articleContent" rows="8" placeholder="Write your article content here..."

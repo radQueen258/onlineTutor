@@ -39,8 +39,8 @@
             <div style="margin-bottom: 30px;">
                 <h2 style="border-bottom:1px solid #ccc;">${resource.topicName}</h2>
 
-                <#if resource.articles?? && numArticles > 0>
-                    <#list resource.article as article>
+                <#if resource.articles?? && exists > 0>
+                    <#list resource.articles as article>
                         <div style="margin-bottom: 25px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
                             <h3>${article.articleTitle}</h3>
                             <p><strong>Subject:</strong> ${article.subject}</p>
@@ -76,12 +76,14 @@
                                 <p>No videos yet for this article.</p>
                             </#if>
 
-                            <p><a href="/tutor/article/${article.id}/upload-video">Add Video</a></p>
+                            <p><a href="/tutor/resources/${resourceId}/article/${article.id}/upload-video">Add Video</a></p>
                         </div>
                     </#list>
+
+                    <p><a href="/tutor/resources/${resource.id}/article/new">Add Article</a></p>
                 <#else>
                     <p>No articles yet for this resource.</p>
-<#--                    I MUST WRITE HERE A LINK TO CREATE AN ARTICLE-->
+                    <p><a href="/tutor/resources/${resource.id}/article/new">Add Article</a></p>
                 </#if>
             </div>
         </#list>

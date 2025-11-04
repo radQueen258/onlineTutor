@@ -8,7 +8,7 @@
 
 <h2>Add a Video to Article: ${article.articleTitle}</h2>
 
-<form action="/tutor/article/${article.id}/upload-video" method="post">
+<form action="/tutor/resources/${article.resource.id}/article/${article.id}/upload-video" method="post">
     <p>
         <label>Video Title:</label><br>
         <input type="text" name="videoTitle" required>
@@ -22,11 +22,6 @@
     <p>
         <label>YouTube URL:</label><br>
         <input type="url" name="videoUrl" placeholder="https://www.youtube.com/watch?v=..." required>
-    </p>
-
-    <p>
-        <label>Subject:</label><br>
-        <input type="text" name="subject" required>
     </p>
 
     <p>
