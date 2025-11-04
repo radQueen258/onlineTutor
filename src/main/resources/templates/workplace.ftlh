@@ -6,12 +6,21 @@
 </head>
 <body>
 
-<h2>Welcome, ${tutorName}!</h2>
+<!-- Sidebar -->
+<div style="width:220px;float:left;background:#0f2b4c;color:white;height:100vh;">
+    <h3 style="padding:10px;">Website Name</h3>
+    <ul style="list-style:none;padding:0;">
+        <#--        <li><a href="/admin/dashboard" style="color:white;text-decoration:none;">Tutor Dashboard</a></li>-->
+        <li><a href="/tutor/article/new" style="color:white;text-decoration:none;">Create New Article</a></li>
+        <li><a href="/tutor/analytics" style="color:white;text-decoration:none;">View Analytics</a></li>
+        <#--        <li><a href="/admin/statistics" style="color:white;text-decoration:none;">General Statistics</a></li>-->
+        <#--        <li><a href="/admin/users" style="color:white;text-decoration:none;">Registered Users</a></li>-->
+    </ul>
+</div>
 
-<p>
-    <a href="/tutor/article/new">Create New Article</a> |
-    <a href="/tutor/analytics">View Analytics</a>
-</p>
+<div style="margin-left:240px;padding:20px;">
+
+<h2>Welcome, ${tutorName}!</h2>
 
 <#if articles?size == 0>
     <p>You haven’t created any articles yet.</p>
@@ -65,6 +74,6 @@
     }
 </script>
 
-
+</div>
 </body>
 </html>

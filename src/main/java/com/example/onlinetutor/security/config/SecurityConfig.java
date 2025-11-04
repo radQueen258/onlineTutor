@@ -73,13 +73,14 @@ public class SecurityConfig {
             }
 
             if (user.getRole() == Role.STUDENT) {
-
                 if (user.getAptitudeTestStatus() == AptitudeTestStatus.COMPLETED) {
                     response.sendRedirect("/dashboard");
                 } else {
                     response.sendRedirect("/onboarding");
                 }
+                return;
             }
+
 
             response.sendRedirect("/login?error=unknown-role");
 

@@ -12,7 +12,7 @@
     <ul style="list-style:none;padding:0;">
 <#--        <li><a href="/admin/dashboard" style="color:white;text-decoration:none;">Tutor Dashboard</a></li>-->
         <li><a href="/admin/article/new" style="color:white;text-decoration:none;">Create New Article</a></li>
-        <li><a href="/admin/aptitudeResults" style="color:white;text-decoration:none;">General Aptitude Results</a></li>
+        <li><a href="/admin/aptitude-results" style="color:white;text-decoration:none;">General Aptitude Results</a></li>
 <#--        <li><a href="/admin/statistics" style="color:white;text-decoration:none;">General Statistics</a></li>-->
 <#--        <li><a href="/admin/users" style="color:white;text-decoration:none;">Registered Users</a></li>-->
     </ul>
