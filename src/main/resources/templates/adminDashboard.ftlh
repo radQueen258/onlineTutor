@@ -16,6 +16,19 @@
 <#--        <li><a href="/admin/statistics" style="color:white;text-decoration:none;">General Statistics</a></li>-->
 <#--        <li><a href="/admin/users" style="color:white;text-decoration:none;">Registered Users</a></li>-->
     </ul>
+
+    <form action="/logout" method="post">
+        <#--            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">-->
+        <button type="submit" style="
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;">
+            Logout
+        </button>
+    </form>
 </div>
 
 <!-- Main Content -->

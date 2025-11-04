@@ -29,6 +29,19 @@
             </li>
         </ul>
 
+        <form action="/logout" method="post">
+<#--            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">-->
+            <button type="submit" style="
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;">
+                Logout
+            </button>
+        </form>
+
         <div style="margin-top: auto;">
             <a href="/profile" style="color: white;">Profile</a>
         </div>

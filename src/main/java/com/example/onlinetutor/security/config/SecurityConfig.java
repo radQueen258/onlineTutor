@@ -114,6 +114,14 @@ public class SecurityConfig {
                 .permitAll()
         );
 
+        http.logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/signIn?logout")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll()
+        );
+
         return http.build();
     }
 
