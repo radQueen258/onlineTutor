@@ -9,4 +9,5 @@ import java.util.List;
 public interface ResourceRepo extends JpaRepository<Resource,Long> {
     List<Resource> findResourceById(Long resourceId);
 
+    void deleteByTutor_Id(Long tutorId);
 }

@@ -40,6 +40,8 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private StudyPlanRepo studyPlanRepo;
+    @Autowired
+    private ResourceRepo resourceRepo;
 
     @Override
     public User updateOnboarding(Long userId, String examLevel, List<String> subjects) {
@@ -102,6 +104,7 @@ public class UserServiceImpl implements UserService{
             }
             articleRepo.deleteArticleByTutorName_Id(userId);
             videoRepo.deleteVideoByTutorName_Id(userId);
+            resourceRepo.deleteByTutor_Id(userId);
         }
 
         userRepo.delete(user);
