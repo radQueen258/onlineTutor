@@ -286,4 +286,67 @@ public class AdminController {
         model.addAttribute("video", video);
         return  "/admin/admin-view-video";
     }
+
+    //    -----------------------EDITING ARTICLES AND VIDEOS -----------------------
+
+    @GetMapping("/admin/article/edit/{articleId}")
+    public String adminEditArticleForm(@PathVariable Long articleId, Model model) {
+        Article article = articleRepo.findById(articleId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid article ID: " + articleId));
+
+        model.addAttribute("article", article);
+        return "/admin/admin-edit-article";
+    }
+
+    @PostMapping("/admin/article/edit/{articleId}")
+    public String updateArticle(@PathVariable Long articleId,
+                                @ModelAttribute Article updatedArticle) {
+        Article article = articleRepo.findById(articleId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid article ID: " + articleId));
+
+        if (updatedArticle.getArticleTitle() != null && !updatedArticle.getArticleTitle().trim().isEmpty()) {
+            article.setArticleTitle(updatedArticle.getArticleTitle());
+        }
+
+        if (updatedArticle.getArticleContent() != null && !updatedArticle.getArticleContent().trim().isEmpty()) {
+            article.setArticleContent(updatedArticle.getArticleContent());
+        }
+
+        if (updatedArticle.getImageUrl() != null && !updatedArticle.getImageUrl().trim().isEmpty()) {
+            article.setImageUrl(updatedArticle.getImageUrl());
+        }
+
+        articleRepo.save(article);
+        return "redirect:/admin/workplace";
+    }
+
+    @GetMapping("/admin/video/edit/{videoId}")
+    public String editVideoForm(@PathVariable Long videoId, Model model) {
+        Video video = videoRepo.findById(videoId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid video ID: " + videoId));
+
+        model.addAttribute("video", video);
+        return "/admin/admin-edit-video";
+    }
+
+    @PostMapping("/admin/video/edit/{videoId}")
+    public String updateVideo(@PathVariable Long videoId, @ModelAttribute Video updatedVideo) {
+        Video video = videoRepo.findById(videoId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid video ID: " + videoId));
+
+        if (updatedVideo.getVideoTitle() != null && !updatedVideo.getVideoTitle().trim().isEmpty()) {
+            video.setVideoTitle(updatedVideo.getVideoTitle());
+        }
+
+        if (updatedVideo.getVideoDescription() != null && !updatedVideo.getVideoDescription().trim().isEmpty()) {
+            video.setVideoDescription(updatedVideo.getVideoDescription());
+        }
+
+        if (updatedVideo.getVideoUrl() != null && !updatedVideo.getVideoUrl().trim().isEmpty()) {
+            video.setVideoUrl(updatedVideo.getVideoUrl());
+        }
+
+        videoRepo.save(video);
+        return "redirect:/admin/workplace";
+    }
 }

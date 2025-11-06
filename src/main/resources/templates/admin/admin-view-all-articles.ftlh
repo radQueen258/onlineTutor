@@ -44,6 +44,7 @@
                             <h3>${article.articleTitle}</h3>
                             <p><strong>Subject:</strong> ${article.subject}</p>
                             <a href="/tutor/resources/${resource.id}/article/${article.id}">See Article</a>
+                            <a href="/admin/article/edit/${article.id}">Edit Article</a>
 
                             <#if article.video??>
                                 <div style="margin: 12px 0; padding: 10px; background: #f8f8f8; border-radius: 8px;">
@@ -72,6 +73,7 @@
                                         </iframe>
                                     </div>
                                 </div>
+                                <a href="/admin/video/edit/${article.video.id}">Edit Video</a>
                             <#else>
                                 <p>No videos yet for this article.</p>
                             </#if>
