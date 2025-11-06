@@ -2,17 +2,16 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Tutor - Resources' Articles</title>
+    <title>Admin - Resources' Articles</title>
 </head>
 <body>
 
-<!-- Sidebar -->
 <div style="width:220px;float:left;background:#0f2b4c;color:white;height:100vh;">
     <h3 style="padding:10px;">Website Name</h3>
     <ul style="list-style:none;padding:0;">
-        <li><a href="/tutor/analytics" style="color:white;text-decoration:none;">View Analytics</a></li>
+        <li><a href="/admin/analytics" style="color:white;text-decoration:none;">View Analytics</a></li>
 
-        <li><a href="/tutor/resources/new" style="color:white;text-decoration:none;">Create Resource</a></li>
+        <li><a href="/admin/resources/new" style="color:white;text-decoration:none;">Create Resource</a></li>
     </ul>
 
     <form action="/logout" method="post">
@@ -32,7 +31,7 @@
 
     <#if resources?size == 0>
         <p>You don’t have any resources yet.</p>
-        <li><a href="/tutor/resources/new" style="color:white;text-decoration:none;">Create Resource</a></li>
+        <li><a href="/admin/resources/new" style="color:white;text-decoration:none;">Create Resource</a></li>
     <#else>
         <#list resources as resource>
             <div style="margin-bottom: 30px;">
@@ -75,14 +74,14 @@
                                 <p>No videos yet for this article.</p>
                             </#if>
 
-                            <p><a href="/tutor/resources/${resourceId}/article/${article.id}/upload-video">Add Video</a></p>
+                            <p><a href="/admin/resources/${resourceId}/article/${article.id}/upload-video">Add Video</a></p>
                         </div>
                     </#list>
 
-                    <p><a href="/tutor/resources/${resource.id}/article/new">Add Article</a></p>
+                    <p><a href="/admin/resources/${resource.id}/article/new">Add Article</a></p>
                 <#else>
                     <p>No articles yet for this resource.</p>
-                    <p><a href="/tutor/resources/${resource.id}/article/new">Add Article</a></p>
+                    <p><a href="/admin/resources/${resource.id}/article/new">Add Article</a></p>
                 </#if>
             </div>
         </#list>

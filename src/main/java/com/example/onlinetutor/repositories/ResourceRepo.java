@@ -11,5 +11,5 @@ public interface ResourceRepo extends JpaRepository<Resource,Long> {
 
     void deleteByTutor_Id(Long tutorId);
 
-//    List<Resource> findAll();
+    List<Resource> findAllByTutor_Id(Long tutorId);
 }

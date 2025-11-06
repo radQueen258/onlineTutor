@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Tutor Workplace</title>
+    <title>Admin Workplace</title>
 </head>
 <body>
 
@@ -10,7 +10,7 @@
 <div style="width:220px;float:left;background:#0f2b4c;color:white;height:100vh;">
     <h3 style="padding:10px;">Website Name</h3>
     <ul style="list-style:none;padding:0;">
-        <li><a href="/tutor/article/new" style="color:white;text-decoration:none;">Create New Article</a></li>
+        <li><a href="/admin/dashboard" style="color:white;text-decoration:none;">Go to Dashboard</a></li>
         <li><a href="/tutor/analytics" style="color:white;text-decoration:none;">View Analytics</a></li>
     </ul>
 
@@ -32,7 +32,7 @@
     <h2>Admin's Workplace!</h2>
 
     <h2>Resources</h2>
-    <li><a href="/tutor/resources/new" style="color:black;text-decoration:none;">Create Resource</a></li>
+    <li><a href="/admin/resources/new" style="color:black;text-decoration:none;">Create Resource</a></li>
 
     <#if resources?? && (resources?size > 0)>
         <table border="1" cellpadding="5" style="width:100%; border-collapse: collapse;">
@@ -53,7 +53,7 @@
                         </#if>
                     </td>
                     <td>
-                        <a href="/tutor/resources/${resource.id}/articles"
+                        <a href="/admin/resources/${resource.id}/articles"
                            style="color: #007bff; text-decoration: none;">View Articles</a>
                     </td>
                 </tr>

@@ -49,7 +49,7 @@ public class TutorController {
         String tutorName = tutor.getFirstName() + " " + tutor.getLastName();
         List<Article> articles = articleRepo.findByTutorName_Id(tutorId);
 
-        List<Resource> resourcesList = resourceRepo.findAll();
+        List<Resource> resourcesList = resourceRepo.findAllByTutor_Id(tutorId);
 
 
         model.addAttribute("articles", articles);

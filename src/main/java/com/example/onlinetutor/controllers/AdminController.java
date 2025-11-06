@@ -1,5 +1,6 @@
 package com.example.onlinetutor.controllers;
 
+import com.example.onlinetutor.dto.TutorAnalyticsDTO;
 import com.example.onlinetutor.models.*;
 import com.example.onlinetutor.repositories.ArticleRepo;
 import com.example.onlinetutor.repositories.ResourceRepo;
@@ -45,6 +46,9 @@ public class AdminController {
     @Autowired
     private ResourceRepo resourceRepo;
 
+    @Autowired
+    private QuizQuestionService quizQuestionService;
+
 
     @GetMapping("/admin/dashboard")
     public String adminDashboard(Model model, Principal principal) {
@@ -63,7 +67,7 @@ public class AdminController {
 //        String tutorName = tutor.getFirstName() + " " + tutor.getLastName();
         List<Article> articles = articleRepo.findByTutorName_Id(adminId);
 
-        List<Resource> resourcesList = resourceRepo.findAll();
+        List<Resource> resourcesList = resourceRepo.findAllByTutor_Id(adminId);
 
 
         model.addAttribute("articles", articles);
@@ -215,5 +219,53 @@ public class AdminController {
         model.addAttribute("test", test);
         model.addAttribute("user", user);
         return "admin-aptitude-result-details";
+    }
+
+    //    ANALYSIS OF STUDENT PERFORMANCE
+    @GetMapping("/admin/analytics")
+    public String analytics(Model model, Principal principal) {
+        User tutor = userRepo.findByEmail(principal.getName()).orElseThrow();
+        List<TutorAnalyticsDTO> stats = quizQuestionService.getTutorAnalytics(tutor.getId());
+        System.out.println("HERE IS THE DATA: " +stats);
+        model.addAttribute("stats", stats);
+        return "admin-analytics";
+    }
+
+    //    -----------------------FIELD THAT DEALS WITH RESOURCES--------------
+
+    @GetMapping("/admin/resources/new")
+    public String showCreateResourceForm(Model model) {
+        model.addAttribute("resource", new Resource());
+        return "admin-create-resource";
+    }
+
+    @PostMapping("/admin/resources")
+    public String createResource(@ModelAttribute Resource resource, Principal principal) {
+        User tutor = userRepo.findUserByEmail(principal.getName());
+        resource.setTutor(tutor);
+        resourceRepo.save(resource);
+        return "redirect:/admin/workplace";
+    }
+
+    @GetMapping("/admin/resources/{resourceId}/articles")
+    public String viewAllArticles (@PathVariable Long resourceId, Model model
+            , Principal principal) {
+        User admin = userRepo.findByEmail(principal.getName()).orElseThrow();
+        Long adminId = admin.getId();
+
+        List<Resource> resources = resourceRepo.findResourceById(resourceId);
+        Long numArticles = articleRepo.countByResource_Id(resourceId);
+
+        boolean exists = false;
+
+        if (numArticles > 0) {
+            exists = true;
+        }
+
+        List<Article> articles = articleRepo.findByTutorName_Id(adminId);
+        model.addAttribute("articles", articles);
+        model.addAttribute("resources", resources);
+        model.addAttribute("exists", exists);
+        return "admin-view-all-articles";
     }
 }
