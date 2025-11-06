@@ -278,4 +278,12 @@ public class AdminController {
         model.addAttribute("exists", exists);
         return "/admin/admin-view-all-articles";
     }
+
+    @GetMapping("/admin/videos/{videoId}")
+    public String adminViewVideos(@PathVariable Long videoId,
+                                  Model model, Principal principal) {
+        Video video = videoRepo.getVideoById(videoId);
+        model.addAttribute("video", video);
+        return  "/admin/admin-view-video";
+    }
 }
