@@ -23,7 +23,7 @@
 <#--    Main Content -->
     <main style="flex: 1; padding: 30px; position: relative;">
         <div>
-            <a href="/resources" style="text-decoration: none; color: black;">← Back</a>
+            <a href="/resources/${resourceId}/articles-and-videos" style="text-decoration: none; color: black;">← Back</a>
         </div>
 
         <!-- Article Title and Tutor Info -->
@@ -49,7 +49,7 @@
 
         <!-- Watch Related Video Button -->
         <div style="position: absolute; right: 60px; top: 150px;">
-            <a href="/resources/video/${article.video.id}"
+            <a href="/resources/${resourceId}/video/${article.video.id}"
                style="display: inline-block; background-color: goldenrod; color: black;
                   padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold;">
                 Watch Related Video

@@ -27,21 +27,21 @@
             <table style="width: 100%;">
                 <thead>
                 <tr>
-                    <th style="text-align: left;">Major Topic</th>
-                    <th style="text-align: left;">Articles & Videos</th>
+                    <th style="text-align: left;">Article</th>
+                    <th style="text-align: left;">Video</th>
                 </tr>
                 </thead>
                 <tbody>
-                <#list resources as resource>
+                <#list articleList as article>
                     <tr>
                         <td>
-                            <a href="/resources/article/${resource.id}"
+                            <a href="/resources/${resourceId}/article/${article.id}"
                                style="color: black; text-decoration: none;">
-                                ${resource.topicName}
+                                ${article.articleTitle}
                             </a>
                         </td>
                         <td>
-                            <a href="/resources/${resource.id}/articles-and-videos"
+                            <a href="/resources/${resourceId}/video/${article.video.id}"
                                style="color: blue;">Click Here</a>
                         </td>
                     </tr>

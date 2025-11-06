@@ -32,7 +32,7 @@
 
     <!-- Main Video Content -->
     <main style="flex: 1; padding: 40px;">
-        <a href="/resources" style="text-decoration: none; color: black;">← Back</a>
+        <a href="/resources/${resourceId}/articles-and-videos" style="text-decoration: none; color: black;">← Back</a>
         <h1>Video Topic</h1>
 
         <div style="margin-top: 20px;">
