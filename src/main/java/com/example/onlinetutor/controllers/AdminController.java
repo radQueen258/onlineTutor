@@ -139,6 +139,17 @@ public class AdminController {
         return "redirect:/admin/articles";
     }
 
+    @GetMapping("/admin/resources/{resourceId}/article/{articleId}")
+    public String tutorViewArticle(@PathVariable Long resourceId,
+                                   @PathVariable Long articleId,
+                                   Model model) {
+        Article article = articleRepo.findArticlesById(articleId);
+        model.addAttribute("article", article);
+        model.addAttribute("resourceId", resourceId);
+
+        return "/admin/view-article";
+    }
+
 //    -----------------METHODS FOR VIDEOS---------------------
     @GetMapping("/admin/videos")
     public String viewVideos(Model model) {

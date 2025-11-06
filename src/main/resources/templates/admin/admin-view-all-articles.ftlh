@@ -10,6 +10,7 @@
     <h3 style="padding:10px;">Website Name</h3>
     <ul style="list-style:none;padding:0;">
         <li><a href="/admin/analytics" style="color:white;text-decoration:none;">View Analytics</a></li>
+        <li><a href="/admin/dashboard" style="color:white;text-decoration:none;">Admin Dashboard</a></li>
 
         <li><a href="/admin/resources/new" style="color:white;text-decoration:none;">Create Resource</a></li>
     </ul>
@@ -42,6 +43,7 @@
                         <div style="margin-bottom: 25px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
                             <h3>${article.articleTitle}</h3>
                             <p><strong>Subject:</strong> ${article.subject}</p>
+                            <a href="/tutor/resources/${resource.id}/article/${article.id}">See Article</a>
 
                             <#if article.video??>
                                 <div style="margin: 12px 0; padding: 10px; background: #f8f8f8; border-radius: 8px;">

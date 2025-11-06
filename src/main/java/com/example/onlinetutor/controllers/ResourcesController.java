@@ -18,12 +18,6 @@ import java.util.List;
 @Controller
 public class ResourcesController {
 
-//    @Autowired
-//    private ArticleRepo articleRepo;
-//
-//    @Autowired
-//    private VideoRepo videoRepo;
-
     @Autowired
     ResourceRepo resourceRepo;
 
@@ -31,8 +25,6 @@ public class ResourcesController {
     private ResourceService resourceService;
     @Autowired
     private ArticleRepo articleRepo;
-    @Autowired
-    private VideoRepo videoRepo;
 
 
     @GetMapping("/resources")
@@ -46,9 +38,8 @@ public class ResourcesController {
     public String openArticle(@PathVariable Long id,
                               @PathVariable Long resourceId,
                               Model model) {
-        Resource resource = resourceRepo.findById(id).orElseThrow(null);
-//        Article article = (Article) resource.getArticles();
-//        List<Article> articleList= resource.getArticles();
+//        Resource resource = resourceRepo.findById(id).orElseThrow(null);
+
         Article article = articleRepo.findArticlesById(id);
 
         model.addAttribute("article", article);

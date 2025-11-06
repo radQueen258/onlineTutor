@@ -43,6 +43,7 @@
                         <div style="margin-bottom: 25px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
                             <h3>${article.articleTitle}</h3>
                             <p><strong>Subject:</strong> ${article.subject}</p>
+                            <a href="/tutor/resources/${resource.id}/article/${article.id}">See Article</a>
 
                             <#if article.video??>
                                 <div style="margin: 12px 0; padding: 10px; background: #f8f8f8; border-radius: 8px;">

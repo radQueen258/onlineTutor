@@ -103,6 +103,17 @@ public class TutorController {
         return "/tutor/view-all-articles";
     }
 
+    @GetMapping("/tutor/resources/{resourceId}/article/{articleId}")
+    public String tutorViewArticle(@PathVariable Long resourceId,
+                                   @PathVariable Long articleId,
+                                   Model model) {
+        Article article = articleRepo.findArticlesById(articleId);
+        model.addAttribute("article", article);
+        model.addAttribute("resourceId", resourceId);
+
+        return "/tutor/view-article";
+    }
+
     @GetMapping("/tutor/resources/{resourceId}/article/{articleId}/upload-video")
     public String showUploadVideoForm(@PathVariable Long articleId,
                                       @PathVariable Long resourceId, Model model) {
