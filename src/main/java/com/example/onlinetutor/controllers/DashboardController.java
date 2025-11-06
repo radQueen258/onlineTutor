@@ -7,7 +7,6 @@ import com.example.onlinetutor.repositories.UserRepo;
 import com.example.onlinetutor.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,6 +51,6 @@ public class DashboardController {
         model. addAttribute("progress", "60%");
         model.addAttribute("upcoming", "Continue Algebraic Expressions");
 
-        return "dashboard";
+        return "/user-and-student/dashboard";
     }
 }

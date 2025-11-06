@@ -1,7 +1,6 @@
 package com.example.onlinetutor.controllers;
 
 import com.example.onlinetutor.models.User;
-import com.example.onlinetutor.repositories.UserRepo;
 import com.example.onlinetutor.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +20,6 @@ public class ProfileController {
                               Model model) {
         User user = userService.findByEmail(userDetails.getUsername());
         model.addAttribute("user", user);
-        return "profile";
+        return "/user-and-student/profile";
     }
 }

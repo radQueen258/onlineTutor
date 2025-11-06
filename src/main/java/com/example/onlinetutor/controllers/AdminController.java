@@ -7,7 +7,6 @@ import com.example.onlinetutor.repositories.ResourceRepo;
 import com.example.onlinetutor.repositories.UserRepo;
 import com.example.onlinetutor.repositories.VideoRepo;
 import com.example.onlinetutor.services.*;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,7 +56,7 @@ public class AdminController {
         model.addAttribute("totalArticles",  articleRepo.count());
         model.addAttribute("totalVideos",  videoRepo.count());
         model.addAttribute("statistics", statisticsService.getOverallStatistics());
-        return "adminDashboard";
+        return "/admin/adminDashboard";
     }
 
     @GetMapping("/admin/workplace")
@@ -73,7 +72,7 @@ public class AdminController {
         model.addAttribute("articles", articles);
 //        model.addAttribute("tutorName", tutorName);
         model.addAttribute("resources", resourcesList);
-        return "admin-workplace";
+        return "/admin/admin-workplace";
     }
 
 //    ---------------VIEW ALL USERSS -----------------
@@ -81,7 +80,7 @@ public class AdminController {
     @GetMapping("/admin/users")
     public String viewUsers(Model model) {
         model.addAttribute("users", userRepo.findAll());
-        return "adminUsers";
+        return "/admin/adminUsers";
     }
 
     @PostMapping("/admin/users/delete/{id}")
@@ -106,7 +105,7 @@ public class AdminController {
     @GetMapping("/admin/articles")
     public String viewArticles(Model model) {
         model.addAttribute("articles", articleRepo.findAll());
-        return "adminArticles";
+        return "/admin/adminArticles";
     }
 
     @PostMapping("/admin/articles/delete/{id}")
@@ -122,7 +121,7 @@ public class AdminController {
         Article article = new Article();
         article.setResource(resource);
         model.addAttribute("article", article);
-        return "admin-new-article";
+        return "/admin/admin-new-article";
     }
 
     @PostMapping("/admin/resources/{resourceId}article/article/save")
@@ -144,7 +143,7 @@ public class AdminController {
     @GetMapping("/admin/videos")
     public String viewVideos(Model model) {
         model.addAttribute("videos", videoRepo.findAll());
-        return "adminVideos";
+        return "/admin/adminVideos";
     }
 
 
@@ -164,7 +163,7 @@ public class AdminController {
         Article article = articleRepo.getById(articleId);
         model.addAttribute("article", article);
         model.addAttribute("video", new Video());
-        return "admin-upload-video";
+        return "/admin/admin-upload-video";
     }
 
     @PostMapping("/admin/resources/{resourceId}/article/{articleId}/upload-video/save")
@@ -198,7 +197,7 @@ public class AdminController {
     @GetMapping("/admin/statistics")
     public String showStatistics(Model model) {
         model.addAttribute("stats", statisticsService.getOverallStatistics());
-        return "adminStatistics";
+        return "/admin/adminStatistics";
     }
 
     @GetMapping("/admin/aptitude-results")
@@ -218,7 +217,7 @@ public class AdminController {
 
         model.addAttribute("test", test);
         model.addAttribute("user", user);
-        return "admin-aptitude-result-details";
+        return "/admin/admin-aptitude-result-details";
     }
 
     //    ANALYSIS OF STUDENT PERFORMANCE
@@ -228,7 +227,7 @@ public class AdminController {
         List<TutorAnalyticsDTO> stats = quizQuestionService.getTutorAnalytics(tutor.getId());
         System.out.println("HERE IS THE DATA: " +stats);
         model.addAttribute("stats", stats);
-        return "admin-analytics";
+        return "/admin/admin-analytics";
     }
 
     //    -----------------------FIELD THAT DEALS WITH RESOURCES--------------
@@ -236,7 +235,7 @@ public class AdminController {
     @GetMapping("/admin/resources/new")
     public String showCreateResourceForm(Model model) {
         model.addAttribute("resource", new Resource());
-        return "admin-create-resource";
+        return "/admin/admin-create-resource";
     }
 
     @PostMapping("/admin/resources")
@@ -266,6 +265,6 @@ public class AdminController {
         model.addAttribute("articles", articles);
         model.addAttribute("resources", resources);
         model.addAttribute("exists", exists);
-        return "admin-view-all-articles";
+        return "/admin/admin-view-all-articles";
     }
 }

@@ -3,7 +3,6 @@ package com.example.onlinetutor.controllers;
 import com.example.onlinetutor.enums.AptitudeTestStatus;
 import com.example.onlinetutor.models.AptitudeTest;
 import com.example.onlinetutor.models.TestQuestion;
-import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.UserRepo;
 import com.example.onlinetutor.services.AptitudeTestService;
 import jakarta.servlet.http.HttpSession;
@@ -50,7 +49,7 @@ public class AptitudeTestController {
         AptitudeTest test = testService.startTest(userId, generateSampleQuestions());
         model.addAttribute("test", test);
 
-        return "aptitude_test";
+        return "/user-and-student/aptitude_test";
     }
 
 
@@ -75,7 +74,7 @@ public class AptitudeTestController {
             user.setAptitudeTestStatus(AptitudeTestStatus.COMPLETED);
             userRepo.save(user);
         });
-        return "aptitude_thankyou";
+        return "/user-and-student/aptitude_thankyou";
     }
 
 //    TODO: This is a temporary method later will brainstorm how to do the real questions generator

@@ -1,6 +1,5 @@
 package com.example.onlinetutor.controllers;
 
-import com.example.onlinetutor.dto.ResourceDto;
 import com.example.onlinetutor.dto.TutorAnalyticsDTO;
 import com.example.onlinetutor.models.Article;
 import com.example.onlinetutor.models.Resource;
@@ -10,16 +9,12 @@ import com.example.onlinetutor.repositories.*;
 import com.example.onlinetutor.services.QuizQuestionService;
 import com.example.onlinetutor.services.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @Controller
 public class TutorController {
@@ -55,7 +50,7 @@ public class TutorController {
         model.addAttribute("articles", articles);
         model.addAttribute("tutorName", tutorName);
         model.addAttribute("resources", resourcesList);
-        return "workplace";
+        return "/tutor/workplace";
     }
 
     @GetMapping("/tutor/resources/{resourceId}/article/new")
@@ -65,7 +60,7 @@ public class TutorController {
         Article article = new Article();
         article.setResource(resource);
         model.addAttribute("article", article);
-        return "new-article";
+        return "/tutor/new-article";
     }
 
 
@@ -105,7 +100,7 @@ public class TutorController {
         model.addAttribute("articles", articles);
         model.addAttribute("resources", resources);
         model.addAttribute("exists", exists);
-        return "view-all-articles";
+        return "/tutor/view-all-articles";
     }
 
     @GetMapping("/tutor/resources/{resourceId}/article/{articleId}/upload-video")
@@ -114,7 +109,7 @@ public class TutorController {
         Article article = articleRepo.getById(articleId);
         model.addAttribute("article", article);
         model.addAttribute("video", new Video());
-        return "upload-video";
+        return "/tutor/upload-video";
     }
 
 
@@ -152,7 +147,7 @@ public class TutorController {
         List<TutorAnalyticsDTO> stats = quizQuestionService.getTutorAnalytics(tutor.getId());
         System.out.println("HERE IS THE DATA: " +stats);
         model.addAttribute("stats", stats);
-        return "analytics";
+        return "/tutor/analytics";
     }
 
 
@@ -161,7 +156,7 @@ public class TutorController {
     @GetMapping("/tutor/resources/new")
     public String showCreateResourceForm(Model model) {
         model.addAttribute("resource", new Resource());
-        return "tutor-create-resource";
+        return "/tutor/tutor-create-resource";
     }
 
     @PostMapping("/tutor/resources")

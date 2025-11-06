@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class SignInController {
     @GetMapping("/signIn")
     public String getSignInPage() {
-        return "sign_in_page";
+        return "/user-and-student/sign_in_page";
     }
 }

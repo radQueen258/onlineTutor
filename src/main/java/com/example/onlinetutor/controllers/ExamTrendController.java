@@ -19,6 +19,6 @@ public class ExamTrendController {
     public String examTrends(Model model) {
         List<ExamTrend> trends = examTrendService.getAllTrends();
         model.addAttribute("trends", trends);
-        return "exam-trends";
+        return "/user-and-student/exam-trends";
     }
 }

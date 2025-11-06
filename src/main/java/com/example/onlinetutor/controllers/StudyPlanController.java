@@ -1,8 +1,6 @@
 package com.example.onlinetutor.controllers;
 
-import com.example.onlinetutor.models.QuizQuestion;
 import com.example.onlinetutor.models.StudyPlan;
-import com.example.onlinetutor.repositories.StudyPlanRepo;
 import com.example.onlinetutor.services.QuizQuestionService;
 import com.example.onlinetutor.services.StudyPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +28,7 @@ public class StudyPlanController {
     public String studyPlan(Model model, Principal principal) {
         List<StudyPlan> plans = studyPlanService.getPlanForUser(principal.getName());
         model.addAttribute("plans", plans);
-        return "study-plan";
+        return "/user-and-student/study-plan";
     }
 
     @GetMapping("/study/continue")
@@ -46,7 +44,7 @@ public class StudyPlanController {
         model.addAttribute("article", nextPlan.getArticle());
         model.addAttribute("quiz", quizQuestionService.getQuizByArticleId(nextPlan.getArticle().getId()));
 
-        return "study-session";
+        return "/user-and-student/study-session";
     }
 
     @PostMapping("/submit/{planId}")
@@ -65,6 +63,6 @@ public class StudyPlanController {
         model.addAttribute("score", score);
         model.addAttribute("article", plan.getArticle());
 
-        return "study-result";
+        return "/user-and-student/study-result";
     }
 }

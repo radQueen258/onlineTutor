@@ -7,7 +7,6 @@ import com.example.onlinetutor.services.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -17,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class OnboardingController {
@@ -36,7 +34,7 @@ public class OnboardingController {
             session.setAttribute("testTaken", false);
         }
         model.addAttribute("testTaken", testTaken);
-        return "onboarding";
+        return "/user-and-student/onboarding";
     }
 
     @PostMapping("/setGoals")
