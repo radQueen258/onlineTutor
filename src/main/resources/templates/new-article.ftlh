@@ -14,11 +14,6 @@
            placeholder="Enter the article title" required
            style="width: 100%; padding: 8px; margin: 8px 0;"><br>
 
-<#--    <label for="subject"><strong>Subject:</strong></label><br>-->
-<#--    <input type="text" id="subject" name="subject" value="${article.subject!}"-->
-<#--           placeholder="E.g., Mathematics, Physics, etc." required-->
-<#--           style="width: 100%; padding: 8px; margin: 8px 0;"><br>-->
-
     <label for="content"><strong>Content:</strong></label><br>
     <textarea id="content" name="articleContent" rows="8" placeholder="Write your article content here..."
               style="width: 100%; padding: 8px; margin: 8px 0;">${article.articleContent!}</textarea><br>

@@ -8,7 +8,7 @@
 
 <h2>Add a Video to Article: ${article.articleTitle}</h2>
 
-<form action="/tutor/resources/${article.resource.id}/article/${article.id}/upload-video" method="post">
+<form action="/tutor/resources/${article.resource.id}/article/${article.id}/upload-video/save" method="post">
     <p>
         <label>Video Title:</label><br>
         <input type="text" name="videoTitle" required>

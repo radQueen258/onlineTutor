@@ -1,5 +1,6 @@
 package com.example.onlinetutor.controllers;
 
+import com.example.onlinetutor.dto.ResourceDto;
 import com.example.onlinetutor.dto.TutorAnalyticsDTO;
 import com.example.onlinetutor.models.Article;
 import com.example.onlinetutor.models.Resource;
@@ -15,7 +16,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -46,17 +49,12 @@ public class TutorController {
         String tutorName = tutor.getFirstName() + " " + tutor.getLastName();
         List<Article> articles = articleRepo.findByTutorName_Id(tutorId);
 
-        Long numArticles = articleRepo.countArticlesByResource_Id(resourceService.getAllResources().get(0).getId());
-        boolean exists = false;
+        List<Resource> resourcesList = resourceRepo.findAll();
 
-        if (numArticles > 0) {
-            exists = true;
-        }
+
         model.addAttribute("articles", articles);
         model.addAttribute("tutorName", tutorName);
-        model.addAttribute("resources", resourceService.getAllResources());
-        model.addAttribute("exists", exists);
-        model.addAttribute("numArticles", numArticles);
+        model.addAttribute("resources", resourcesList);
         return "workplace";
     }
 
@@ -95,7 +93,7 @@ public class TutorController {
         Long tutorId = tutor.getId();
 
         List<Resource> resources = resourceRepo.findResourceById(resourceId);
-        Long numArticles = articleRepo.countArticlesByResource_Id(resourceId);
+        Long numArticles = articleRepo.countByResource_Id(resourceId);
 
         boolean exists = false;
 
@@ -120,7 +118,7 @@ public class TutorController {
     }
 
 
-    @PostMapping("/tutor/resources/{resourceId}/article/{id}/upload-video")
+    @PostMapping("/tutor/resources/{resourceId}/article/{id}/upload-video/save")
     public String uploadVideo(@PathVariable Long id,
                               @PathVariable Long resourceId,
                               @RequestParam("videoTitle") String videoTitle,

@@ -29,7 +29,7 @@
 
 <div style="margin-left:240px;padding:20px;">
 
-    <h2>Welcome, ${tutorName}!</h2>
+    <h2>Admin's Workplace!</h2>
 
     <h2>Resources</h2>
     <li><a href="/tutor/resources/new" style="color:black;text-decoration:none;">Create Resource</a></li>
@@ -47,9 +47,9 @@
                     <td>${resource.topicName!'-'}</td>
                     <td>
                         <#if resource.articles?? && (resource.articles?size > 0)>
-                        ${resource.articles?size}
+                            ${resource.articles?size}
                         <#else>
-                        0
+                            0
                         </#if>
                     </td>
                     <td>

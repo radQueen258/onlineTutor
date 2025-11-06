@@ -1,6 +1,7 @@
 package com.example.onlinetutor.repositories;
 
 import com.example.onlinetutor.models.Article;
+import com.example.onlinetutor.models.Resource;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,9 @@ import java.util.List;
 public interface ArticleRepo extends JpaRepository<Article,Long> {
     List<Article> findByArticleTitle(String topic);
     List<Article> findByTutorName_Id(Long userId);
-    Long countArticlesByResource_Id(Long resourceId);
+    Long countByResource_Id(Long resourceId);
+
+//    Long countArticlesByResource(Resource resource);
 
     List<Article> findAll();
 

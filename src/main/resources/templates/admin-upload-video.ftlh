@@ -8,7 +8,7 @@
 
 <h2>Add a Video to Article: ${article.articleTitle}</h2>
 
-<form action="/admin/article/${article.id}/upload-video" method="post">
+<form action="/admin/resources/${resourceId}/article/${article.id}/upload-video/save" method="post">
     <p>
         <label>Video Title:</label><br>
         <input type="text" name="videoTitle" required>
@@ -24,10 +24,6 @@
         <input type="url" name="videoUrl" placeholder="https://www.youtube.com/watch?v=..." required>
     </p>
 
-    <p>
-        <label>Subject:</label><br>
-        <input type="text" name="subject" required>
-    </p>
 
     <p>
         <button type="submit">Save Video</button>

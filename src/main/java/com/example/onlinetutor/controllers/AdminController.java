@@ -1,10 +1,8 @@
 package com.example.onlinetutor.controllers;
 
-import com.example.onlinetutor.models.AptitudeTest;
-import com.example.onlinetutor.models.Article;
-import com.example.onlinetutor.models.User;
-import com.example.onlinetutor.models.Video;
+import com.example.onlinetutor.models.*;
 import com.example.onlinetutor.repositories.ArticleRepo;
+import com.example.onlinetutor.repositories.ResourceRepo;
 import com.example.onlinetutor.repositories.UserRepo;
 import com.example.onlinetutor.repositories.VideoRepo;
 import com.example.onlinetutor.services.*;
@@ -44,6 +42,9 @@ public class AdminController {
     @Autowired
     private AptitudeTestService aptitudeTestService;
 
+    @Autowired
+    private ResourceRepo resourceRepo;
+
 
     @GetMapping("/admin/dashboard")
     public String adminDashboard(Model model, Principal principal) {
@@ -53,6 +54,22 @@ public class AdminController {
         model.addAttribute("totalVideos",  videoRepo.count());
         model.addAttribute("statistics", statisticsService.getOverallStatistics());
         return "adminDashboard";
+    }
+
+    @GetMapping("/admin/workplace")
+    public String adminWorkplace(Model model, Principal principal) {
+        User admin = userRepo.findByEmail(principal.getName()).orElseThrow();
+        Long adminId = admin.getId();
+//        String tutorName = tutor.getFirstName() + " " + tutor.getLastName();
+        List<Article> articles = articleRepo.findByTutorName_Id(adminId);
+
+        List<Resource> resourcesList = resourceRepo.findAll();
+
+
+        model.addAttribute("articles", articles);
+//        model.addAttribute("tutorName", tutorName);
+        model.addAttribute("resources", resourcesList);
+        return "admin-workplace";
     }
 
 //    ---------------VIEW ALL USERSS -----------------
@@ -94,16 +111,27 @@ public class AdminController {
         return "redirect:/admin/articles";
     }
 
-    @GetMapping("/admin/article/new")
-    public String newArticleForm(Model model) {
-        model.addAttribute("article", new Article());
+    @GetMapping("/admin/resources/{resourceId}/article/new")
+    public String newArticleForm(@PathVariable Long resourceId,Model model) {
+        Resource resource = resourceRepo.getById(resourceId);
+
+        Article article = new Article();
+        article.setResource(resource);
+        model.addAttribute("article", article);
         return "admin-new-article";
     }
 
-    @PostMapping("/admin/article/save")
-    public String createArticle(@ModelAttribute Article article, Principal principal) {
+    @PostMapping("/admin/resources/{resourceId}article/article/save")
+    public String createArticle(@ModelAttribute Article article,
+                                Principal principal,
+                                @PathVariable Long resourceId,
+                                Model model) {
         User admin = userRepo.findByEmail(principal.getName()).orElseThrow();
+        Resource resource = resourceRepo.getById(resourceId);
         article.setTutorName(admin);
+        article.setResource(resource);
+        article.setSubject(resource.getSubject());
+        model.addAttribute("resourceId", resourceId);
         articleRepo.save(article);
         return "redirect:/admin/articles";
     }
@@ -125,23 +153,26 @@ public class AdminController {
         return "redirect:/admin/videos";
     }
 
-    @GetMapping("/admin/article/{articleId}/upload-video")
-    public String showUploadVideoForm(@PathVariable Long articleId, Model model) {
+    @GetMapping("/admin/resources/{resourceId}/article/{articleId}/upload-video")
+    public String showUploadVideoForm(@PathVariable Long articleId,
+                                      @PathVariable Long resourceId,
+                                      Model model) {
         Article article = articleRepo.getById(articleId);
         model.addAttribute("article", article);
         model.addAttribute("video", new Video());
         return "admin-upload-video";
     }
 
-    @PostMapping("/admin/article/{id}/upload-video")
-    public String uploadVideo(@PathVariable Long id,
+    @PostMapping("/admin/resources/{resourceId}/article/{articleId}/upload-video/save")
+    public String uploadVideo(@PathVariable Long articleId,
+                              @PathVariable Long resourceId,
                               @RequestParam("videoTitle") String videoTitle,
                               @RequestParam("videoDescription") String videoDescription,
                               @RequestParam("videoUrl") String videoUrl,
                               Principal principal,
                               Model model) {
         User admin = userRepo.findByEmail(principal.getName()).orElseThrow();
-        Article article = articleRepo.getById(id);
+        Article article = articleRepo.getById(articleId);
 
         model.addAttribute("article", article);
 
