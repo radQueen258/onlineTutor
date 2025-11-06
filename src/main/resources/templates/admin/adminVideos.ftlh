@@ -23,7 +23,7 @@
             <td>${video.videoTitle}</td>
             <td>${video.article.tutorName.firstName}</td>
             <td><a href="/admin/videos/${video.id}">Check Video</a></td>
-<#--            <td>${video.uploadedAt?string("yyyy-MM-dd")}</td>-->
+
             <td>
                 <form action="/admin/videos/delete/${video.id}" method="post" style="display:inline;" onsubmit="alert('Submitting delete for ${video.id}')">
                     <input type="submit" value="Delete"
