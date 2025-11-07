@@ -43,15 +43,13 @@
             </tr>
         </#list>
     </table>
+
+    <br>
+    <a href="/study/continue">
+        <button>Continue Plan</button>
+    </a>
 <#else>
     <p>No study plan available yet.</p>
 </#if>
-
-
-<br>
-<a href="/study/continue">
-    <button>Continue Plan</button>
-</a>
-
 </body>
 </html>

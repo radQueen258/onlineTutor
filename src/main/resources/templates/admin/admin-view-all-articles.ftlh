@@ -11,6 +11,7 @@
     <ul style="list-style:none;padding:0;">
         <li><a href="/admin/analytics" style="color:white;text-decoration:none;">View Analytics</a></li>
         <li><a href="/admin/dashboard" style="color:white;text-decoration:none;">Admin Dashboard</a></li>
+        <li><a href="/admin/workplace" style="color:white;text-decoration:none;">Go to Workplace</a></li>
 
         <li><a href="/admin/resources/new" style="color:white;text-decoration:none;">Create Resource</a></li>
     </ul>
@@ -43,7 +44,7 @@
                         <div style="margin-bottom: 25px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
                             <h3>${article.articleTitle}</h3>
                             <p><strong>Subject:</strong> ${article.subject}</p>
-                            <a href="/tutor/resources/${resource.id}/article/${article.id}">See Article</a>
+                            <a href="/admin/resources/${resource.id}/article/${article.id}">See Article</a>
                             <a href="/admin/article/edit/${article.id}">Edit Article</a>
 
                             <#if article.video??>

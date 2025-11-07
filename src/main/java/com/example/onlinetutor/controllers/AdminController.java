@@ -216,7 +216,7 @@ public class AdminController {
         List<AptitudeTest> tests = aptitudeTestService.getAllResults();
 //        var results = aptitudeTestService.getAllResults();
         model.addAttribute("tests", tests);
-        return "admin-aptitude-results";
+        return "/admin/admin-aptitude-results";
     }
 
     @GetMapping("/admin/aptitude-results/{id}")

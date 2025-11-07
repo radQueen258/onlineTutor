@@ -41,9 +41,15 @@
                             </a>
                         </td>
                         <td>
-                            <a href="/resources/${resourceId}/video/${article.video.id}"
-                               style="color: blue;">Click Here</a>
+                            <#if article.video??>
+                                <a href="/resources/${resourceId}/video/${article.video.id}" style="color: blue;">
+                                    Click Here
+                                </a>
+                            <#else>
+                                <span style="color: gray;">No video available for this article</span>
+                            </#if>
                         </td>
+
                     </tr>
                 </#list>
                 </tbody>

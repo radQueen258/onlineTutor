@@ -10,8 +10,8 @@
 <div style="width:220px;float:left;background:#0f2b4c;color:white;height:100vh;">
     <h3 style="padding:10px;">Website Name</h3>
     <ul style="list-style:none;padding:0;">
+        <li><a href="/tutor/workplace" style="color:white;text-decoration:none;">View Analytics</a></li>
         <li><a href="/tutor/analytics" style="color:white;text-decoration:none;">View Analytics</a></li>
-
         <li><a href="/tutor/resources/new" style="color:white;text-decoration:none;">Create Resource</a></li>
     </ul>
 

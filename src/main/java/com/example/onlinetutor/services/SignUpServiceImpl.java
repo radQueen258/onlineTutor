@@ -48,7 +48,6 @@ public class SignUpServiceImpl implements SignUpService{
                 .schoolName(form.getSchoolName())
                 .idCard(idCard)
                 .build();
-//        System.out.println("Saving User: {}" + user);
 
         userRepo.save(user);
 
