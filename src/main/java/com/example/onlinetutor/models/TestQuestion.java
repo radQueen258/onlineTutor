@@ -1,5 +1,6 @@
 package com.example.onlinetutor.models;
 
+import com.example.onlinetutor.enums.Subject;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,7 +18,9 @@ public class TestQuestion {
     private Long id;
 
     private String questionText;
-    private String subject;
+
+    @Enumerated(EnumType.STRING)
+    private Subject subject;
 
     @ElementCollection
     private List<String> options;

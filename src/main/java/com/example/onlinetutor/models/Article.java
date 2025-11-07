@@ -1,5 +1,6 @@
 package com.example.onlinetutor.models;
 
+import com.example.onlinetutor.enums.Subject;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,7 +18,9 @@ public class Article {
     private String articleTitle;
     private String articleContent;
     private String imageUrl;
-    private String subject; // TODO: This must later be substituted with an actual ENUM of subjects
+
+    @Enumerated(EnumType.STRING)
+    private Subject subject;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "resource_id")

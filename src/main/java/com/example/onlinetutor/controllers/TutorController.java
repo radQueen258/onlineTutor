@@ -1,6 +1,7 @@
 package com.example.onlinetutor.controllers;
 
 import com.example.onlinetutor.dto.TutorAnalyticsDTO;
+import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.Article;
 import com.example.onlinetutor.models.Resource;
 import com.example.onlinetutor.models.User;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -166,11 +168,12 @@ public class TutorController {
 
     @GetMapping("/tutor/resources/new")
     public String showCreateResourceForm(Model model) {
+        model.addAttribute("subjects", Arrays.asList(Subject.values()));
         model.addAttribute("resource", new Resource());
         return "/tutor/tutor-create-resource";
     }
 
-    @PostMapping("/tutor/resources")
+    @PostMapping("/tutor/resources/save")
     public String createResource(@ModelAttribute Resource resource, Principal principal) {
         User tutor = userRepo.findUserByEmail(principal.getName());
         resource.setTutor(tutor);

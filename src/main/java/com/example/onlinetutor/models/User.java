@@ -49,7 +49,7 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_subjects", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "subjects")
-    private List<String> preferredSubjects = new ArrayList<>();
+    private List<String> preferredSubjects = new ArrayList<>(); //TODO:  Later on implement the Subject's Enum here
 
     @Enumerated(EnumType.STRING)
     private AptitudeTestStatus aptitudeTestStatus = AptitudeTestStatus.NOT_STARTED;

@@ -1,6 +1,7 @@
 package com.example.onlinetutor.controllers;
 
 import com.example.onlinetutor.enums.AptitudeTestStatus;
+import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.AptitudeTest;
 import com.example.onlinetutor.models.TestQuestion;
 import com.example.onlinetutor.repositories.UserRepo;
@@ -84,13 +85,13 @@ public class AptitudeTestController {
         q1.setQuestionText("What is 2 + 2?");
         q1.setOptions(List.of("3", "4", "5"));
         q1.setCorrectAnswer("4");
-        q1.setSubject("Math");
+        q1.setSubject(Subject.MATH);
 
         TestQuestion q2 = new TestQuestion();
         q2.setQuestionText("Who discovered gravity?");
         q2.setOptions(List.of("Newton", "Einstein", "Tesla"));
         q2.setCorrectAnswer("Newton");
-        q2.setSubject("Physics");
+        q2.setSubject(Subject.PHYSICS);
 
         return List.of(q1, q2);
     }
