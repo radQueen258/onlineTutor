@@ -17,9 +17,6 @@ import java.util.Map;
 public class StatisticsServiceImpl implements StatisticsService{
 
     @Autowired
-    private QuizQuestionRepo quizQuestionRepo;
-
-    @Autowired
     private ArticleRepo articleRepo;
 
     @Autowired
@@ -45,13 +42,10 @@ public class StatisticsServiceImpl implements StatisticsService{
             long passed = testResultRepo.countByArticleAndPassed(article, true);
             long failed = testResultRepo.countByArticleAndPassed(article, false);
 
-//            TODO: Later I must have a method to tell me which are the most failed questions
-
             Map<String, Long> mistakeMap = quizQuestionService.findQuestionMistakeStats(article.getId());
 
             TutorAnalyticsDTO dto = new TutorAnalyticsDTO(article.getArticleTitle(), passed, failed, mistakeMap);
 
-//            result.add(new TutorAnalyticsDTO(article.getArticleTitle(), passed, failed));
             result.add(dto);
         }
         return result;
