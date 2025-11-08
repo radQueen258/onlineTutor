@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ResourceService {
     List<ResourceDto> getAllResources();
+    void deleteResource(Long resourceId);
 }

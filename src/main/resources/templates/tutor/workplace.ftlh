@@ -40,6 +40,7 @@
                 <th>Resource Name</th>
                 <th>Number of Articles</th>
                 <th>Actions</th>
+                <th>Deleted</th>
             </tr>
 
             <#list resources as resource>
@@ -55,6 +56,14 @@
                     <td>
                         <a href="/tutor/resources/${resource.id}/articles"
                            style="color: #007bff; text-decoration: none;">View Articles</a>
+                    </td>
+
+                    <td>
+                        <form action="/tutor/resources/${resource.id}/delete" method="post" style="display:inline;">
+                            <button type="submit" onclick="return confirm('Are you sure you want to delete this resource?');">
+                                Delete
+                            </button>
+                        </form>
                     </td>
                 </tr>
             </#list>
