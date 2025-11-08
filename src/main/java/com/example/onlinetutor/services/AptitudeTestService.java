@@ -17,4 +17,6 @@ public interface AptitudeTestService {
     Optional<AptitudeTest> getById(Long id);
     List<AptitudeTest> getAllTests();
     Optional<User> getUserById(Long userId);
+
+    void assignNewTest(Long userId, String[] focusAreas);
 }

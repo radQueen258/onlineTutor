@@ -18,4 +18,7 @@ public interface UserService {
     void deleteIdCardById(Long userId);
     void deleteUserAndDependencies(Long userId);
 
+    void updatePassword(String email, String newPassword);
+    void updateFocusAreas(Long userId, String[] focusAreas);
+
 }

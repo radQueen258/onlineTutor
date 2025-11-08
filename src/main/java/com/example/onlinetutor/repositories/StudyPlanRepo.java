@@ -16,5 +16,9 @@ public interface StudyPlanRepo extends JpaRepository<StudyPlan,Long> {
     StudyPlan findFirstByUserEmailAndCompletedFalseOrderByIdAsc(String email);
     void deleteByUserId(Long id);
 
+//    List<StudyPlan> findAllByUser_IdAndCompletedIsTrue(Long userId, boolean completed);
+
+    List<StudyPlan> findByUser_Id(Long userId);
+
 //    StudyPlan findById(Long id);
 }

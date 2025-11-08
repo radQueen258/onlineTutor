@@ -24,17 +24,18 @@
                 <td>${item.articleTitle}</td>
                 <td>${item.studentsPassed}</td>
                 <td>${item.studentsFailed}</td>
-                <#--                <td>-->
-                <#--                    <#if item.commonMistakes?? && item.commonMistakes?size > 0>-->
-                <#--                        <ul>-->
-                <#--                            <#list item.commonMistakes?keys as question>-->
-                <#--                                <li>${question}: ${item.commonMistakes[question]}</li>-->
-                <#--                            </#list>-->
-                <#--                        </ul>-->
-                <#--                    <#else>-->
-                <#--                        No data yet-->
-                <#--                    </#if>-->
-                <#--                </td>-->
+                <td>
+                    <#if item.commonMistakes?? && (item.commonMistakes?size > 0)>
+                        <ul>
+                            <#list item.commonMistakes?keys as question>
+                                <li>${question}: ${item.commonMistakes[question]}</li>
+                            </#list>
+                        </ul>
+                    <#else>
+                        No data yet
+                    </#if>
+
+                </td>
             </tr>
         </#list>
     </table>

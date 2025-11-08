@@ -82,4 +82,19 @@ public class AptitudeTestServiceImpl implements AptitudeTestService {
     public Optional<User> getUserById(Long userId) {
         return userRepository.findById(userId);
     }
+
+    @Override
+    public void assignNewTest(Long userId, String[] focusAreas) {
+        for (String subject : focusAreas) {
+            AptitudeTest test = new AptitudeTest();
+            test.setUserId(userId);
+//            test.setSubject(subject);
+            test.setStatus(AptitudeTestStatus.NOT_STARTED);
+            test.setScore(null);
+
+            testRepository.save(test);
+
+//            TODO: I must check later on the real logic for this
+        }
+    }
 }

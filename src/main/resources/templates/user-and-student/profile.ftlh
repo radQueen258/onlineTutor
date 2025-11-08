@@ -21,6 +21,14 @@
 <br>
 
 <p>
+    <a href="/student/edit">
+        <button>Edit Profile</button>
+    </a>
+</p>
+
+<br>
+
+<p>
     <a href="/dashboard">
         <button>Go to dashboard</button>
     </a>

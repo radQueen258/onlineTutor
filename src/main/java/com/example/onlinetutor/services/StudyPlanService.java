@@ -20,4 +20,8 @@ public interface StudyPlanService {
 
     StudyPlan getById(Long id);
 
+    boolean hasCompletedPlans(Long userId);
+
+    void createPlansForNewStudyFocus(Long userID, String[] newFocusAreas);
+
 }

@@ -20,15 +20,6 @@ public class QuizQuestionServiceImpl implements QuizQuestionService {
     @Autowired
     private QuizQuestionRepo quizQuestionRepo;
 
-    @Autowired
-    private ArticleRepo articleRepo;
-
-    @Autowired
-    private TestResultRepo testResultRepo;
-
-//    @Autowired
-//    private QuizQuestionService quizQuestionService;
-
 
     @Override
     public List<QuizQuestion> getQuizByArticleId(Long articleId) {
@@ -58,26 +49,5 @@ public class QuizQuestionServiceImpl implements QuizQuestionService {
         }
         return map;
     }
-
-//    @Override
-//    public List<TutorAnalyticsDTO> getTutorAnalytics(Long tutorId) {
-//        List<Article> articles = articleRepo.findByTutorName_Id(tutorId);
-//        List<TutorAnalyticsDTO> result = new ArrayList<>();
-//
-//        for (Article article : articles) {
-//            long passed = testResultRepo.countByArticleAndPassed(article, true);
-//            long failed = testResultRepo.countByArticleAndPassed(article, false);
-//
-////            TODO: Later I must have a method to tell me which are the most failed questions
-//
-//            Map<String, Long> mistakeMap = quizQuestionService.findQuestionMistakeStats(article.getId());
-//
-//            TutorAnalyticsDTO dto = new TutorAnalyticsDTO(article.getArticleTitle(), passed, failed, mistakeMap);
-//
-////            result.add(new TutorAnalyticsDTO(article.getArticleTitle(), passed, failed));
-//            result.add(dto);
-//        }
-//        return result;
-//    }
 
 }

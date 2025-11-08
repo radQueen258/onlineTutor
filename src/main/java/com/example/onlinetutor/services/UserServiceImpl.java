@@ -6,8 +6,10 @@ import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -39,6 +41,8 @@ public class UserServiceImpl implements UserService{
     private StudyPlanRepo studyPlanRepo;
     @Autowired
     private ResourceRepo resourceRepo;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public User updateOnboarding(Long userId, String examLevel, List<String> subjects) {
@@ -105,5 +109,20 @@ public class UserServiceImpl implements UserService{
         }
 
         userRepo.delete(user);
+    }
+
+    @Override
+    public void updatePassword(String email, String newPassword) {
+        User user = findByEmail(email);
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepo.save(user);
+    }
+
+    @Override
+    public void updateFocusAreas(Long userId, String[] focusAreas) {
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.setPreferredSubjects(Arrays.asList(focusAreas));
+        userRepo.save(user);
     }
 }

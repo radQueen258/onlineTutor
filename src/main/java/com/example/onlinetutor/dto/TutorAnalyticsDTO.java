@@ -19,6 +19,4 @@ public class TutorAnalyticsDTO {
     private long studentsFailed;
 
     private Map<String, Long> commonMistakes = new HashMap<>();
-
-//    TODO: The commonly failed questions field must be here
 }
