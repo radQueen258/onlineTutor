@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,9 @@ public class QuizQuestionServiceImpl implements QuizQuestionService {
 
     @Autowired
     private TestResultRepo testResultRepo;
+
+//    @Autowired
+//    private QuizQuestionService quizQuestionService;
 
 
     @Override
@@ -46,19 +50,34 @@ public class QuizQuestionServiceImpl implements QuizQuestionService {
     }
 
     @Override
-    public List<TutorAnalyticsDTO> getTutorAnalytics(Long tutorId) {
-        List<Article> articles = articleRepo.findByTutorName_Id(tutorId);
-        List<TutorAnalyticsDTO> result = new ArrayList<>();
-
-        for (Article article : articles) {
-            long passed = testResultRepo.countByArticleAndPassed(article, true);
-            long failed = testResultRepo.countByArticleAndPassed(article, false);
-
-//            TODO: Later I must have a method to tell me which are the most failed questions
-
-            result.add(new TutorAnalyticsDTO(article.getArticleTitle(), passed, failed));
+    public Map<String, Long> findQuestionMistakeStats(Long articleId) {
+        List<Object[]> rows = quizQuestionRepo.findCommonMistakesByArticleId(articleId);
+        Map<String, Long> map = new LinkedHashMap<>();
+        for (Object[] row : rows) {
+            map.put((String) row[0], (Long) row[1]);
         }
-        return result;
+        return map;
     }
+
+//    @Override
+//    public List<TutorAnalyticsDTO> getTutorAnalytics(Long tutorId) {
+//        List<Article> articles = articleRepo.findByTutorName_Id(tutorId);
+//        List<TutorAnalyticsDTO> result = new ArrayList<>();
+//
+//        for (Article article : articles) {
+//            long passed = testResultRepo.countByArticleAndPassed(article, true);
+//            long failed = testResultRepo.countByArticleAndPassed(article, false);
+//
+////            TODO: Later I must have a method to tell me which are the most failed questions
+//
+//            Map<String, Long> mistakeMap = quizQuestionService.findQuestionMistakeStats(article.getId());
+//
+//            TutorAnalyticsDTO dto = new TutorAnalyticsDTO(article.getArticleTitle(), passed, failed, mistakeMap);
+//
+////            result.add(new TutorAnalyticsDTO(article.getArticleTitle(), passed, failed));
+//            result.add(dto);
+//        }
+//        return result;
+//    }
 
 }

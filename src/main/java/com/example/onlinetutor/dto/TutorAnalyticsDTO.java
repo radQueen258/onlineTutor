@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -14,6 +17,8 @@ public class TutorAnalyticsDTO {
     private String articleTitle;
     private long studentsPassed;
     private long studentsFailed;
+
+    private Map<String, Long> commonMistakes = new HashMap<>();
 
 //    TODO: The commonly failed questions field must be here
 }

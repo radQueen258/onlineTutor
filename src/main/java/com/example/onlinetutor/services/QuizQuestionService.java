@@ -10,6 +10,8 @@ import java.util.Map;
 public interface QuizQuestionService {
     List<QuizQuestion> getQuizByArticleId(Long articleId);
     int evaluateQuiz(Long articleId, Map<String, String> answers);
+    Map<String, Long> findQuestionMistakeStats(Long articleId);
+//    List<TutorAnalyticsDTO> getTutorAnalytics(Long tutorId);
 
-    List<TutorAnalyticsDTO> getTutorAnalytics(Long tutorId);
+
 }

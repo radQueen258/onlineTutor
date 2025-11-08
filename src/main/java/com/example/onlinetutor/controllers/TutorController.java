@@ -9,6 +9,7 @@ import com.example.onlinetutor.models.Video;
 import com.example.onlinetutor.repositories.*;
 import com.example.onlinetutor.services.QuizQuestionService;
 import com.example.onlinetutor.services.ResourceService;
+import com.example.onlinetutor.services.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +39,8 @@ public class TutorController {
 
     @Autowired
     private ResourceService resourceService;
+    @Autowired
+    private StatisticsService statisticsService;
 
     @GetMapping("/tutor/workplace")
     public String workplace(Model model, Principal principal) {
@@ -157,7 +160,7 @@ public class TutorController {
     @GetMapping("/tutor/analytics")
     public String analytics(Model model, Principal principal) {
         User tutor = userRepo.findByEmail(principal.getName()).orElseThrow();
-        List<TutorAnalyticsDTO> stats = quizQuestionService.getTutorAnalytics(tutor.getId());
+        List<TutorAnalyticsDTO> stats = statisticsService.getTutorAnalytics(tutor.getId());
         System.out.println("HERE IS THE DATA: " +stats);
         model.addAttribute("stats", stats);
         return "/tutor/analytics";

@@ -1,6 +1,7 @@
 package com.example.onlinetutor.controllers;
 
 import com.example.onlinetutor.dto.TutorAnalyticsDTO;
+import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.*;
 import com.example.onlinetutor.repositories.ArticleRepo;
 import com.example.onlinetutor.repositories.ResourceRepo;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -235,7 +237,7 @@ public class AdminController {
     @GetMapping("/admin/analytics")
     public String analytics(Model model, Principal principal) {
         User tutor = userRepo.findByEmail(principal.getName()).orElseThrow();
-        List<TutorAnalyticsDTO> stats = quizQuestionService.getTutorAnalytics(tutor.getId());
+        List<TutorAnalyticsDTO> stats = statisticsService.getTutorAnalytics(tutor.getId());
         System.out.println("HERE IS THE DATA: " +stats);
         model.addAttribute("stats", stats);
         return "/admin/admin-analytics";
@@ -245,11 +247,12 @@ public class AdminController {
 
     @GetMapping("/admin/resources/new")
     public String showCreateResourceForm(Model model) {
+        model.addAttribute("subjects", Arrays.asList(Subject.values()));
         model.addAttribute("resource", new Resource());
         return "/admin/admin-create-resource";
     }
 
-    @PostMapping("/admin/resources")
+    @PostMapping("/admin/resources/save")
     public String createResource(@ModelAttribute Resource resource, Principal principal) {
         User tutor = userRepo.findUserByEmail(principal.getName());
         resource.setTutor(tutor);
