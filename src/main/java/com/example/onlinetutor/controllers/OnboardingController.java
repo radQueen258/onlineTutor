@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -35,6 +36,7 @@ public class OnboardingController {
             session.setAttribute("testTaken", false);
         }
         model.addAttribute("testTaken", testTaken);
+        model.addAttribute("subjects", Arrays.asList(Subject.values()));
         return "/user-and-student/onboarding";
     }
 
@@ -55,7 +57,7 @@ public class OnboardingController {
 
     @GetMapping("/choose-test")
     public String chooseTest() {
-        return "choose-test";
+        return "/user-and-student/choose-test";
     }
 
     @PostMapping("/markTestStatus")

@@ -16,13 +16,9 @@
 
     <label>Subjects (hold Ctrl to select multiple):</label>
     <select name="subjects" multiple required>
-        <option value="Math">Math</option>
-        <option value="Physics">Physics</option>
-        <option value="Chemistry">Chemistry</option>
-        <option value="Biology">Biology</option>
-        <option value="English">English</option>
-        <option value="Portuguese">Portuguese</option>
-        <option value="French">French</option>
+        <#list subjects as subject>
+            <option value="${subject}">${subject}</option>
+        </#list>
     </select><br>
 
     <button type="submit">Continue</button>
