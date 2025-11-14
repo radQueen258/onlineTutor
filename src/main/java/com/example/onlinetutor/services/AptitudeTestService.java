@@ -1,5 +1,6 @@
 package com.example.onlinetutor.services;
 
+import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.AptitudeTest;
 import com.example.onlinetutor.models.TestQuestion;
 import com.example.onlinetutor.models.User;
@@ -18,5 +19,5 @@ public interface AptitudeTestService {
     List<AptitudeTest> getAllTests();
     Optional<User> getUserById(Long userId);
 
-    void assignNewTest(Long userId, String[] focusAreas);
+    void assignNewTest(Long userId, Subject[] focusAreas);
 }

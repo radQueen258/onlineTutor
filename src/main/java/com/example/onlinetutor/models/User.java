@@ -3,6 +3,7 @@ package com.example.onlinetutor.models;
 import com.example.onlinetutor.enums.AptitudeTestStatus;
 import com.example.onlinetutor.enums.Gender;
 import com.example.onlinetutor.enums.Role;
+import com.example.onlinetutor.enums.Subject;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -49,7 +50,8 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_subjects", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "subjects")
-    private List<String> preferredSubjects = new ArrayList<>(); //TODO:  Later on implement the Subject's Enum here
+    @Enumerated(EnumType.STRING)
+    private List<Subject> preferredSubjects = new ArrayList<>(); //TODO:  Later on implement the Subject's Enum here
 
     @Enumerated(EnumType.STRING)
     private AptitudeTestStatus aptitudeTestStatus = AptitudeTestStatus.NOT_STARTED;

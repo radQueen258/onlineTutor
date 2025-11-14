@@ -1,6 +1,7 @@
 package com.example.onlinetutor.controllers;
 
 import com.example.onlinetutor.enums.AptitudeTestStatus;
+import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.UserRepo;
 import com.example.onlinetutor.services.UserService;
@@ -40,7 +41,7 @@ public class OnboardingController {
     @PostMapping("/setGoals")
     public String setGoals(HttpSession session,
                            @RequestParam String examLevel,
-                           @RequestParam List<String> subjects) {
+                           @RequestParam List<Subject> subjects) {
         Long userId = (Long) session.getAttribute("userId");
         userService.updateOnboarding(userId,examLevel, subjects);
 

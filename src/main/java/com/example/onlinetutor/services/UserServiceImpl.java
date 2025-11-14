@@ -1,6 +1,7 @@
 package com.example.onlinetutor.services;
 
 import com.example.onlinetutor.enums.AptitudeTestStatus;
+import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.IdCard;
 import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.*;
@@ -45,7 +46,7 @@ public class UserServiceImpl implements UserService{
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public User updateOnboarding(Long userId, String examLevel, List<String> subjects) {
+    public User updateOnboarding(Long userId, String examLevel, List<Subject> subjects) {
         User user = userRepo.findById(userId)
                 .orElseThrow(()-> new RuntimeException("User not found!!")) ;
 
@@ -119,10 +120,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void updateFocusAreas(Long userId, String[] focusAreas) {
+    public void updateFocusAreas(Long userId, Subject[] focusAreas) {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         user.setPreferredSubjects(Arrays.asList(focusAreas));
+//        Arrays.asList(Subject.values()))
         userRepo.save(user);
     }
 }

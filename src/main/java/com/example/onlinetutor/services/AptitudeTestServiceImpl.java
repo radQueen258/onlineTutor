@@ -1,6 +1,7 @@
 package com.example.onlinetutor.services;
 
 import com.example.onlinetutor.enums.AptitudeTestStatus;
+import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.AptitudeTest;
 import com.example.onlinetutor.models.TestQuestion;
 import com.example.onlinetutor.models.User;
@@ -84,8 +85,8 @@ public class AptitudeTestServiceImpl implements AptitudeTestService {
     }
 
     @Override
-    public void assignNewTest(Long userId, String[] focusAreas) {
-        for (String subject : focusAreas) {
+    public void assignNewTest(Long userId, Subject[] focusAreas) {
+        for (Subject subject : focusAreas) {
             AptitudeTest test = new AptitudeTest();
             test.setUserId(userId);
 //            test.setSubject(subject);

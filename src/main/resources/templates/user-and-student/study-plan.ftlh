@@ -26,6 +26,19 @@
     </div>
 </nav>
 
+<form action="/logout" method="post">
+    <button type="submit" style="
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;">
+        Logout
+    </button>
+</form>
+<br>
+
 <h2>Your Study Plan</h2>
 
 <#if message??>

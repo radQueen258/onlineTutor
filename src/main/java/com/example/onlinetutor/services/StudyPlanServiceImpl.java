@@ -1,5 +1,6 @@
 package com.example.onlinetutor.services;
 
+import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.Article;
 import com.example.onlinetutor.models.StudyPlan;
 import com.example.onlinetutor.models.User;
@@ -80,12 +81,12 @@ public class StudyPlanServiceImpl implements StudyPlanService {
     }
 
     @Override
-    public void createPlansForNewStudyFocus(Long userID, String[] newFocusAreas) {
+    public void createPlansForNewStudyFocus(Long userID, Subject[] newFocusAreas) {
         studyPlanRepo.deleteByUserId(userID);
 
         User user = userRepo.findById(userID).orElse(null);
 
-        for (String focusArea : newFocusAreas) {
+        for (Subject focusArea : newFocusAreas) {
             StudyPlan plan = new StudyPlan();
             plan.setUser(user);
             plan.setProgress(0);

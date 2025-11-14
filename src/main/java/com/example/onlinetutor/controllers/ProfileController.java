@@ -1,5 +1,6 @@
 package com.example.onlinetutor.controllers;
 
+import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.services.AptitudeTestService;
 import com.example.onlinetutor.services.StudyPlanService;
@@ -57,10 +58,11 @@ public class ProfileController {
     }
 
     @PostMapping("/student/update-focus")
-    public String updateFocusAreas(Principal principal, @RequestParam String[] focusAreas) {
+    public String updateFocusAreas(Principal principal, @RequestParam Subject[] focusAreas) {
         User user = userService.findByEmail(principal.getName());
 
         userService.updateFocusAreas(user.getId(), focusAreas);
+//        Arrays.asList(Subject.values()))
 
         aptitudeTestService.assignNewTest(user.getId(), focusAreas);
 

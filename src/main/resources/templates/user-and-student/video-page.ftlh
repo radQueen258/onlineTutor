@@ -30,6 +30,18 @@
         </div>
     </nav>
 
+    <form action="/logout" method="post">
+        <button type="submit" style="
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;">
+            Logout
+        </button>
+    </form>
+
     <!-- Main Video Content -->
     <main style="flex: 1; padding: 40px;">
         <a href="/resources/${resourceId}/articles-and-videos" style="text-decoration: none; color: black;">← Back</a>

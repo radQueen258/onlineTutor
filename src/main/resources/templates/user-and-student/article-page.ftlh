@@ -20,6 +20,20 @@
         </div>
     </nav>
 
+    <form action="/logout" method="post">
+        <button type="submit" style="
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;">
+            Logout
+        </button>
+    </form>
+
+    <br>
+
 <#--    Main Content -->
     <main style="flex: 1; padding: 30px; position: relative;">
         <div>

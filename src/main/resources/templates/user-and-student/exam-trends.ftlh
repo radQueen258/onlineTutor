@@ -27,6 +27,20 @@
     </div>
 </nav>
 
+<form action="/logout" method="post">
+    <button type="submit" style="
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;">
+        Logout
+    </button>
+</form>
+
+<br>
+
 <table>
     <tr><th>Topic</th><th>Appearances</th></tr>
     <#list trends as t>
