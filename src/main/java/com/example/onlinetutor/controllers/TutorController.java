@@ -2,10 +2,7 @@ package com.example.onlinetutor.controllers;
 
 import com.example.onlinetutor.dto.TutorAnalyticsDTO;
 import com.example.onlinetutor.enums.Subject;
-import com.example.onlinetutor.models.Article;
-import com.example.onlinetutor.models.Resource;
-import com.example.onlinetutor.models.User;
-import com.example.onlinetutor.models.Video;
+import com.example.onlinetutor.models.*;
 import com.example.onlinetutor.repositories.*;
 import com.example.onlinetutor.services.QuizQuestionService;
 import com.example.onlinetutor.services.ResourceService;
@@ -63,6 +60,10 @@ public class TutorController {
         Resource resource = resourceRepo.getById(resourceId);
 
         Article article = new Article();
+
+        for (int i = 0; i < 3; i++) {
+            article.addQuestion(new QuizQuestion());
+        }
         article.setResource(resource);
         model.addAttribute("article", article);
         return "/tutor/new-article";
@@ -81,6 +82,10 @@ public class TutorController {
         article.setSubject(resource.getSubject());
 
         model.addAttribute("resourceId", resourceId);
+
+        for (QuizQuestion q : article.getQuestions()) {
+            q.setArticle(article);
+        }
 
         articleRepo.save(article);
         return "redirect:/tutor/workplace";
@@ -211,6 +216,18 @@ public class TutorController {
 
         if (updatedArticle.getImageUrl() != null && !updatedArticle.getImageUrl().trim().isEmpty()) {
             article.setImageUrl(updatedArticle.getImageUrl());
+        }
+
+        // Update questions
+        for (int i = 0; i < 3; i++) {
+            QuizQuestion q = article.getQuestions().get(i);
+            QuizQuestion incoming = updatedArticle.getQuestions().get(i);
+
+            q.setQuestion(incoming.getQuestion());
+            q.setCorrectAnswer(incoming.getCorrectAnswer());
+            q.setWrongAnswer1(incoming.getWrongAnswer1());
+            q.setWrongAnswer2(incoming.getWrongAnswer2());
+            q.setWrongAnswer3(incoming.getWrongAnswer3());
         }
 
         articleRepo.save(article);

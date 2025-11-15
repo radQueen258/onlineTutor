@@ -19,9 +19,12 @@ public class QuizQuestion {
     @ManyToOne
     private Article article;
 
+    @Column(columnDefinition = "TEXT")
     private String question;
-    private String optionA;
-    private String optionB;
-    private String optionC;
+
+    private String wrongAnswer1;
+    private String wrongAnswer2;
+    private String wrongAnswer3;
+
     private String correctAnswer;
 }

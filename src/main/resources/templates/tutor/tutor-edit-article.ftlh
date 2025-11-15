@@ -16,6 +16,14 @@
     <label>Content:</label><br>
     <textarea name="articleContent" rows="8" cols="60">${article.articleContent}</textarea><br><br>
 
+    <#list article.questions as q>
+        <textarea name="questions[${q?index}].question">${q.question}</textarea>
+        <input type="text" name="questions[${q?index}].correctAnswer" value="${q.correctAnswer}">
+        <input type="text" name="questions[${q?index}].wrongAnswer1" value="${q.wrongAnswer1}">
+        <input type="text" name="questions[${q?index}].wrongAnswer2" value="${q.wrongAnswer2}">
+        <input type="text" name="questions[${q?index}].wrongAnswer3" value="${q.wrongAnswer3}">
+    </#list>
+
     <button type="submit">Save Changes</button>
     <a href="/tutor/workplace">Cancel</a>
 </form>
