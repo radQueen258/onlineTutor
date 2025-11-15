@@ -43,7 +43,6 @@
 
 <p>${article.articleContent}</p>
 
-
 <h3>Quick Quiz</h3>
 <form method="post" action="/submit/${plan.id}">
     <#list quiz as q>
