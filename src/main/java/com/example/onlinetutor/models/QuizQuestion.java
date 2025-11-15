@@ -1,10 +1,7 @@
 package com.example.onlinetutor.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Data
@@ -19,12 +16,17 @@ public class QuizQuestion {
     @ManyToOne
     private Article article;
 
+    @NonNull
     @Column(columnDefinition = "TEXT")
     private String question;
 
+    @NonNull
     private String wrongAnswer1;
+    @NonNull
     private String wrongAnswer2;
+    @NonNull
     private String wrongAnswer3;
 
+    @NonNull
     private String correctAnswer;
 }

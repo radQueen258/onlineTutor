@@ -47,14 +47,61 @@
 <h3>Quick Quiz</h3>
 <form method="post" action="/submit/${plan.id}">
     <#list quiz as q>
-        <p>${q.question}</p>
-        <label><input type="radio" name="q${q.id}" value="A"> ${q.optionA}</label><br>
-        <label><input type="radio" name="q${q.id}" value="B"> ${q.optionB}</label><br>
-        <label><input type="radio" name="q${q.id}" value="C"> ${q.optionC}</label><br>
+        <div class="question-block" data-question-id="${q.id}">
+            <p>${q.question}</p>
+
+            <div class="answers"
+                 data-correct="${q.correctAnswer}"
+                 data-w1="${q.wrongAnswer1}"
+                 data-w2="${q.wrongAnswer2}"
+                 data-w3="${q.wrongAnswer3}">
+            </div>
+
+        </div>
         <hr>
     </#list>
+
     <button type="submit">Submit Quiz</button>
 </form>
 
+
 </body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        document.querySelectorAll(".answers").forEach(answerDiv => {
+            const qId = answerDiv.closest(".question-block").dataset.questionId;
+
+            // Collect answers
+            let answers = [
+                { text: answerDiv.dataset.correct, value: "correct" },
+                { text: answerDiv.dataset.w1, value: "wrong1" },
+                { text: answerDiv.dataset.w2, value: "wrong2" },
+                { text: answerDiv.dataset.w3, value: "wrong3" }
+            ];
+
+            // Shuffle
+            shuffle(answers);
+
+            // Render randomized answers
+            answers.forEach(ans => {
+                answerDiv.innerHTML += `
+                    <label>
+                        <input type="radio" name="q${qId}" value="${ans.value}">
+                        ${ans.text}
+                    </label><br>
+                `;
+            });
+        });
+    });
+</script>
+
 </html>
