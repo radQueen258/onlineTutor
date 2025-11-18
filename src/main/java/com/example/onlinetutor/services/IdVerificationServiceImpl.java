@@ -36,7 +36,7 @@ public class IdVerificationServiceImpl implements IdVerificationService {
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
         ResponseEntity<String> response = restTemplate.postForEntity(verifierUrl, requestEntity, String.class);
-        if (response.getStatusCode().is2xxSuccessful()) {
+        if (!response.getStatusCode().is2xxSuccessful()) {
             return new VerificationResult(false, 0.0, "verifier_error");
         }
 

@@ -48,40 +48,48 @@ public class SignUpController {
                           HttpServletRequest request,
                           HttpSession session,
                           Model model) {
+        System.out.println("I JUST ENTERED THE POST METHOD");
 
         if (frontImage == null || frontImage.isEmpty() || backImage == null || backImage.isEmpty()) {
             model.addAttribute("errorMessage", "Please upload both front and back images of your ID.");
             return "/user-and-student/sign_up_page";
         }
 
+        System.out.println("I JUST CHECKED IF FILES ARE PRESENT");
+
 
         try {
-            // 1) Call verifier for front image
             byte[] frontBytes = frontImage.getBytes();
             IdVerificationServiceImpl.VerificationResult frontResult =
                     idVerificationServiceImpl.verifyId(frontBytes, frontImage.getOriginalFilename());
 
-            // 2) Call verifier for back image
+            System.out.println("I VERIFIED THE FRONT IMAGE");
+
             byte[] backBytes = backImage.getBytes();
             IdVerificationServiceImpl.VerificationResult backResult =
                     idVerificationServiceImpl.verifyId(backBytes, backImage.getOriginalFilename());
 
-            // 3) Decide acceptance policy
-            // Option A (strict): require both accepted
-            boolean accepted = frontResult.accepted && backResult.accepted;
+            System.out.println("I VERIFIED THE BACK IMAGE");
 
-            // Option B (alternative): average probability threshold
-            // double avgProb = (frontResult.probability + backResult.probability) / 2.0;
-            // boolean accepted = avgProb >= 0.70;
+//            the average probab of both
+             double avgProb = (frontResult.probability + backResult.probability) / 2.0;
+             boolean accepted = avgProb >= 0.70;
+
+            System.out.println("I VERIFIED THE AVG PROBABILITY: " +avgProb);
 
             if (!accepted) {
                 String msg = String.format("ID verification failed. Front: %.2f, Back: %.2f",
                         frontResult.probability, backResult.probability);
                 model.addAttribute("errorMessage", msg);
-                return "/user-and-student/sign_up_page";
+                return "/error/notId";
+
             }
 
+            System.out.println("BY NOW I KNOW IF IT WAS ACCEPTED OR NOT");
+
         User savedUser = signUpService.addUser(form);
+
+            System.out.println("I SAVED THE USER");
 
         UsernamePasswordAuthenticationToken token =
                 new UsernamePasswordAuthenticationToken(form.getEmail(), form.getPassword());
