@@ -73,7 +73,7 @@ public class SignUpController {
 
 //            the average probab of both
              double avgProb = (frontResult.probability + backResult.probability) / 2.0;
-             boolean accepted = avgProb >= 0.70;
+             boolean accepted = avgProb >= 0.60;
 
             System.out.println("I VERIFIED THE AVG PROBABILITY: " +avgProb);
 
