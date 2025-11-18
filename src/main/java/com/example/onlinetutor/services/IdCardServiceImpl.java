@@ -22,8 +22,6 @@ public class IdCardServiceImpl implements IdCardService {
     @Value("${storage.path}")
     private String storagePath;
 
-//    @Autowired
-//    private IdCardRepo  idCardRepo;
 
 
     public String saveFile(MultipartFile file) {
@@ -51,8 +49,4 @@ public class IdCardServiceImpl implements IdCardService {
                 .build();
     }
 
-//    @Override
-//    public void deleteIdCard(Long id) {
-//
-//    }
 }
