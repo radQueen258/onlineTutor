@@ -53,7 +53,8 @@ public class AdminController {
 
     @GetMapping("/admin/dashboard")
     public String adminDashboard(Model model, Principal principal) {
-        model.addAttribute("adminName", principal.getName());
+        User admin = userRepo.findByEmail(principal.getName()).orElseThrow();
+        model.addAttribute("adminName", admin.getFirstName()); 
         model.addAttribute("totalUsers", userRepo.count());
         model.addAttribute("totalArticles",  articleRepo.count());
         model.addAttribute("totalVideos",  videoRepo.count());

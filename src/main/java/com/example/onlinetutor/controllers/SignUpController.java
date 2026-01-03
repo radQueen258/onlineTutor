@@ -58,32 +58,32 @@ public class SignUpController {
         System.out.println("I JUST CHECKED IF FILES ARE PRESENT");
 
 
-        try {
-            byte[] frontBytes = frontImage.getBytes();
-            IdVerificationServiceImpl.VerificationResult frontResult =
-                    idVerificationServiceImpl.verifyId(frontBytes, frontImage.getOriginalFilename());
-
-            System.out.println("I VERIFIED THE FRONT IMAGE");
-
-            byte[] backBytes = backImage.getBytes();
-            IdVerificationServiceImpl.VerificationResult backResult =
-                    idVerificationServiceImpl.verifyId(backBytes, backImage.getOriginalFilename());
-
-            System.out.println("I VERIFIED THE BACK IMAGE");
-
-//            the average probab of both
-             double avgProb = (frontResult.probability + backResult.probability) / 2.0;
-             boolean accepted = avgProb >= 0.60;
-
-            System.out.println("I VERIFIED THE AVG PROBABILITY: " +avgProb);
-
-            if (!accepted) {
-                String msg = String.format("ID verification failed. Front: %.2f, Back: %.2f",
-                        frontResult.probability, backResult.probability);
-                model.addAttribute("errorMessage", msg);
-                return "/error/notId";
-
-            }
+//        try {
+//            byte[] frontBytes = frontImage.getBytes();
+//            IdVerificationServiceImpl.VerificationResult frontResult =
+//                    idVerificationServiceImpl.verifyId(frontBytes, frontImage.getOriginalFilename());
+//
+//            System.out.println("I VERIFIED THE FRONT IMAGE");
+//
+//            byte[] backBytes = backImage.getBytes();
+//            IdVerificationServiceImpl.VerificationResult backResult =
+//                    idVerificationServiceImpl.verifyId(backBytes, backImage.getOriginalFilename());
+//
+//            System.out.println("I VERIFIED THE BACK IMAGE");
+//
+////            the average probab of both
+//             double avgProb = (frontResult.probability + backResult.probability) / 2.0;
+//             boolean accepted = avgProb >= 0.10;
+//
+//            System.out.println("I VERIFIED THE AVG PROBABILITY: " +avgProb);
+//
+//            if (!accepted) {
+//                String msg = String.format("ID verification failed. Front: %.2f, Back: %.2f",
+//                        frontResult.probability, backResult.probability);
+//                model.addAttribute("errorMessage", msg);
+//                return "/error/notId";
+//
+//            }
 
             System.out.println("BY NOW I KNOW IF IT WAS ACCEPTED OR NOT");
 
@@ -112,14 +112,14 @@ public class SignUpController {
             return "redirect:/onboarding";
         }
 
-        } catch (IOException ioEx) {
-            model.addAttribute("errorMessage", "Could not read uploaded files.");
-            return "/user-and-student/sign_up_page";
-        } catch (Exception ex) {
-            model.addAttribute("errorMessage", "An error occurred while verifying your ID. Please try again.");
-            ex.printStackTrace();
-            return "/user-and-student/sign_up_page";
-        }
+//        } catch (IOException ioEx) {
+//            model.addAttribute("errorMessage", "Could not read uploaded files.");
+//            return "/user-and-student/sign_up_page";
+//        } catch (Exception ex) {
+//            model.addAttribute("errorMessage", "An error occurred while verifying your ID. Please try again.");
+//            ex.printStackTrace();
+//            return "/user-and-student/sign_up_page";
+//        }
 
     }
 }

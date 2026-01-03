@@ -32,7 +32,7 @@
     <h2>Admin's Workplace!</h2>
 
     <h2>Resources</h2>
-    <li><a href="/admin/resources/new" style="color:black;text-decoration:none;">Create Resource</a></li>
+    <a href="/admin/resources/new" style="color:black;text-decoration:none;">Create Resource</a>
 
     <#if resources?? && (resources?size > 0)>
         <table border="1" cellpadding="5" style="width:100%; border-collapse: collapse;">

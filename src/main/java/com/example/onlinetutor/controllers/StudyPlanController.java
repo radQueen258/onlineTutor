@@ -37,7 +37,7 @@ public class StudyPlanController {
 
         if (nextPlan == null) {
             model.addAttribute("message", "All lessons completed!");
-            return "study-plan";
+            return "/user-and-student/study-plan";
         }
 
         model.addAttribute("plan",  nextPlan);
@@ -54,7 +54,7 @@ public class StudyPlanController {
         var plan = studyPlanService.getById(planId);
         int score = quizQuestionService.evaluateQuiz(plan.getArticle().getId(), answers);
 
-        if (score >= 2) { // POR AGORA VAMOS USAR ASSIM O CRITERIO PARA PASSAR
+        if (score >= 2) { // todo: POR AGORA VAMOS USAR ASSIM O CRITERIO PARA PASSAR
             plan.setCompleted(true);
             plan.setProgress(1.0);
             studyPlanService.savePlan(plan);
