@@ -1,69 +1,71 @@
 package com.example.onlinetutor.services;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.onlinetutor.dto.IdVerificationResponse;
+import com.example.onlinetutor.dto.VerificationResult;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.http.*;
+import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-@Component
+@Service
 public class IdVerificationServiceImpl implements IdVerificationService {
 
-    private final RestTemplate restTemplate = new RestTemplate();
-    private final ObjectMapper objectMapper = new ObjectMapper();
-    private final String verifierUrl = "https://undefaced-marielle-subobliquely.ngrok-free.dev/verify";
+    private final RestTemplate restTemplate;
+    private final String verifierUrl;
 
+    public IdVerificationServiceImpl(
+            RestTemplate restTemplate,
+            @Value("${id-verification.url}") String verifierUrl
+    ) {
+        this.restTemplate = restTemplate;
+        this.verifierUrl = verifierUrl;
+    }
+
+    @Override
     public VerificationResult verifyId(byte[] imageBytes, String filename) {
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
-        ByteArrayResource bar = new ByteArrayResource(imageBytes) {
+        ByteArrayResource fileResource = new ByteArrayResource(imageBytes) {
             @Override
-            public String getFilename() {return filename;}
-            @Override
-            public long contentLength() {return imageBytes.length;}
+            public String getFilename() {
+                return filename;
+            }
         };
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("file", bar);
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+        body.add("file", fileResource);
 
-        ResponseEntity<String> response = restTemplate.postForEntity(verifierUrl, requestEntity, String.class);
-        if (!response.getStatusCode().is2xxSuccessful()) {
-            return new VerificationResult(false, 0.0, "verifier_error");
-        }
+        HttpEntity<MultiValueMap<String, Object>> request =
+                new HttpEntity<>(body, headers);
 
         try {
-            JsonNode node = objectMapper.readTree(response.getBody());
-            boolean accepted = node.path("accepted").asBoolean(false);
-            double probability = node.path("probability").asDouble(0.0);
-            return new VerificationResult(accepted, probability, node.path("method").asText());
+            ResponseEntity<IdVerificationResponse> response =
+                    restTemplate.exchange(
+                            verifierUrl,
+                            HttpMethod.POST,
+                            request,
+                            IdVerificationResponse.class
+                    );
+
+            if (!response.getStatusCode().is2xxSuccessful()
+                    || response.getBody() == null) {
+                return new VerificationResult(false, 0.0, "verifier_error");
+            }
+
+            IdVerificationResponse r = response.getBody();
+            return new VerificationResult(
+                    r.isAccepted(),
+                    r.getProbability(),
+                    r.getMethod()
+            );
+
         } catch (Exception e) {
-            return new VerificationResult(false, 0.0, "parse_error");
+            return new VerificationResult(false, 0.0, "service_unavailable");
         }
     }
-
-
-
-    public static class VerificationResult {
-        public final boolean accepted;
-        public final double probability;
-        public final String method;
-
-
-//        public VerificationResult(boolean accepted, double probability) {}
-        public VerificationResult(boolean accepted, double probability, String method) {
-            this.accepted = accepted;
-            this.probability = probability;
-            this.method = method;
-        }
-    }
-
 }
