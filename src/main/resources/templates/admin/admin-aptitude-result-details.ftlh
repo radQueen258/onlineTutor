@@ -5,6 +5,10 @@
 </head>
 <body>
 
+<br>
+<a href="/admin/aptitude-results">← Back to All Results</a>
+<br>
+
 <h2>Aptitude Test Details</h2>
 
 <p><strong>User ID:</strong> ${test.userId}</p>
@@ -37,9 +41,6 @@
 <#else>
     <p>No questions available for this test.</p>
 </#if>
-
-<br>
-<a href="/admin/aptitude-results">← Back to All Results</a>
 
 </body>
 </html>

@@ -5,6 +5,9 @@
 </head>
 <body>
 <h2>Aptitude Test Results</h2>
+<br>
+<a href="/admin/dashboard">Back to Dashboard</a>
+<br>
 
 <table border="1" cellpadding="8" cellspacing="0">
     <tr>
@@ -32,7 +35,5 @@
     </#if>
 </table>
 
-<br>
-<a href="/admin/dashboard">Back to Dashboard</a>
 </body>
 </html>
