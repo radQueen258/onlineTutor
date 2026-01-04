@@ -24,21 +24,46 @@ public class IdVerificationServiceImpl implements IdVerificationService {
         this.verifierUrl = verifierUrl;
     }
 
+    /**
+     * Verifies FRONT and BACK images by calling the ML service twice
+     * and combining the probabilities.
+     */
     @Override
-    public VerificationResult verifyId(byte[] imageBytes, String filename) {
+    public VerificationResult verifyFrontAndBack(
+            byte[] frontBytes, String frontFilename,
+            byte[] backBytes, String backFilename
+    ) {
+
+        VerificationResult frontResult =
+                verifySingleImage(frontBytes, frontFilename);
+
+        VerificationResult backResult =
+                verifySingleImage(backBytes, backFilename);
+
+        // If either request failed hard
+        if (!frontResult.isAccepted() && !backResult.isAccepted()) {
+            return new VerificationResult(false, 0.0, "both_failed");
+        }
+
+        double avgProbability =
+                (frontResult.getProbability() + backResult.getProbability()) / 2.0;
+
+        boolean accepted = avgProbability >= 0.10;
+
+        return new VerificationResult(
+                accepted,
+                avgProbability,
+                "clip_front_back_avg"
+        );
+    }
+
+    private VerificationResult verifySingleImage(byte[] imageBytes, String filename) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
-        ByteArrayResource fileResource = new ByteArrayResource(imageBytes) {
-            @Override
-            public String getFilename() {
-                return filename;
-            }
-        };
-
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("file", fileResource);
+        body.add("file", toResource(imageBytes, filename)); // 🔴 IMPORTANT
 
         HttpEntity<MultiValueMap<String, Object>> request =
                 new HttpEntity<>(body, headers);
@@ -58,6 +83,7 @@ public class IdVerificationServiceImpl implements IdVerificationService {
             }
 
             IdVerificationResponse r = response.getBody();
+
             return new VerificationResult(
                     r.isAccepted(),
                     r.getProbability(),
@@ -65,7 +91,25 @@ public class IdVerificationServiceImpl implements IdVerificationService {
             );
 
         } catch (Exception e) {
+            e.printStackTrace();
             return new VerificationResult(false, 0.0, "service_unavailable");
         }
+    }
+
+    /**
+     * Converts byte[] to multipart resource with filename
+     */
+    private ByteArrayResource toResource(byte[] bytes, String filename) {
+        return new ByteArrayResource(bytes) {
+            @Override
+            public String getFilename() {
+                return filename;
+            }
+
+            @Override
+            public long contentLength() {
+                return bytes.length;
+            }
+        };
     }
 }
