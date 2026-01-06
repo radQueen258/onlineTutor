@@ -195,9 +195,9 @@ public class TutorController {
 //        return "redirect:/tutor/workplace";
 //    }
 
-    @GetMapping("/tutor/resources/create")
-    public String createResourcePage(Model model,
-                                     @AuthenticationPrincipal User tutor) {
+    @GetMapping("/tutor/resources/new")
+    public String createResourcePage(Model model, Principal principal) {
+        User tutor = userRepo.findUserByEmail(principal.getName());
 
         List<CurriculumResource> availableResources =
                 curriculumResourceRepo.findBySubjectIn(tutor.getPreferredSubjects());
@@ -218,8 +218,9 @@ public class TutorController {
 
     @PostMapping("/tutor/resources/save")
     public String saveResource(@RequestParam Long curriculumResourceId,
-                               @AuthenticationPrincipal User tutor,
-                               RedirectAttributes redirectAttributes) {
+                               RedirectAttributes redirectAttributes,
+                               Principal principal) {
+        User tutor = userRepo.findUserByEmail(principal.getName());
 
         try {
             // TUTOR call: topicName and subject ignored
