@@ -8,13 +8,32 @@
 
     <script>
         function toggleRole(role) {
-            document.getElementById("schoolBlock").style.display =
-                role === 'STUDENT' ? 'block' : 'none';
+            const school = document.getElementById("schoolBlock");
+            const subject = document.getElementById("subjectBlock");
 
-            document.getElementById("subjectBlock").style.display =
-                role === 'TUTOR' ? 'block' : 'none';
+            const schoolSelect = school.querySelector("select");
+            const subjectSelect = subject.querySelector("select");
+
+            if (role === 'STUDENT') {
+                school.style.display = 'block';
+                schoolSelect.disabled = false;
+
+                subject.style.display = 'none';
+                subjectSelect.disabled = true;
+                subjectSelect.value = "";
+            }
+
+            if (role === 'TUTOR') {
+                subject.style.display = 'block';
+                subjectSelect.disabled = false;
+
+                school.style.display = 'none';
+                schoolSelect.disabled = true;
+                schoolSelect.value = "";
+            }
         }
     </script>
+
 </head>
 <body>
 
@@ -47,7 +66,7 @@
 
     <!-- School (STUDENT only) -->
     <div id="schoolBlock" style="display:none">
-        <select name="schoolName" required>
+        <select name="schoolName">
             <option value="" disabled selected>School Name</option>
             <option value="School One">School One</option>
             <option value="School Two">School Two</option>
@@ -57,7 +76,7 @@
 
     <!-- Subject (TUTOR only) -->
     <div id="subjectBlock" style="display:none">
-        <select name="preferredSubjects" required>
+        <select name="preferredSubjects">
             <option value="" disabled selected>Subject you teach</option>
             <#list subjects as subject>
                 <option value="${subject}">
@@ -69,15 +88,14 @@
 
     <br><br>
 
-    <!-- ID Upload -->
-    <div>
-        <input type="file" name="frontImage" required>
-        <label>Upload ID – Front</label>
+    <#-- To upload the ID card-->
+    <div class="input-group mb-3">
+        <input type="file" class="form-control" name="frontImage" required>
+        <label class="input-group-text" for="inputGroupFile02">Upload Front Page</label>
     </div>
-
-    <div>
-        <input type="file" name="backImage" required>
-        <label>Upload ID – Back</label>
+    <div class="input-group mb-3">
+        <input type="file" class="form-control" name="backImage" required>
+        <label class="input-group-text" for="inputGroupFile02">Upload Back Page</label>
     </div>
 
     <br>

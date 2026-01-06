@@ -11,7 +11,8 @@ import java.util.List;
 @Repository
 public interface CurriculumResourceRepo extends JpaRepository<CurriculumResource, Long> {
 
-    List<CurriculumResource> findBySubject(List<Subject> subject);
+    List<CurriculumResource> findBySubjectIn(List<Subject> subjects);
+
 
     List<CurriculumResource> findBySubjectAndGrade(Subject subject, Grade grade);
 }

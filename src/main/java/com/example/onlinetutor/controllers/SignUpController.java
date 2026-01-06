@@ -60,6 +60,13 @@ public class SignUpController {
             return "/user-and-student/sign_up_page";
         }
 
+        System.out.println("Front filename: " + frontImage.getOriginalFilename());
+        System.out.println("Front size: " + frontImage.getSize());
+
+        System.out.println("Back filename: " + backImage.getOriginalFilename());
+        System.out.println("Back size: " + backImage.getSize());
+
+
         try {
             VerificationResult result =
                     idVerificationServiceImpl.verifyFrontAndBack(
@@ -70,6 +77,9 @@ public class SignUpController {
                     );
 
             System.out.println("THE RESULT IS: " + result.getProbability());
+            System.out.println("Accepted: " + result.isAccepted());
+            System.out.println("Method: " + result.getMethod());
+
 
             if (!result.isAccepted()) {
                 model.addAttribute(
@@ -80,8 +90,12 @@ public class SignUpController {
                 return "/error/notId";
             }
 
-        } catch (IOException e) {
-            model.addAttribute("errorMessage", "Could not read uploaded images.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute(
+                    "errorMessage",
+                    "ID verification service error: " + e.getMessage()
+            );
             return "/user-and-student/sign_up_page";
         }
 

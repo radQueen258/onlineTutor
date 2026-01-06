@@ -200,7 +200,7 @@ public class TutorController {
                                      @AuthenticationPrincipal User tutor) {
 
         List<CurriculumResource> availableResources =
-                curriculumResourceRepo.findBySubject(tutor.getPreferredSubjects());
+                curriculumResourceRepo.findBySubjectIn(tutor.getPreferredSubjects());
 
         // Remove already-created ones
         List<Resource> existingResources =
