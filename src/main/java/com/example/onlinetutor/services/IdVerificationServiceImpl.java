@@ -24,55 +24,37 @@ public class IdVerificationServiceImpl implements IdVerificationService {
         this.verifierUrl = verifierUrl;
     }
 
-    /**
-     * Verifies FRONT and BACK images by calling the ML service twice
-     * and combining the probabilities.
-     */
     @Override
     public VerificationResult verifyFrontAndBack(
             byte[] frontBytes, String frontFilename,
             byte[] backBytes, String backFilename
     ) {
 
-        VerificationResult frontResult =
-                verifySingleImage(frontBytes, frontFilename);
+        VerificationResult front = verifySingle(frontBytes, frontFilename);
+        VerificationResult back  = verifySingle(backBytes, backFilename);
 
-        VerificationResult backResult =
-                verifySingleImage(backBytes, backFilename);
+        double avg = (front.getProbability() + back.getProbability()) / 2.0;
+        boolean accepted = avg >= 0.10;
 
-        // If either request failed hard
-        if (!frontResult.isAccepted() && !backResult.isAccepted()) {
-            return new VerificationResult(false, 0.0, "both_failed");
-        }
-
-        double avgProbability =
-                (frontResult.getProbability() + backResult.getProbability()) / 2.0;
-
-        boolean accepted = avgProbability >= 0.10;
-
-        return new VerificationResult(
-                accepted,
-                avgProbability,
-                "clip_front_back_avg"
-        );
+        return new VerificationResult(accepted, avg, "clip_front_back");
     }
 
-    private VerificationResult verifySingleImage(byte[] imageBytes, String filename) {
+    private VerificationResult verifySingle(byte[] imageBytes, String filename) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("file", toResource(imageBytes, filename)); // 🔴 IMPORTANT
+
+        body.add("file", buildFilePart(imageBytes, filename));
 
         HttpEntity<MultiValueMap<String, Object>> request =
                 new HttpEntity<>(body, headers);
 
         try {
             ResponseEntity<IdVerificationResponse> response =
-                    restTemplate.exchange(
+                    restTemplate.postForEntity(
                             verifierUrl,
-                            HttpMethod.POST,
                             request,
                             IdVerificationResponse.class
                     );
@@ -96,20 +78,13 @@ public class IdVerificationServiceImpl implements IdVerificationService {
         }
     }
 
-    /**
-     * Converts byte[] to multipart resource with filename
-     */
-    private ByteArrayResource toResource(byte[] bytes, String filename) {
-        return new ByteArrayResource(bytes) {
-            @Override
-            public String getFilename() {
-                return filename;
-            }
+    private HttpEntity<byte[]> buildFilePart(byte[] data, String filename) {
 
-            @Override
-            public long contentLength() {
-                return bytes.length;
-            }
-        };
+        HttpHeaders partHeaders = new HttpHeaders();
+        partHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        partHeaders.setContentDispositionFormData("file", filename);
+        partHeaders.setContentLength(data.length);
+
+        return new HttpEntity<>(data, partHeaders);
     }
 }
