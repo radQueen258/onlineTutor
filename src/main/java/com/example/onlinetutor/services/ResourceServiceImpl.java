@@ -51,17 +51,19 @@ public class ResourceServiceImpl implements ResourceService {
     public Resource createResource(User tutor, Long curriculumResourceId) {
         CurriculumResource cr =
                 curriculumResourceRepo.findById(curriculumResourceId)
-                        .orElseThrow();
+                        .orElseThrow(() ->
+                                new IllegalArgumentException("Curriculum resource not found")
+                        );
 
         if (resourceRepo.existsByTutorAndCurriculumResource(tutor, cr)) {
-            throw new IllegalStateException("Resource already exists");
+            throw new IllegalStateException("You already created this resource");
         }
 
         Resource resource = Resource.builder()
                 .curriculumResource(cr)
+                .topicName(cr.getTopicName())
                 .subject(cr.getSubject())
                 .tutor(tutor)
-                .topicName(cr.getTopicName())
                 .build();
 
         return resourceRepo.save(resource);

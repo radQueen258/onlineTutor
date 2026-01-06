@@ -40,7 +40,6 @@ public class ResourcesController {
     public String openArticle(@PathVariable Long id,
                               @PathVariable Long resourceId,
                               Model model) {
-//        Resource resource = resourceRepo.findById(id).orElseThrow(null);
 
         Article article = articleRepo.findArticlesById(id);
 
@@ -65,7 +64,6 @@ public class ResourcesController {
     public String openArticlesAndVideosPage(@PathVariable Long resourceId,
                                             Model model) {
         List<Article> articleList = articleRepo.findArticlesByResource_Id(resourceId);
-//        List<Video> videoList = videoRepo.findVideoByArticle()
         model.addAttribute("articleList", articleList);
         return "user-and-student/articles-and-videos-page";
     }

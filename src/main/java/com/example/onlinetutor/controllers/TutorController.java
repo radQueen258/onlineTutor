@@ -8,9 +8,11 @@ import com.example.onlinetutor.services.QuizQuestionService;
 import com.example.onlinetutor.services.ResourceService;
 import com.example.onlinetutor.services.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.Arrays;
@@ -38,6 +40,9 @@ public class TutorController {
     private ResourceService resourceService;
     @Autowired
     private StatisticsService statisticsService;
+
+    @Autowired
+    private CurriculumResourceRepo curriculumResourceRepo;
 
     @GetMapping("/tutor/workplace")
     public String workplace(Model model, Principal principal) {
@@ -174,20 +179,66 @@ public class TutorController {
 
 //    -----------------------FIELD THAT DEALS WITH RESOURCES--------------
 
-    @GetMapping("/tutor/resources/new")
-    public String showCreateResourceForm(Model model) {
-        model.addAttribute("subjects", Arrays.asList(Subject.values()));
-        model.addAttribute("resource", new Resource());
+//    @GetMapping("/tutor/resources/new")
+//    public String showCreateResourceForm(Model model) {
+//        model.addAttribute("subjects", Arrays.asList(Subject.values()));
+//        model.addAttribute("resource", new Resource());
+//        return "/tutor/tutor-create-resource";
+//    }
+
+//    @PostMapping("/tutor/resources/save")
+//    public String createResource(@ModelAttribute Resource resource,
+//                                 Principal principal) {
+//        User tutor = userRepo.findUserByEmail(principal.getName());
+//        resource.setTutor(tutor);
+//        resourceRepo.save(resource);
+//        return "redirect:/tutor/workplace";
+//    }
+
+    @GetMapping("/tutor/resources/create")
+    public String createResourcePage(Model model,
+                                     @AuthenticationPrincipal User tutor) {
+
+        // Only curriculum resources for tutor's subject
+        List<CurriculumResource> availableResources =
+                curriculumResourceRepo.findBySubject(tutor.getPreferredSubjects());
+
+        // Remove already-created ones
+        List<Resource> existingResources =
+                resourceRepo.findByTutor(tutor);
+
+        List<Long> usedIds = existingResources.stream()
+                .map(r -> r.getCurriculumResource().getId())
+                .toList();
+
+        availableResources.removeIf(
+                cr -> usedIds.contains(cr.getId())
+        );
+
+        model.addAttribute("curriculumResources", availableResources);
         return "/tutor/tutor-create-resource";
     }
 
+
     @PostMapping("/tutor/resources/save")
-    public String createResource(@ModelAttribute Resource resource, Principal principal) {
-        User tutor = userRepo.findUserByEmail(principal.getName());
-        resource.setTutor(tutor);
-        resourceRepo.save(resource);
+    public String saveResource(@RequestParam Long curriculumResourceId,
+                               @AuthenticationPrincipal User tutor,
+                               RedirectAttributes redirectAttributes) {
+
+        try {
+            resourceService.createResource(tutor, curriculumResourceId);
+            redirectAttributes.addFlashAttribute(
+                    "success", "Resource created successfully"
+            );
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute(
+                    "error", e.getMessage()
+            );
+        }
+
         return "redirect:/tutor/workplace";
     }
+
 
 //    -----------------------EDITING ARTICLES AND VIDEOS -----------------------
 

@@ -9,15 +9,22 @@
 <h2>Create New Resource</h2>
 
 <form action="/tutor/resources/save" method="post">
-    <label>Topic Name:</label><br>
-    <input type="text" name="topicName" required><br><br>
 
-    <label>Subject:</label><br>
-    <select name="subject" required>
-        <#list subjects as subject>
-            <option value="${subject}">${subject}</option>
+    <label>Curriculum Topic:</label><br>
+
+    <select name="curriculumResourceId" required>
+        <option value="" disabled selected>
+            Select a topic
+        </option>
+
+        <#list curriculumResources as cr>
+            <option value="${cr.id}">
+                ${cr.topicName} (${cr.grade})
+            </option>
         </#list>
-    </select><br><br>
+    </select>
+
+    <br><br>
 
     <button type="submit">Create Resource</button>
 </form>
