@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface StudyPlanService {
 
-    void generatePlanForUser(User user, List<String> weakTopics);
+    void generatePlanForUser(User user, List<Long> weakCurriculumResourceIds);
 
     List<StudyPlan> getPlanForUser(String email);
 

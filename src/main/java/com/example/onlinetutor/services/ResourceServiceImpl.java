@@ -2,7 +2,10 @@ package com.example.onlinetutor.services;
 
 import com.example.onlinetutor.dto.ResourceDto;
 import com.example.onlinetutor.models.Article;
+import com.example.onlinetutor.models.CurriculumResource;
 import com.example.onlinetutor.models.Resource;
+import com.example.onlinetutor.models.User;
+import com.example.onlinetutor.repositories.CurriculumResourceRepo;
 import com.example.onlinetutor.repositories.ResourceRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,9 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private CurriculumResourceRepo curriculumResourceRepo;
 
     @Override
     public List<ResourceDto> getAllResources() {
@@ -39,5 +45,25 @@ public class ResourceServiceImpl implements ResourceService {
         }
 
         resourceRepo.deleteById(resourceId);
+    }
+
+    @Override
+    public Resource createResource(User tutor, Long curriculumResourceId) {
+        CurriculumResource cr =
+                curriculumResourceRepo.findById(curriculumResourceId)
+                        .orElseThrow();
+
+        if (resourceRepo.existsByTutorAndCurriculumResource(tutor, cr)) {
+            throw new IllegalStateException("Resource already exists");
+        }
+
+        Resource resource = Resource.builder()
+                .curriculumResource(cr)
+                .subject(cr.getSubject())
+                .tutor(tutor)
+                .topicName(cr.getTopicName())
+                .build();
+
+        return resourceRepo.save(resource);
     }
 }

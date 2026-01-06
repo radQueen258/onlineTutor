@@ -2,11 +2,15 @@ package com.example.onlinetutor.dto;
 
 import com.example.onlinetutor.enums.Gender;
 import com.example.onlinetutor.enums.Role;
+import com.example.onlinetutor.enums.Subject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -24,5 +28,6 @@ public class UserForm {
     private MultipartFile frontImage;
     private MultipartFile backImage;
     private String schoolName;
+    private List<Subject> preferredSubjects = new ArrayList<>();
 }
 

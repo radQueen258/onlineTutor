@@ -51,7 +51,7 @@ public class User {
     @CollectionTable(name = "user_subjects", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "subjects")
     @Enumerated(EnumType.STRING)
-    private List<Subject> preferredSubjects = new ArrayList<>(); //TODO:  Later on implement the Subject's Enum here
+    private List<Subject> preferredSubjects = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private AptitudeTestStatus aptitudeTestStatus = AptitudeTestStatus.NOT_STARTED;

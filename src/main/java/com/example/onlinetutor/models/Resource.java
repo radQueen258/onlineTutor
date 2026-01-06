@@ -34,4 +34,9 @@ public class Resource {
     @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Article> articles = new ArrayList<>();
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "curriculum_resource_id")
+    private CurriculumResource curriculumResource;
+
+
 }

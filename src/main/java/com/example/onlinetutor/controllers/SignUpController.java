@@ -85,7 +85,7 @@ public class SignUpController {
             return "/user-and-student/sign_up_page";
         }
 
-        // --- existing signup logic (unchanged) ---
+
         User savedUser = signUpService.addUser(form);
 
         UsernamePasswordAuthenticationToken token =

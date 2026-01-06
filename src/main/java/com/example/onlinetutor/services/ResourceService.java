@@ -1,10 +1,14 @@
 package com.example.onlinetutor.services;
 
 import com.example.onlinetutor.dto.ResourceDto;
+import com.example.onlinetutor.models.Resource;
+import com.example.onlinetutor.models.User;
 
 import java.util.List;
 
 public interface ResourceService {
     List<ResourceDto> getAllResources();
     void deleteResource(Long resourceId);
+
+    Resource createResource(User tutor, Long curriculumResourceId);
 }

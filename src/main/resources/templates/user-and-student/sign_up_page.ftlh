@@ -3,23 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+          content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
+
+    <script>
+        function toggleRole(role) {
+            document.getElementById("schoolBlock").style.display =
+                role === 'STUDENT' ? 'block' : 'none';
+
+            document.getElementById("subjectBlock").style.display =
+                role === 'TUTOR' ? 'block' : 'none';
+        }
+    </script>
 </head>
 <body>
-<form action="/signUp" method="post" enctype="multipart/form-data">
-    <input name="firstName" type="text" placeholder="FIRSTNAME" required>
-    <input name="lastName" type="text" placeholder="LASTNAME" required>
 
-<#--    Choose the school-->
-    <select name="schoolName" class="form-select" aria-label="Default select example">
-        <option selected>School Name</option>
-        <option value="1"> School One</option>
-        <option value="2"> School Two</option>
-        <option value="3"> School Three</option>
-    </select>
-<#--    Gender-->
+<form action="/signUp" method="post" enctype="multipart/form-data">
+
+    <input name="firstName" type="text" placeholder="FIRST NAME" required>
+    <input name="lastName" type="text" placeholder="LAST NAME" required>
+
+    <!-- Gender -->
     <label>
         <input type="radio" name="gender" value="FEMALE" required> Female
     </label>
@@ -27,28 +31,65 @@
         <input type="radio" name="gender" value="MALE" required> Male
     </label>
 
-    <#--    Role-->
+    <br><br>
+
+    <!-- Role -->
     <label>
-        <input type="radio" name="role" value="STUDENT" required> Student
+        <input type="radio" name="role" value="STUDENT"
+               onclick="toggleRole('STUDENT')" required> Student
     </label>
     <label>
-        <input type="radio" name="role" value="TUTOR" required> Tutor
+        <input type="radio" name="role" value="TUTOR"
+               onclick="toggleRole('TUTOR')" required> Tutor
     </label>
-<#--    To upload the ID card-->
-    <div class="input-group mb-3">
-        <input type="file" class="form-control" name="frontImage" required>
-        <label class="input-group-text" for="inputGroupFile02">Upload Front Page</label>
+
+    <br><br>
+
+    <!-- School (STUDENT only) -->
+    <div id="schoolBlock" style="display:none">
+        <select name="schoolName" required>
+            <option value="" disabled selected>School Name</option>
+            <option value="School One">School One</option>
+            <option value="School Two">School Two</option>
+            <option value="School Three">School Three</option>
+        </select>
     </div>
 
-    <div class="input-group mb-3">
-        <input type="file" class="form-control" name="backImage" required>
-        <label class="input-group-text" for="inputGroupFile02">Upload Back Page</label>
+    <!-- Subject (TUTOR only) -->
+    <div id="subjectBlock" style="display:none">
+        <select name="preferredSubjects" required>
+            <option value="" disabled selected>Subject you teach</option>
+            <#list subjects as subject>
+                <option value="${subject}">
+                    ${subject}
+                </option>
+            </#list>
+        </select>
     </div>
+
+    <br><br>
+
+    <!-- ID Upload -->
+    <div>
+        <input type="file" name="frontImage" required>
+        <label>Upload ID – Front</label>
+    </div>
+
+    <div>
+        <input type="file" name="backImage" required>
+        <label>Upload ID – Back</label>
+    </div>
+
+    <br>
 
     <input name="email" type="email" placeholder="EMAIL" required>
     <input name="password" type="password" placeholder="PASSWORD" required>
 
+    <br><br>
+
     <input type="submit" value="REGISTER">
+
 </form>
+
 </body>
 </html>

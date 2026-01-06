@@ -2,9 +2,11 @@ package com.example.onlinetutor.services;
 
 import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.Article;
+import com.example.onlinetutor.models.Resource;
 import com.example.onlinetutor.models.StudyPlan;
 import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.ArticleRepo;
+import com.example.onlinetutor.repositories.ResourceRepo;
 import com.example.onlinetutor.repositories.StudyPlanRepo;
 import com.example.onlinetutor.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +27,28 @@ public class StudyPlanServiceImpl implements StudyPlanService {
     @Autowired
     private UserRepo userRepo;
 
-    @Override
-    public void generatePlanForUser(User user, List<String> weakTopics) {
-        for (String topic : weakTopics) {
-            List<Article> relatedArticles = articleRepo.findByArticleTitle(topic);
+    @Autowired
+    private ResourceRepo resourceRepo;
 
-            for (Article article : relatedArticles) {
+    @Override
+    public void generatePlanForUser(User user, List<Long> weakCurriculumResourceIds) {
+        studyPlanRepo.deleteByUserId(user.getId());
+
+        List<Resource> resources =
+                resourceRepo.findAll().stream()
+                        .filter(r ->
+                                weakCurriculumResourceIds.contains(
+                                        r.getCurriculumResource().getId()
+                                )
+                        )
+                        .toList();
+
+        for (Resource resource : resources) {
+            for (Article article : resource.getArticles()) {
+
                 StudyPlan plan = StudyPlan.builder()
-                        .article(article)
                         .user(user)
+                        .article(article)
                         .progress(0.0)
                         .completed(false)
                         .build();
