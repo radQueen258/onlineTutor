@@ -1,6 +1,7 @@
 package com.example.onlinetutor.services;
 
 import com.example.onlinetutor.dto.ResourceDto;
+import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.Resource;
 import com.example.onlinetutor.models.User;
 
@@ -10,5 +11,5 @@ public interface ResourceService {
     List<ResourceDto> getAllResources();
     void deleteResource(Long resourceId);
 
-    Resource createResource(User tutor, Long curriculumResourceId);
+    Resource createResource(User tutor, String topicName, Subject subject, Long curriculumResourceId);
 }

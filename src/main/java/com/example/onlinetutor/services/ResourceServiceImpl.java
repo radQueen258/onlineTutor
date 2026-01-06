@@ -1,6 +1,8 @@
 package com.example.onlinetutor.services;
 
 import com.example.onlinetutor.dto.ResourceDto;
+import com.example.onlinetutor.enums.Role;
+import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.Article;
 import com.example.onlinetutor.models.CurriculumResource;
 import com.example.onlinetutor.models.Resource;
@@ -48,24 +50,46 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public Resource createResource(User tutor, Long curriculumResourceId) {
-        CurriculumResource cr =
-                curriculumResourceRepo.findById(curriculumResourceId)
-                        .orElseThrow(() ->
-                                new IllegalArgumentException("Curriculum resource not found")
-                        );
+    public Resource createResource(
+            User user,
+            String topicName,                 // ADMIN free-text topic
+            Subject subject,                  // ADMIN free-text subject
+            Long curriculumResourceId         // optional, ADMIN or TUTOR
+    ) {
 
-        if (resourceRepo.existsByTutorAndCurriculumResource(tutor, cr)) {
-            throw new IllegalStateException("You already created this resource");
+        Resource resource = new Resource();
+        resource.setTutor(user);
+
+        if (user.getRole() == Role.TUTOR) {
+            // TUTOR rules: must choose CurriculumResource
+            if (curriculumResourceId == null) {
+                throw new IllegalArgumentException("Curriculum resource must be selected");
+            }
+
+            CurriculumResource cr = curriculumResourceRepo.findById(curriculumResourceId)
+                    .orElseThrow(() -> new IllegalArgumentException("Curriculum resource not found"));
+
+            if (resourceRepo.existsByTutorAndCurriculumResource(user, cr)) {
+                throw new IllegalStateException("You already created this resource");
+            }
+
+            resource.setCurriculumResource(cr);
+            resource.setTopicName(cr.getTopicName());
+            resource.setSubject(cr.getSubject());
+
+        } else if (user.getRole() == Role.ADMIN) {
+            // ADMIN rules: can create free-text topic, optional link to CurriculumResource
+            resource.setTopicName(topicName);
+            resource.setSubject(subject);
+
+            if (curriculumResourceId != null) {
+                CurriculumResource cr = curriculumResourceRepo.findById(curriculumResourceId)
+                        .orElseThrow(() -> new IllegalArgumentException("Curriculum resource not found"));
+                resource.setCurriculumResource(cr);
+            }
         }
-
-        Resource resource = Resource.builder()
-                .curriculumResource(cr)
-                .topicName(cr.getTopicName())
-                .subject(cr.getSubject())
-                .tutor(tutor)
-                .build();
 
         return resourceRepo.save(resource);
     }
+
 }

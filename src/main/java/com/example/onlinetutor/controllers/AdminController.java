@@ -3,10 +3,7 @@ package com.example.onlinetutor.controllers;
 import com.example.onlinetutor.dto.TutorAnalyticsDTO;
 import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.*;
-import com.example.onlinetutor.repositories.ArticleRepo;
-import com.example.onlinetutor.repositories.ResourceRepo;
-import com.example.onlinetutor.repositories.UserRepo;
-import com.example.onlinetutor.repositories.VideoRepo;
+import com.example.onlinetutor.repositories.*;
 import com.example.onlinetutor.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,7 +45,13 @@ public class AdminController {
     private ResourceRepo resourceRepo;
 
     @Autowired
+    private CurriculumResourceRepo curriculumResourceRepo;
+
+    @Autowired
     private QuizQuestionService quizQuestionService;
+
+    @Autowired
+    private ResourceService resourceService;
 
 
     @GetMapping("/admin/dashboard")
@@ -246,18 +249,51 @@ public class AdminController {
 
     //    -----------------------FIELD THAT DEALS WITH RESOURCES--------------
 
+//    @GetMapping("/admin/resources/new")
+//    public String showCreateResourceForm(Model model) {
+//        model.addAttribute("subjects", Arrays.asList(Subject.values()));
+//        model.addAttribute("resource", new Resource());
+//        return "/admin/admin-create-resource";
+//    }
+//
+//    @PostMapping("/admin/resources/save")
+//    public String createResource(@ModelAttribute Resource resource, Principal principal) {
+//        User tutor = userRepo.findUserByEmail(principal.getName());
+//        resource.setTutor(tutor);
+//        resourceRepo.save(resource);
+//        return "redirect:/admin/workplace";
+//    }
+
     @GetMapping("/admin/resources/new")
     public String showCreateResourceForm(Model model) {
         model.addAttribute("subjects", Arrays.asList(Subject.values()));
-        model.addAttribute("resource", new Resource());
+        model.addAttribute("curriculumResources", curriculumResourceRepo.findAll());
         return "/admin/admin-create-resource";
     }
 
     @PostMapping("/admin/resources/save")
-    public String createResource(@ModelAttribute Resource resource, Principal principal) {
-        User tutor = userRepo.findUserByEmail(principal.getName());
-        resource.setTutor(tutor);
-        resourceRepo.save(resource);
+    public String createResource(
+            @RequestParam String topicName,
+            @RequestParam Subject subject,
+            @RequestParam(required = false) Long curriculumResourceId,
+            Principal principal,
+            RedirectAttributes redirectAttributes) {
+
+        User admin = userRepo.findUserByEmail(principal.getName());
+
+        try {
+            resourceService.createResource(
+                    admin,
+                    topicName,
+                    subject,
+                    curriculumResourceId
+            );
+
+            redirectAttributes.addFlashAttribute("success", "Resource created successfully");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
         return "redirect:/admin/workplace";
     }
 

@@ -199,7 +199,6 @@ public class TutorController {
     public String createResourcePage(Model model,
                                      @AuthenticationPrincipal User tutor) {
 
-        // Only curriculum resources for tutor's subject
         List<CurriculumResource> availableResources =
                 curriculumResourceRepo.findBySubject(tutor.getPreferredSubjects());
 
@@ -211,14 +210,11 @@ public class TutorController {
                 .map(r -> r.getCurriculumResource().getId())
                 .toList();
 
-        availableResources.removeIf(
-                cr -> usedIds.contains(cr.getId())
-        );
+        availableResources.removeIf(cr -> usedIds.contains(cr.getId()));
 
         model.addAttribute("curriculumResources", availableResources);
         return "/tutor/tutor-create-resource";
     }
-
 
     @PostMapping("/tutor/resources/save")
     public String saveResource(@RequestParam Long curriculumResourceId,
@@ -226,18 +222,22 @@ public class TutorController {
                                RedirectAttributes redirectAttributes) {
 
         try {
-            resourceService.createResource(tutor, curriculumResourceId);
-            redirectAttributes.addFlashAttribute(
-                    "success", "Resource created successfully"
+            // TUTOR call: topicName and subject ignored
+            resourceService.createResource(
+                    tutor,
+                    null,
+                    null,
+                    curriculumResourceId
             );
+
+            redirectAttributes.addFlashAttribute("success", "Resource created successfully");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute(
-                    "error", e.getMessage()
-            );
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
 
         return "redirect:/tutor/workplace";
     }
+
 
 
 //    -----------------------EDITING ARTICLES AND VIDEOS -----------------------
