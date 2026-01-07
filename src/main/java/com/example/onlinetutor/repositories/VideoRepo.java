@@ -16,4 +16,6 @@ public interface VideoRepo extends JpaRepository<Video,Long> {
     void deleteVideoById(Long id);
 
     Video getVideoById(Long id);
+
+    void deleteByArticleId(Long articleId);
 }

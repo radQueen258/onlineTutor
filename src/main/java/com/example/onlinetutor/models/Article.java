@@ -34,7 +34,9 @@ public class Article {
     private Resource resource;
 
     @ToString.Exclude
-    @OneToOne(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "article",
+            cascade = CascadeType.ALL, fetch = FetchType.LAZY,
+            orphanRemoval = true)
     private Video video;
 
     @ToString.Exclude

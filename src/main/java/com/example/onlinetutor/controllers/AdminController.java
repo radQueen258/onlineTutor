@@ -250,21 +250,6 @@ public class AdminController {
 
     //    -----------------------FIELD THAT DEALS WITH RESOURCES--------------
 
-//    @GetMapping("/admin/resources/new")
-//    public String showCreateResourceForm(Model model) {
-//        model.addAttribute("subjects", Arrays.asList(Subject.values()));
-//        model.addAttribute("resource", new Resource());
-//        return "/admin/admin-create-resource";
-//    }
-//
-//    @PostMapping("/admin/resources/save")
-//    public String createResource(@ModelAttribute Resource resource, Principal principal) {
-//        User tutor = userRepo.findUserByEmail(principal.getName());
-//        resource.setTutor(tutor);
-//        resourceRepo.save(resource);
-//        return "redirect:/admin/workplace";
-//    }
-
     @GetMapping("/admin/create-choice")
     public String showAdminCreateChoice() {
         return "/admin/admin-create-choice";

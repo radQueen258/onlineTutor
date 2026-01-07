@@ -77,9 +77,8 @@
                                 <a href="/admin/video/edit/${article.video.id}">Edit Video</a>
                             <#else>
                                 <p>No videos yet for this article.</p>
+                                <p><a href="/admin/resources/${resource.id}/article/${article.id}/upload-video">Add Video</a></p>
                             </#if>
-
-                            <p><a href="/admin/resources/${resourceId}/article/${article.id}/upload-video">Add Video</a></p>
                         </div>
                     </#list>
 
