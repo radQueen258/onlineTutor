@@ -11,5 +11,12 @@ public interface ResourceService {
     List<ResourceDto> getAllResources();
     void deleteResource(Long resourceId);
 
-    Resource createResource(User tutor, String topicName, Subject subject, Long curriculumResourceId);
+    Resource createResource(User tutor, String topicName,
+                            Subject subject, Long curriculumResourceId);
+
+    Resource createResourceFromCurriculum(
+            User creator,
+            Long curriculumResourceId
+    );
+
 }

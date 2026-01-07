@@ -48,7 +48,7 @@
             <td>${article.tutorName.firstName}</td>
 <#--            <td>${article.createdAt?string("yyyy-MM-dd")}</td>-->
             <td>
-                <a href="/admin/article/${article.id}/upload-video">Upload</a> |
+                <a href="/admin/resources/${article.resource.id}/article/${article.id}/upload-video">Upload</a> |
 
                 <form action="/admin/articles/delete/${article.id}" method="post" style="display:inline;">
                     <input type="submit" value="Delete"

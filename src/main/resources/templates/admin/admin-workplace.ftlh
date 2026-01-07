@@ -32,7 +32,7 @@
     <h2>Admin's Workplace!</h2>
 
     <h2>Resources</h2>
-    <a href="/admin/resources/new" style="color:black;text-decoration:none;">Create Resource</a>
+    <a href="/admin/create-choice" style="color:black;text-decoration:none;">Create Resource</a>
 
     <#if resources?? && (resources?size > 0)>
         <table border="1" cellpadding="5" style="width:100%; border-collapse: collapse;">
@@ -60,7 +60,7 @@
             </#list>
         </table>
     <#else>
-        <p>No resources found yet. <a href="/tutor/resources/new">Create one now</a>.</p>
+        <p>No resources found yet. <a href="/admin/create-choice">Create one now</a>.</p>
     </#if>
 
 

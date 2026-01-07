@@ -1,6 +1,7 @@
 package com.example.onlinetutor.controllers;
 
 import com.example.onlinetutor.dto.TutorAnalyticsDTO;
+import com.example.onlinetutor.enums.Grade;
 import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.*;
 import com.example.onlinetutor.repositories.*;
@@ -130,7 +131,7 @@ public class AdminController {
         return "/admin/admin-new-article";
     }
 
-    @PostMapping("/admin/resources/{resourceId}article/article/save")
+    @PostMapping("/admin/resources/{resourceId}/article/save")
     public String createArticle(@ModelAttribute Article article,
                                 Principal principal,
                                 @PathVariable Long resourceId,
@@ -142,7 +143,7 @@ public class AdminController {
         article.setSubject(resource.getSubject());
         model.addAttribute("resourceId", resourceId);
         articleRepo.save(article);
-        return "redirect:/admin/articles";
+        return "redirect:/admin/workplace";
     }
 
     @GetMapping("/admin/resources/{resourceId}/article/{articleId}")
@@ -207,7 +208,7 @@ public class AdminController {
 
         videoRepo.save(video);
 
-        return "redirect:/admin/videos";
+        return "redirect:/admin/workplace";
     }
 
 //    ---------------STATISTICS----------------------
@@ -264,6 +265,19 @@ public class AdminController {
 //        return "redirect:/admin/workplace";
 //    }
 
+    @GetMapping("/admin/create-choice")
+    public String showAdminCreateChoice() {
+        return "/admin/admin-create-choice";
+    }
+
+    @GetMapping("/admin/curriculum-resources/new")
+    public String showCurriculumResourcePage(Model model) {
+        model.addAttribute("subjects", Arrays.asList(Subject.values()));
+        model.addAttribute("grades", Arrays.asList(Grade.values()));
+        return "/admin/admin-create-curriculum-resource";
+    }
+
+
     @GetMapping("/admin/resources/new")
     public String showCreateResourceForm(Model model) {
         model.addAttribute("subjects", Arrays.asList(Subject.values()));
@@ -273,29 +287,47 @@ public class AdminController {
 
     @PostMapping("/admin/resources/save")
     public String createResource(
-            @RequestParam String topicName,
-            @RequestParam Subject subject,
-            @RequestParam(required = false) Long curriculumResourceId,
+            @RequestParam Long curriculumResourceId,
             Principal principal,
-            RedirectAttributes redirectAttributes) {
+            RedirectAttributes redirectAttributes
+    ) {
 
         User admin = userRepo.findUserByEmail(principal.getName());
 
         try {
-            resourceService.createResource(
+            resourceService.createResourceFromCurriculum(
                     admin,
-                    topicName,
-                    subject,
                     curriculumResourceId
             );
-
-            redirectAttributes.addFlashAttribute("success", "Resource created successfully");
+            redirectAttributes.addFlashAttribute(
+                    "success", "Resource created successfully"
+            );
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
 
         return "redirect:/admin/workplace";
     }
+
+    @PostMapping("/admin/curriculum-resources/save")
+    public String createCurriculumResource(
+            @RequestParam String topicName,
+            @RequestParam Subject subject,
+            @RequestParam Grade grade,
+            RedirectAttributes redirectAttributes
+    ) {
+
+        CurriculumResource cr = new CurriculumResource();
+        cr.setTopicName(topicName);
+        cr.setSubject(subject);
+        cr.setGrade(grade);
+
+        curriculumResourceRepo.save(cr);
+
+        redirectAttributes.addFlashAttribute("success", "Curriculum resource created");
+        return "redirect:/admin/workplace";
+    }
+
 
     @GetMapping("/admin/resources/{resourceId}/articles")
     public String viewAllArticles (@PathVariable Long resourceId, Model model

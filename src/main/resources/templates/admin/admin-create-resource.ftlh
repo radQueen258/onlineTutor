@@ -6,31 +6,20 @@
 </head>
 <body>
 
-<h2>Create New Resource</h2>
+<h2>Create Resource from Curriculum</h2>
 
 <form action="/admin/resources/save" method="post">
 
-    <label>Topic Name:</label><br>
-    <input type="text" name="topicName" required><br><br>
-
-    <label>Subject:</label><br>
-    <select name="subject" required>
-        <#list subjects as subject>
-            <option value="${subject}">${subject}</option>
-        </#list>
-    </select><br><br>
-
-    <label>Optional: Link to Curriculum Resource</label><br>
-    <select name="curriculumResourceId">
-        <option value="">None</option>
+    <label>Select Curriculum Topic:</label><br>
+    <select name="curriculumResourceId" required>
         <#list curriculumResources as cr>
             <option value="${cr.id}">
-                ${cr.topicName} (${cr.grade})
+                ${cr.topicName} (${cr.subject}, ${cr.grade})
             </option>
         </#list>
     </select>
-    <br><br>
 
+    <br><br>
     <button type="submit">Create Resource</button>
 </form>
 

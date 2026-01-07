@@ -13,8 +13,10 @@ public class QuizQuestion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "article_id", nullable = false)
     private Article article;
+
 
     @NonNull
     @Column(columnDefinition = "TEXT")

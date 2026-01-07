@@ -52,16 +52,16 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public Resource createResource(
             User user,
-            String topicName,                 // ADMIN free-text topic
-            Subject subject,                  // ADMIN free-text subject
-            Long curriculumResourceId         // optional, ADMIN or TUTOR
+            String topicName,                 // ADMIN
+            Subject subject,                  // ADMIN
+            Long curriculumResourceId         //  ADMIN or TUTOR
     ) {
 
         Resource resource = new Resource();
         resource.setTutor(user);
 
         if (user.getRole() == Role.TUTOR) {
-            // TUTOR rules: must choose CurriculumResource
+            // TUTOR: must choose CurriculumResource
             if (curriculumResourceId == null) {
                 throw new IllegalArgumentException("Curriculum resource must be selected");
             }
@@ -78,7 +78,7 @@ public class ResourceServiceImpl implements ResourceService {
             resource.setSubject(cr.getSubject());
 
         } else if (user.getRole() == Role.ADMIN) {
-            // ADMIN rules: can create free-text topic, optional link to CurriculumResource
+            // ADMIN : can create free-text topic, optional link to CurriculumResource
             resource.setTopicName(topicName);
             resource.setSubject(subject);
 
@@ -91,5 +91,31 @@ public class ResourceServiceImpl implements ResourceService {
 
         return resourceRepo.save(resource);
     }
+
+    @Transactional
+    @Override
+    public Resource createResourceFromCurriculum(
+            User creator,
+            Long curriculumResourceId
+    ) {
+
+        CurriculumResource cr = curriculumResourceRepo.findById(curriculumResourceId)
+                .orElseThrow(() -> new IllegalArgumentException("Curriculum Resource not found"));
+
+        // Prevent duplicate resources per user
+        if (resourceRepo.existsByTutorAndCurriculumResource(creator, cr)) {
+            throw new IllegalStateException("You already have this resource");
+        }
+
+        Resource resource = Resource.builder()
+                .topicName(cr.getTopicName())
+                .subject(cr.getSubject())
+                .curriculumResource(cr)
+                .tutor(creator)
+                .build();
+
+        return resourceRepo.save(resource);
+    }
+
 
 }

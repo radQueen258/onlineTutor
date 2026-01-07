@@ -19,7 +19,11 @@ public class Article {
     private Long id;
 
     private String articleTitle;
+
+    @Column(columnDefinition = "TEXT")
     private String articleContent;
+
+    @Column(length = 1024)
     private String imageUrl;
 
     @Enumerated(EnumType.STRING)
