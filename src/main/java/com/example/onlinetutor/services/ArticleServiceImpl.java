@@ -31,18 +31,27 @@ public class ArticleServiceImpl implements ArticleService {
     @Transactional
     @Override
     public void safeDeleteArticle(Long articleId) {
+
         Article article = articleRepo.findById(articleId)
                 .orElseThrow(() -> new IllegalArgumentException("Article not found"));
 
-        quizQuestionRepo.deleteByArticleId(articleId);
-
         if (article.getVideo() != null) {
-            Video video = videoService.getVideoById(article.getVideo().getId()); // fetch managed entity
-            videoService.safeDeleteVideoById(video.getId());
+            Video video = article.getVideo();
+            video.setArticle(null);      // VERY IMPORTANT
+            article.setVideo(null);
+            videoRepo.delete(video);
         }
 
-        articleRepo.delete(article); // delete managed entity
+        quizQuestionRepo.deleteByArticleId(articleId);
+
+        if (article.getResource() != null) {
+            article.getResource().getArticles().remove(article);
+            article.setResource(null);
+        }
+
+        articleRepo.delete(article);
     }
+
 
 
 }
