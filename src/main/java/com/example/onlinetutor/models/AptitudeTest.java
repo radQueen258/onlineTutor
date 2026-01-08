@@ -26,6 +26,10 @@ public class AptitudeTest {
     private Integer score;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "aptitudeTest", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(
+            mappedBy = "aptitudeTest",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
     private List<TestQuestion> questions = new ArrayList<>();
 }

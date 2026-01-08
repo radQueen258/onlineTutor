@@ -38,9 +38,14 @@ public class AptitudeTestServiceImpl implements AptitudeTestService {
         test.setUserId(userId);
         test.setStatus(AptitudeTestStatus.IN_PROGRESS);
 
-        for (TestQuestion q: generatedQuestions) {
+        for (TestQuestion q : generatedQuestions) {
             q.setAptitudeTest(test);
+
+            if (q.getOptions() == null) {
+                q.setOptions(new ArrayList<>());
+            }
         }
+
         test.setQuestions(generatedQuestions);
 
         return testRepository.save(test);

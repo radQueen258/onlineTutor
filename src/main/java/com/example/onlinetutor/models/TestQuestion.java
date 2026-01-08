@@ -4,6 +4,7 @@ import com.example.onlinetutor.enums.Subject;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -22,8 +23,14 @@ public class TestQuestion {
     @Enumerated(EnumType.STRING)
     private Subject subject;
 
-    @ElementCollection
-    private List<String> options;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "test_question_options",
+            joinColumns = @JoinColumn(name = "test_question_id")
+    )
+    @Column(name = "option_value")
+    private List<String> options = new ArrayList<>();
+
 
     private String correctAnswer;
     private String userAnswer;
