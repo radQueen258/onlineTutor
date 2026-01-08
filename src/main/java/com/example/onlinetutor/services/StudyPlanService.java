@@ -1,6 +1,7 @@
 package com.example.onlinetutor.services;
 
 import com.example.onlinetutor.enums.Subject;
+import com.example.onlinetutor.models.AptitudeTest;
 import com.example.onlinetutor.models.StudyPlan;
 import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.StudyPlanRepo;
@@ -24,5 +25,7 @@ public interface StudyPlanService {
     boolean hasCompletedPlans(Long userId);
 
     void createPlansForNewStudyFocus(Long userID, Subject[] newFocusAreas);
+
+    void generateStudyPlanFromTest(AptitudeTest test);
 
 }

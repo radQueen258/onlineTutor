@@ -22,4 +22,6 @@ public interface AptitudeTestService {
     void assignNewTest(Long userId, Subject[] focusAreas);
 
     List<Long> extractWeakCurriculumResources (AptitudeTest test);
+
+    AptitudeTest findById(Long testId);
 }

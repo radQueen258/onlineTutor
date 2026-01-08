@@ -99,7 +99,7 @@ public class SecurityConfig {
                 .requestMatchers("/setGoals/**").permitAll()
                 .requestMatchers("/choose-test/**", "/videos/**"
                 ,"/resources/**", "/article/**", "/exam-trends/**", "/study/**"
-                , "/study-plan/**", "/submit/**", "/tutor/**","/admin/**", "/statistics").permitAll()
+                , "/study-plan/**", "/submit/**", "/tutor/**","/admin/**", "/statistics","/debug/**").permitAll()
                 .requestMatchers("/error").permitAll()
                 .requestMatchers("/aptitude-test/**").permitAll()
                 .anyRequest().permitAll()

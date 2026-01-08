@@ -6,6 +6,7 @@ import com.example.onlinetutor.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface ResourceRepo extends JpaRepository<Resource,Long> {
@@ -20,5 +21,9 @@ public interface ResourceRepo extends JpaRepository<Resource,Long> {
     boolean existsByTutorAndCurriculumResource(
             User tutor,
             CurriculumResource curriculumResource
+    );
+
+    List<Resource> findByCurriculumResourceIn(
+            Collection<CurriculumResource> curriculumResources
     );
 }
