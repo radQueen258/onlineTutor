@@ -1,6 +1,7 @@
 package com.example.onlinetutor.services;
 
 import com.example.onlinetutor.enums.AptitudeTestStatus;
+import com.example.onlinetutor.enums.Grade;
 import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.User;
 
@@ -9,7 +10,7 @@ import java.util.Set;
 
 public interface UserService {
 
-    User updateOnboarding (Long userId, String examLevel, List<Subject> subjects);
+    User updateOnboarding (Long userId, Grade examLevel, List<Subject> subjects);
 
     User updateAptitudeTestStatus(Long userId, AptitudeTestStatus status);
 

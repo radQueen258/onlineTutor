@@ -9,6 +9,7 @@ import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.CurriculumResourceRepo;
 import com.example.onlinetutor.repositories.StudyPlanRepo;
 import com.example.onlinetutor.repositories.UserRepo;
+import com.example.onlinetutor.services.AptitudeGeneratorService;
 import com.example.onlinetutor.services.AptitudeTestService;
 import com.example.onlinetutor.services.StudyPlanService;
 import jakarta.servlet.http.HttpSession;
@@ -40,12 +41,19 @@ public class AptitudeTestController {
     @Autowired
     private StudyPlanService studyPlanService;
 
+    @Autowired
+    private AptitudeGeneratorService questionGenerator;
+
     @PostMapping("/start/{userId}")
     public ResponseEntity<AptitudeTest> startTest(@PathVariable Long userId) {
         // TODO: generate questions dynamically based on profile (examLevel and subjects)
-        List<TestQuestion> questions = generateSampleQuestions();
-        AptitudeTest test = testService.startTest(userId, questions);
+//        List<TestQuestion> questions = generateSampleQuestions();
+//        AptitudeTest test = testService.startTest(userId, questions);
+        User user = userRepo.findById(userId).orElseThrow();
+        List<TestQuestion> questions =
+                questionGenerator.generateQuestionsForStudent(user);
 
+        AptitudeTest test = testService.startTest(userId, questions);
         return ResponseEntity.ok(test);
     }
 
@@ -53,7 +61,12 @@ public class AptitudeTestController {
     public String startTest(HttpSession session, Model model, Authentication authentication) {
 
         Long userId = (Long) session.getAttribute("userId");
-        AptitudeTest test = testService.startTest(userId, generateSampleQuestions());
+        User user = userRepo.findById(userId).orElseThrow();
+
+        List<TestQuestion> questions =
+                questionGenerator.generateQuestionsForStudent(user);
+
+        AptitudeTest test = testService.startTest(userId, questions);
         model.addAttribute("test", test);
 
         return "/user-and-student/aptitude_test";

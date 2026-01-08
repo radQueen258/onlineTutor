@@ -1,6 +1,7 @@
 package com.example.onlinetutor.controllers;
 
 import com.example.onlinetutor.enums.AptitudeTestStatus;
+import com.example.onlinetutor.enums.Grade;
 import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.UserRepo;
@@ -37,12 +38,14 @@ public class OnboardingController {
         }
         model.addAttribute("testTaken", testTaken);
         model.addAttribute("subjects", Arrays.asList(Subject.values()));
+        model.addAttribute("examLevel10", Grade.GRADE10);
+        model.addAttribute("examLevel12", Grade.GRADE12);
         return "/user-and-student/onboarding";
     }
 
     @PostMapping("/setGoals")
     public String setGoals(HttpSession session,
-                           @RequestParam String examLevel,
+                           @RequestParam Grade examLevel,
                            @RequestParam List<Subject> subjects) {
         Long userId = (Long) session.getAttribute("userId");
         userService.updateOnboarding(userId,examLevel, subjects);

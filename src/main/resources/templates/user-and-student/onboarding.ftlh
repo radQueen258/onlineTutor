@@ -10,8 +10,8 @@
 <form action="/setGoals" method="post">
     <label>Exam Level:</label>
     <select name="examLevel" required>
-        <option value="GRADE_10">Grade 10 National Exam</option>
-        <option value="GRADE_12">Grade 12 National Exam</option>
+        <option value="${examLevel10}">Grade 10 National Exam</option>
+        <option value="${examLevel12}">Grade 12 National Exam</option>
     </select><br>
 
     <label>Subjects (hold Ctrl to select multiple):</label>

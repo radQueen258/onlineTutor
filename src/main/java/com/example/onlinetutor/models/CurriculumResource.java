@@ -27,4 +27,6 @@ public class CurriculumResource {
     @Enumerated(EnumType.STRING)
     private Grade grade;
 
+    public CurriculumResource(String topicName, Subject subject, Grade grade) {
+    }
 }

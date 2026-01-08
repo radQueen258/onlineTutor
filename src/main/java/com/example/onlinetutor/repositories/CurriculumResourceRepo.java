@@ -6,6 +6,7 @@ import com.example.onlinetutor.models.CurriculumResource;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,4 +19,8 @@ public interface CurriculumResourceRepo extends JpaRepository<CurriculumResource
     List<CurriculumResource> findBySubjectAndGrade(Subject subject, Grade grade);
 
     Optional<CurriculumResource> findByTopicName(String linearEquations);
+
+    List<CurriculumResource> findBySubjectInAndGrade(Collection<Subject> subjects, Grade grade);
+
+    List<CurriculumResource> findByGrade(Grade grade);
 }

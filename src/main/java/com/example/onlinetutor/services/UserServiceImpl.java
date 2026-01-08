@@ -1,6 +1,7 @@
 package com.example.onlinetutor.services;
 
 import com.example.onlinetutor.enums.AptitudeTestStatus;
+import com.example.onlinetutor.enums.Grade;
 import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.IdCard;
 import com.example.onlinetutor.models.User;
@@ -46,7 +47,7 @@ public class UserServiceImpl implements UserService{
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public User updateOnboarding(Long userId, String examLevel, List<Subject> subjects) {
+    public User updateOnboarding(Long userId, Grade examLevel, List<Subject> subjects) {
         User user = userRepo.findById(userId)
                 .orElseThrow(()-> new RuntimeException("User not found!!")) ;
 

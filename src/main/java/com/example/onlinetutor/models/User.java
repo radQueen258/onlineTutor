@@ -1,9 +1,6 @@
 package com.example.onlinetutor.models;
 
-import com.example.onlinetutor.enums.AptitudeTestStatus;
-import com.example.onlinetutor.enums.Gender;
-import com.example.onlinetutor.enums.Role;
-import com.example.onlinetutor.enums.Subject;
+import com.example.onlinetutor.enums.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -45,7 +42,8 @@ public class User {
     private IdCard idCard;
 
     //    Fields to be filled after the Aptitude Test
-    private String examLevel;
+    @Enumerated(EnumType.STRING)
+    private Grade examLevel;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_subjects", joinColumns = @JoinColumn(name = "user_id"))
