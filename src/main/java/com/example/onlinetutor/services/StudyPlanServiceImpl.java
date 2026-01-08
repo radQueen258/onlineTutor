@@ -31,7 +31,11 @@ public class StudyPlanServiceImpl implements StudyPlanService {
     private ResourceRepo resourceRepo;
 
     @Override
-    public void generatePlanForUser(User user, List<Long> weakCurriculumResourceIds) {
+    public void generatePlanForUser(
+            User user,
+            List<Long> weakCurriculumResourceIds
+    ) {
+
         studyPlanRepo.deleteByUserId(user.getId());
 
         List<Resource> resources =
@@ -57,6 +61,7 @@ public class StudyPlanServiceImpl implements StudyPlanService {
             }
         }
     }
+
 
     @Override
     public List<StudyPlan> getPlanForUser(String email) {

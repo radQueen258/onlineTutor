@@ -11,9 +11,11 @@ import com.example.onlinetutor.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class AptitudeTestServiceImpl implements AptitudeTestService {
@@ -26,6 +28,8 @@ public class AptitudeTestServiceImpl implements AptitudeTestService {
 
     @Autowired
     private UserRepo userRepository;
+
+    private static final double WEAK_THRESHOLD = 0.5;
 
 
     @Override
@@ -97,5 +101,30 @@ public class AptitudeTestServiceImpl implements AptitudeTestService {
 
 //            TODO: I must check later on the real logic for this
         }
+    }
+
+    @Override
+    public List<Long> extractWeakCurriculumResources(AptitudeTest test) {
+        Map<Long, List<TestQuestion>> grouped =
+                test.getQuestions().stream()
+                        .collect(Collectors.groupingBy(
+                                q -> q.getCurriculumResource().getId()
+                        ));
+
+        List<Long> weakResources = new ArrayList<>();
+
+        for (var entry : grouped.entrySet()) {
+            long correct = entry.getValue().stream()
+                    .filter(q -> q.getCorrectAnswer().equals(q.getUserAnswer()))
+                    .count();
+
+            double score = (double) correct / entry.getValue().size();
+
+            if (score < WEAK_THRESHOLD) {
+                weakResources.add(entry.getKey());
+            }
+        }
+
+        return weakResources;
     }
 }

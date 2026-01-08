@@ -33,4 +33,8 @@ public class TestQuestion {
     @JoinColumn(name = "aptitude_test_id")
     private AptitudeTest aptitudeTest;
 
+    @ManyToOne
+    @JoinColumn(name = "curriculum_resource_id")
+    private CurriculumResource curriculumResource;
+
 }
