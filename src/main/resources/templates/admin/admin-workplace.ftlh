@@ -38,6 +38,7 @@
         <table border="1" cellpadding="5" style="width:100%; border-collapse: collapse;">
             <tr>
                 <th>Resource Name</th>
+                <th>Subject</th>
                 <th>Number of Articles</th>
                 <th>Actions</th>
             </tr>
@@ -45,6 +46,7 @@
             <#list resources as resource>
                 <tr>
                     <td>${resource.topicName!'-'}</td>
+                    <td>${resource.subject!'-'}</td>
                     <td>
                         <#if resource.articles?? && (resource.articles?size > 0)>
                             ${resource.articles?size}

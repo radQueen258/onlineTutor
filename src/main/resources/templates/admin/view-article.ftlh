@@ -50,9 +50,11 @@
             <p>${article.articleContent}</p>
 
             <!-- Example image -->
-            <div style="text-align: center; margin: 20px 0;">
-                <img src="/images/example-diagram.png" alt="Article Diagram" width="250">
-            </div>
+            <#if article.imageUrl??>
+                <div style="text-align: center; margin: 20px 0;">
+                    <img src="/images/example-diagram.png" alt="Article Diagram" width="250">
+                </div>
+            </#if>
 
             <p>
                 More placeholder content for the article... Lorem ipsum dolor sit amet, consectetur adipiscing elit.

@@ -75,7 +75,7 @@ public class TutorController {
     }
 
 
-    @PostMapping("/tutor/resources/{resourceId}article/save")
+    @PostMapping("/tutor/resources/{resourceId}/article/save")
     public String createArticle(@ModelAttribute Article article,
                                 Principal principal,
                                 @PathVariable Long resourceId,

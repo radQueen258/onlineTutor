@@ -49,20 +49,25 @@
 
         <div style="margin-top: 20px;">
             <video width="640" height="360" controls>
-<#--                <source src="${video.videoUrl}" type="video/mp4">-->
-                <source src="https://youtu.be/C2HX2pNbUCM?si=QfheGNb9bCKV-qYN" type="video/mp4">
+                <source src="${video.videoUrl}" type="video/mp4">
+<#--                <source src="https://youtu.be/C2HX2pNbUCM?si=QfheGNb9bCKV-qYN" type="video/mp4">-->
                 Your browser does not support the video tag.
             </video>
         </div>
 
         <br>
 
-        <div style="margin-top: 20px;">
-            <p>
-                <strong>${video.tutorName.firstName} - ${video.videoTitle}</strong>
-            </p>
-            <p>${video.videoDescription}</p>
-        </div>
+        <#if video.tutorName??>
+            <div style="margin-top: 20px;">
+                <p>
+                    <strong>${video.tutorName.firstName} - ${video.videoTitle}</strong>
+                </p>
+                <p>${video.videoDescription}</p>
+            </div>
+            <#else>
+            <p>There is no video information fetched</p>
+        </#if>
+
     </main>
 </div>
 </body>

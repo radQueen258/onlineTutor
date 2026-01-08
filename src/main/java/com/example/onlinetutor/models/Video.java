@@ -16,7 +16,10 @@ public class Video {
     private Long id;
 
     private String videoTitle;
+
+    @Column(columnDefinition = "TEXT")
     private String videoDescription;
+
     private String videoUrl;
 
     @Enumerated(EnumType.STRING)

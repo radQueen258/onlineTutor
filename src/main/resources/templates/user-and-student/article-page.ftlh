@@ -52,9 +52,11 @@
             <p>${article.articleContent}</p>
 
             <!-- Example image -->
+            <#if article.imageUrl??>
             <div style="text-align: center; margin: 20px 0;">
-                <img src="/images/example-diagram.png" alt="Article Diagram" width="250">
+                <img src="${article.imageUrl}" alt="Article Diagram" width="250">
             </div>
+            </#if>
 
             <p>
                 More placeholder content for the article... Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -62,6 +64,7 @@
         </section>
 
         <!-- Watch Related Video Button -->
+        <#if article.video??>
         <div style="position: absolute; right: 60px; top: 150px;">
             <a href="/resources/${resourceId}/video/${article.video.id}"
                style="display: inline-block; background-color: goldenrod; color: black;
@@ -69,6 +72,7 @@
                 Watch Related Video
             </a>
         </div>
+        </#if>
     </main>
 
 </div>

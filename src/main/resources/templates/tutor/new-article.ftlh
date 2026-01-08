@@ -8,7 +8,7 @@
 
 <h2>Create a New Article</h2>
 
-<form action="/tutor/resources/${resourceId}article/save" method="post" style="max-width: 600px;">
+<form action="/tutor/resources/${resourceId}/article/save" method="post" style="max-width: 600px;">
     <label for="title"><strong>Title:</strong></label><br>
     <input type="text" id="title" name="articleTitle" value="${article.articleTitle!}"
            placeholder="Enter the article title" required

@@ -126,6 +126,9 @@ public class AdminController {
         Resource resource = resourceRepo.getById(resourceId);
 
         Article article = new Article();
+        for (int i = 0; i < 3; i++) {
+            article.addQuestion(new QuizQuestion());
+        }
         article.setResource(resource);
         model.addAttribute("article", article);
         return "/admin/admin-new-article";
@@ -141,7 +144,13 @@ public class AdminController {
         article.setTutorName(admin);
         article.setResource(resource);
         article.setSubject(resource.getSubject());
+
         model.addAttribute("resourceId", resourceId);
+
+        for (QuizQuestion q : article.getQuestions()) {
+            q.setArticle(article);
+        }
+
         articleRepo.save(article);
         return "redirect:/admin/workplace";
     }

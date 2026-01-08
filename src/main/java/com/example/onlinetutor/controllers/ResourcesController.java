@@ -52,7 +52,7 @@ public class ResourcesController {
     public String openVideo(@PathVariable Long id,
                             @PathVariable Long resourceId,
                             Model model) {
-        Resource resource = resourceRepo.findById(id).orElseThrow(null);
+        Resource resource = resourceRepo.findById(resourceId).orElseThrow(null);
         Video video = resource.getVideo();
 
         model.addAttribute("video", video);
