@@ -10,6 +10,7 @@ import com.example.onlinetutor.repositories.UserRepo;
 import com.example.onlinetutor.services.AptitudeTestService;
 import com.example.onlinetutor.services.StudyPlanService;
 import com.example.onlinetutor.services.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 @Controller
@@ -80,6 +82,7 @@ public class ProfileController {
         return "redirect:/profile";
     }
 
+    @Transactional
     @PostMapping("/student/update-focus")
     public String updateFocus(
             @RequestParam("focusAreas") Subject[] focusAreas,
@@ -95,9 +98,13 @@ public class ProfileController {
 
         // 2. RESET LEARNING CYCLE
         studyPlanRepo.deleteByUserId(user.getId());
-        aptitudeTestRepo.deleteByUserId(user.getId());
+        user.setAptitudeTestStatus(AptitudeTestStatus.NOT_STARTED);
 
-        user.setPreferredSubjects(Arrays.asList(focusAreas));
+//        aptitudeTestRepo.deleteByUserId(user.getId());
+
+//        user.setPreferredSubjects(Arrays.asList(focusAreas));
+        user.setPreferredSubjects(new ArrayList<>(Arrays.asList(focusAreas)));
+
         user.setExamLevel(grade);
         user.setAptitudeTestStatus(AptitudeTestStatus.NOT_STARTED);
         userRepo.save(user);
