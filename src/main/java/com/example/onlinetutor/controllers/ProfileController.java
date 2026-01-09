@@ -62,7 +62,6 @@ public class ProfileController {
         User user = userService.findByEmail(principal.getName());
 
         userService.updateFocusAreas(user.getId(), focusAreas);
-//        Arrays.asList(Subject.values()))
 
         aptitudeTestService.assignNewTest(user.getId(), focusAreas);
 

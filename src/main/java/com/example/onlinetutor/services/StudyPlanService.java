@@ -1,5 +1,6 @@
 package com.example.onlinetutor.services;
 
+import com.example.onlinetutor.dto.DashboardStudyPlanInfo;
 import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.AptitudeTest;
 import com.example.onlinetutor.models.StudyPlan;
@@ -28,4 +29,5 @@ public interface StudyPlanService {
 
     void generateStudyPlanFromTest(AptitudeTest test);
 
+    DashboardStudyPlanInfo getDashboardInfo(User user);
 }

@@ -1,9 +1,12 @@
 package com.example.onlinetutor.controllers;
 
 
+import com.example.onlinetutor.dto.DashboardStudyPlanInfo;
 import com.example.onlinetutor.enums.AptitudeTestStatus;
 import com.example.onlinetutor.models.User;
+import com.example.onlinetutor.repositories.StudyPlanRepo;
 import com.example.onlinetutor.repositories.UserRepo;
+import com.example.onlinetutor.services.StudyPlanService;
 import com.example.onlinetutor.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,9 @@ public class DashboardController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private StudyPlanService studyPlanService;
+
     public DashboardController(UserRepo userRepo) {
         this.userRepo = userRepo;
     }
@@ -31,7 +37,8 @@ public class DashboardController {
     public String dashboard(Model model, Principal principal,
                             HttpSession session, Authentication authentication,
                             @RequestParam(value = "status", required = false) AptitudeTestStatus status) {
-        System.out.println("Logged in user is: " + authentication.getName());
+
+//        System.out.println("Logged in user is: " + authentication.getName());
         String email = authentication.getName();
         User user1 = userRepo.findByEmail(email).orElseThrow(() ->
                 new RuntimeException("User not found"));
@@ -48,8 +55,13 @@ public class DashboardController {
         model.addAttribute("userId", user1.getId());
         model.addAttribute("firstName", user1.getFirstName());
         //TODO: These below need to be changed by the real logic
-        model. addAttribute("progress", "60%");
-        model.addAttribute("upcoming", "Continue Algebraic Expressions");
+        if (!needsTest) {
+            DashboardStudyPlanInfo info =
+                    studyPlanService.getDashboardInfo(user1);
+
+            model.addAttribute("progress", info.getProgressPercent() + "%");
+            model.addAttribute("upcoming", info.getUpcoming());
+        }
 
         return "/user-and-student/dashboard";
     }

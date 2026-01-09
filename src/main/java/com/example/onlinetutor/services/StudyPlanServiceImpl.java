@@ -1,5 +1,6 @@
 package com.example.onlinetutor.services;
 
+import com.example.onlinetutor.dto.DashboardStudyPlanInfo;
 import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.*;
 import com.example.onlinetutor.repositories.ArticleRepo;
@@ -8,9 +9,7 @@ import com.example.onlinetutor.repositories.StudyPlanRepo;
 import com.example.onlinetutor.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -169,4 +168,34 @@ public class StudyPlanServiceImpl implements StudyPlanService {
         }
     }
 
+    @Override
+    public DashboardStudyPlanInfo getDashboardInfo(User user) {
+
+        List<StudyPlan> plans = studyPlanRepo.findByUser(user);
+
+        if (plans.isEmpty()) {
+            return new DashboardStudyPlanInfo(0, "No study plan yet");
+        }
+
+        double avgProgress = plans.stream()
+                .mapToDouble(StudyPlan::getProgress)
+                .average()
+                .orElse(0);
+
+        StudyPlan nextPlan = plans.stream()
+                .filter(p -> !p.isCompleted())
+                .findFirst()
+                .orElse(null);
+
+        String upcoming = nextPlan != null
+                ? nextPlan.getArticle().getArticleTitle()
+                : "All articles completed";
+
+        return new DashboardStudyPlanInfo(
+                (int) avgProgress,
+                upcoming
+        );
+    }
 }
+
+

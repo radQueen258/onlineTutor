@@ -25,4 +25,8 @@ public interface StudyPlanRepo extends JpaRepository<StudyPlan,Long> {
     boolean existsByUserAndArticle(User user, Article article);
 
 //    StudyPlan findById(Long id);
+
+    List<StudyPlan> findByUser(User user);
+
+    List<StudyPlan> findByUserAndCompletedFalseOrderByIdAsc(User user);
 }
