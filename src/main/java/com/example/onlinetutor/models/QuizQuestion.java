@@ -3,6 +3,10 @@ package com.example.onlinetutor.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -31,4 +35,15 @@ public class QuizQuestion {
 
     @NonNull
     private String correctAnswer;
+
+    @Transient
+    public List<String> getShuffledAnswers() {
+        List<String> answers = new ArrayList<>();
+        answers.add(correctAnswer);
+        answers.add(wrongAnswer1);
+        answers.add(wrongAnswer2);
+        answers.add(wrongAnswer3);
+        Collections.shuffle(answers);
+        return answers;
+    }
 }
