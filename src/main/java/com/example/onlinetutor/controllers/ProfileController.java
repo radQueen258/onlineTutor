@@ -70,7 +70,6 @@ public class ProfileController {
         model.addAttribute("user", user);
         model.addAttribute("subjects", Arrays.asList(Subject.values()));
         model.addAttribute("grades", Arrays.asList(Grade.values()));
-//        model.addAttribute("examLevel12", Grade.GRADE12);
 
         return "/user-and-student/edit-profile";
     }
@@ -91,25 +90,19 @@ public class ProfileController {
     ) {
         User user = userService.findByEmail(authentication.getName());
 
-        // 1. Safety check
+
         if (!studyPlanService.hasCompletedPlans(user.getId())) {
             throw new RuntimeException("Cannot change focus before completing study plan");
         }
 
-        // 2. RESET LEARNING CYCLE
         studyPlanRepo.deleteByUserId(user.getId());
         user.setAptitudeTestStatus(AptitudeTestStatus.NOT_STARTED);
-
-//        aptitudeTestRepo.deleteByUserId(user.getId());
-
-//        user.setPreferredSubjects(Arrays.asList(focusAreas));
         user.setPreferredSubjects(new ArrayList<>(Arrays.asList(focusAreas)));
 
         user.setExamLevel(grade);
         user.setAptitudeTestStatus(AptitudeTestStatus.NOT_STARTED);
         userRepo.save(user);
 
-        // 3. Redirect to new aptitude test
         return "redirect:/aptitude-test/start";
     }
 

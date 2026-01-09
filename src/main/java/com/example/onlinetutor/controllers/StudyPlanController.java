@@ -101,10 +101,6 @@ public class StudyPlanController {
     public String generateStudyPlan(@PathVariable Long testId,
                                     @AuthenticationPrincipal UserDetails userDetails) {
 
-//        User student = userService.findByEmail(userDetails.getUsername());
-//        AptitudeTest test = aptitudeTestService.findById(testId);
-
-//        studyPlanService.generateStudyPlan(student, test);
 
         return "redirect:/study-plan";
     }
