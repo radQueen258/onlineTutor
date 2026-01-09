@@ -3,6 +3,7 @@ package com.example.onlinetutor.controllers;
 
 import com.example.onlinetutor.dto.DashboardStudyPlanInfo;
 import com.example.onlinetutor.enums.AptitudeTestStatus;
+import com.example.onlinetutor.models.StudyPlan;
 import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.StudyPlanRepo;
 import com.example.onlinetutor.repositories.UserRepo;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class DashboardController {
@@ -62,6 +64,16 @@ public class DashboardController {
             model.addAttribute("progress", info.getProgressPercent() + "%");
             model.addAttribute("upcoming", info.getUpcoming());
         }
+
+//        List<StudyPlan> plans = studyPlanService.getPlanForUser(email);
+//
+//        System.out.println("Study plans count = " + plans.size());
+//        plans.forEach(p ->
+//                System.out.println("Plan id=" + p.getId()
+//                        + " userId=" + p.getUser().getId()
+//                        + " progress=" + p.getProgress())
+//        );
+
 
         return "/user-and-student/dashboard";
     }

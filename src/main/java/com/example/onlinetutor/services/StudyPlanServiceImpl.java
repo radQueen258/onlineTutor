@@ -177,22 +177,43 @@ public class StudyPlanServiceImpl implements StudyPlanService {
             return new DashboardStudyPlanInfo(0, "No study plan yet");
         }
 
-        double avgProgress = plans.stream()
-                .mapToDouble(StudyPlan::getProgress)
-                .average()
-                .orElse(0);
+//        double avgProgress = plans.stream()
+//                .mapToDouble(StudyPlan::getProgress)
+//                .average()
+//                .orElse(0.0);
+//
+//        int progressPercent = (int) Math.round(avgProgress * 100);
 
-        StudyPlan nextPlan = plans.stream()
+        long total = plans.size();
+        long completed = plans.stream()
+                .filter(StudyPlan::isCompleted)
+                .count();
+
+        int progressPercent = total == 0
+                ? 0
+                : (int) ((completed * 100.0) / total);
+
+
+//        StudyPlan nextPlan = plans.stream()
+//                .filter(p -> !p.isCompleted())
+//                .findFirst()
+//                .orElse(null);
+//
+//        String upcoming = nextPlan != null
+//                ? nextPlan.getArticle().getArticleTitle()
+//                : "All articles completed";
+        StudyPlan next = plans.stream()
                 .filter(p -> !p.isCompleted())
                 .findFirst()
                 .orElse(null);
 
-        String upcoming = nextPlan != null
-                ? nextPlan.getArticle().getArticleTitle()
-                : "All articles completed";
+        String upcoming = next != null
+                ? next.getArticle().getArticleTitle()
+                : "All lessons completed";
+
 
         return new DashboardStudyPlanInfo(
-                (int) avgProgress,
+                progressPercent ,
                 upcoming
         );
     }
