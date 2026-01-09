@@ -132,4 +132,14 @@ public class AptitudeTestServiceImpl implements AptitudeTestService {
 
         return weakResources;
     }
+
+    @Override
+    public AptitudeTest findById(Long testId) {
+        return null;
+    }
+
+    @Override
+    public void save(AptitudeTest completed) {
+        testRepository.save(completed);
+    }
 }

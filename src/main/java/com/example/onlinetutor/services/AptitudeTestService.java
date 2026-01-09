@@ -24,4 +24,6 @@ public interface AptitudeTestService {
     List<Long> extractWeakCurriculumResources (AptitudeTest test);
 
     AptitudeTest findById(Long testId);
+
+    void save(AptitudeTest completed);
 }

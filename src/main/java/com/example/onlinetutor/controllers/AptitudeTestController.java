@@ -94,10 +94,16 @@ public class AptitudeTestController {
         user.setAptitudeTestStatus(AptitudeTestStatus.COMPLETED);
         userRepo.save(user);
 
-        List<Long> weakResourceIds =
-                aptitudeTestService.extractWeakCurriculumResources(completed);
+//        List<Long> weakResourceIds =
+//                aptitudeTestService.extractWeakCurriculumResources(completed);
+//
+//        studyPlanService.generatePlanForUser(user, weakResourceIds);
 
-        studyPlanService.generatePlanForUser(user, weakResourceIds);
+        completed.setStatus(AptitudeTestStatus.COMPLETED);
+        testService.save(completed); // if not already saved
+
+        studyPlanService.generateStudyPlanFromTest(completed);
+
 
         return "/user-and-student/aptitude_thankyou";
     }

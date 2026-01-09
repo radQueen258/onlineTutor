@@ -35,30 +35,30 @@ public class StudyPlanServiceImpl implements StudyPlanService {
             List<Long> weakCurriculumResourceIds
     ) {
 
-        studyPlanRepo.deleteByUserId(user.getId());
-
-        List<Resource> resources =
-                resourceRepo.findAll().stream()
-                        .filter(r ->
-                                weakCurriculumResourceIds.contains(
-                                        r.getCurriculumResource().getId()
-                                )
-                        )
-                        .toList();
-
-        for (Resource resource : resources) {
-            for (Article article : resource.getArticles()) {
-
-                StudyPlan plan = StudyPlan.builder()
-                        .user(user)
-                        .article(article)
-                        .progress(0.0)
-                        .completed(false)
-                        .build();
-
-                studyPlanRepo.save(plan);
-            }
-        }
+//        studyPlanRepo.deleteByUserId(user.getId());
+//
+//        List<Resource> resources =
+//                resourceRepo.findAll().stream()
+//                        .filter(r ->
+//                                weakCurriculumResourceIds.contains(
+//                                        r.getCurriculumResource().getId()
+//                                )
+//                        )
+//                        .toList();
+//
+//        for (Resource resource : resources) {
+//            for (Article article : resource.getArticles()) {
+//
+//                StudyPlan plan = StudyPlan.builder()
+//                        .user(user)
+//                        .article(article)
+//                        .progress(0.0)
+//                        .completed(false)
+//                        .build();
+//
+//                studyPlanRepo.save(plan);
+//            }
+//        }
     }
 
 
@@ -142,9 +142,14 @@ public class StudyPlanServiceImpl implements StudyPlanService {
 
         if (resources.isEmpty()) return;
 
+
         // 3. Fetch articles
         List<Article> articles =
                 articleRepo.findByResourceIn(resources);
+
+        System.out.println("Weak curriculum resources: " + weakCurriculumResources.size());
+        System.out.println("Articles found: " + articles.size());
+
 
         // 4. Create study plan
         for (Article article : articles) {
