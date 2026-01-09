@@ -23,4 +23,5 @@ public interface UserService {
     void updatePassword(String email, String newPassword);
     void updateFocusAreas(Long userId, Subject[] focusAreas);
 
+    boolean canChangeStudyFocus(Long userId);
 }

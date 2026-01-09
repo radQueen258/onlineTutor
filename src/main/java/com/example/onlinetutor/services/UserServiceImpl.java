@@ -4,6 +4,7 @@ import com.example.onlinetutor.enums.AptitudeTestStatus;
 import com.example.onlinetutor.enums.Grade;
 import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.IdCard;
+import com.example.onlinetutor.models.StudyPlan;
 import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.*;
 import jakarta.transaction.Transactional;
@@ -128,4 +129,11 @@ public class UserServiceImpl implements UserService{
 //        Arrays.asList(Subject.values()))
         userRepo.save(user);
     }
+
+    @Override
+    public boolean canChangeStudyFocus(Long userId) {
+        return studyPlanRepo.findByUser_Id(userId).stream()
+                .allMatch(StudyPlan::isCompleted);
+    }
+
 }

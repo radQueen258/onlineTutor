@@ -18,21 +18,28 @@
 <#if canChangeFocus>
     <form method="post" action="/student/update-focus">
         <p>Change Study Focus:</p>
-        <label>
-            <input type="checkbox" name="focusAreas" value="Math"> Math
-        </label>
-        <label>
-            <input type="checkbox" name="focusAreas" value="Physics"> Physics
-        </label>
-        <label>
-            <input type="checkbox" name="focusAreas" value="Chemistry"> Chemistry
-        </label>
-        <br>
+
+        <label>Choose Grade:</label><br>
+        <select name="grade" required>
+            <#list grades as g>
+                <option value="${g}">${g}</option>
+            </#list>
+        </select>
+
+        <p>Select Subjects:</p>
+        <#list subjects as s>
+            <label>
+                <input type="checkbox" name="focusAreas" value="${s}"> ${s}
+            </label>
+        </#list>
+
+        <br><br>
         <button type="submit">Update Focus</button>
     </form>
 <#else>
     <p>You must complete your current study plan before changing your study focus.</p>
 </#if>
+
 
 </body>
 </html>

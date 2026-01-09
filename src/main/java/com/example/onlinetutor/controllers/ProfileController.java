@@ -1,11 +1,17 @@
 package com.example.onlinetutor.controllers;
 
+import com.example.onlinetutor.enums.AptitudeTestStatus;
+import com.example.onlinetutor.enums.Grade;
 import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.User;
+import com.example.onlinetutor.repositories.AptitudeTestRepo;
+import com.example.onlinetutor.repositories.StudyPlanRepo;
+import com.example.onlinetutor.repositories.UserRepo;
 import com.example.onlinetutor.services.AptitudeTestService;
 import com.example.onlinetutor.services.StudyPlanService;
 import com.example.onlinetutor.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.Arrays;
 
 @Controller
 public class ProfileController {
@@ -30,10 +37,23 @@ public class ProfileController {
     @Autowired
     private AptitudeTestService aptitudeTestService;
 
+    @Autowired
+    private UserRepo userRepo;
+
+    @Autowired
+    private StudyPlanRepo studyPlanRepo;
+
+    @Autowired
+    private AptitudeTestRepo aptitudeTestRepo;
+
     @GetMapping("/profile")
     public String userProfile(@AuthenticationPrincipal UserDetails userDetails,
                               Model model) {
         User user = userService.findByEmail(userDetails.getUsername());
+        boolean canChangeFocus =
+                studyPlanService.hasCompletedPlans(user.getId());
+
+        model.addAttribute("canChangeFocus", canChangeFocus);
         model.addAttribute("user", user);
         return "/user-and-student/profile";
     }
@@ -46,6 +66,9 @@ public class ProfileController {
         boolean canChangeFocus = studyPlanService.hasCompletedPlans(user.getId());
         model.addAttribute("canChangeFocus", canChangeFocus);
         model.addAttribute("user", user);
+        model.addAttribute("subjects", Arrays.asList(Subject.values()));
+        model.addAttribute("grades", Arrays.asList(Grade.values()));
+//        model.addAttribute("examLevel12", Grade.GRADE12);
 
         return "/user-and-student/edit-profile";
     }
@@ -58,15 +81,29 @@ public class ProfileController {
     }
 
     @PostMapping("/student/update-focus")
-    public String updateFocusAreas(Principal principal, @RequestParam Subject[] focusAreas) {
-        User user = userService.findByEmail(principal.getName());
+    public String updateFocus(
+            @RequestParam("focusAreas") Subject[] focusAreas,
+            @RequestParam("grade") Grade grade,
+            Authentication authentication
+    ) {
+        User user = userService.findByEmail(authentication.getName());
 
-        userService.updateFocusAreas(user.getId(), focusAreas);
+        // 1. Safety check
+        if (!studyPlanService.hasCompletedPlans(user.getId())) {
+            throw new RuntimeException("Cannot change focus before completing study plan");
+        }
 
-        aptitudeTestService.assignNewTest(user.getId(), focusAreas);
+        // 2. RESET LEARNING CYCLE
+        studyPlanRepo.deleteByUserId(user.getId());
+        aptitudeTestRepo.deleteByUserId(user.getId());
 
-        studyPlanService.createPlansForNewStudyFocus(user.getId(), focusAreas);
+        user.setPreferredSubjects(Arrays.asList(focusAreas));
+        user.setExamLevel(grade);
+        user.setAptitudeTestStatus(AptitudeTestStatus.NOT_STARTED);
+        userRepo.save(user);
 
-        return "redirect:/profile";
+        // 3. Redirect to new aptitude test
+        return "redirect:/aptitude-test/start";
     }
+
 }
