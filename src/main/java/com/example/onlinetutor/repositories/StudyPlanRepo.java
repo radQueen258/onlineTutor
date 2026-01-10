@@ -4,15 +4,12 @@ import com.example.onlinetutor.models.Article;
 import com.example.onlinetutor.models.StudyPlan;
 import com.example.onlinetutor.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface StudyPlanRepo extends JpaRepository<StudyPlan,Long> {
 
-    List<StudyPlan> findByUserEmail(String email);
+//    List<StudyPlan> findByUserEmail(String email);
 
     StudyPlan findFirstByUserEmailAndCompletedFalseOrderByIdAsc(String email);
     void deleteByUserId(Long id);
@@ -23,5 +20,7 @@ public interface StudyPlanRepo extends JpaRepository<StudyPlan,Long> {
 
     List<StudyPlan> findByUser(User user);
 
-    List<StudyPlan> findByUserAndCompletedFalseOrderByIdAsc(User user);
+//    List<StudyPlan> findByUserAndCompletedFalseOrderByIdAsc(User user);
+
+    List<StudyPlan> findByUserEmailAndArchivedFalse(String email);
 }

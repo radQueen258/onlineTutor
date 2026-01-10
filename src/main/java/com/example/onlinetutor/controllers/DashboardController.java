@@ -40,7 +40,6 @@ public class DashboardController {
                             HttpSession session, Authentication authentication,
                             @RequestParam(value = "status", required = false) AptitudeTestStatus status) {
 
-//        System.out.println("Logged in user is: " + authentication.getName());
         String email = authentication.getName();
         User user1 = userRepo.findByEmail(email).orElseThrow(() ->
                 new RuntimeException("User not found"));
@@ -51,12 +50,16 @@ public class DashboardController {
             userService.updateAptitudeTestStatus(userId, status);
         }
 
-        boolean needsTest = user1.getAptitudeTestStatus() == AptitudeTestStatus.NOT_STARTED;
+        boolean needsTest = false;
+        if (user1.getAptitudeTestStatus() != AptitudeTestStatus.COMPLETED) {
+            needsTest = true;
+        }
+
         model.addAttribute("needsTest", needsTest);
 
         model.addAttribute("userId", user1.getId());
         model.addAttribute("firstName", user1.getFirstName());
-        //TODO: These below need to be changed by the real logic
+
         if (!needsTest) {
             DashboardStudyPlanInfo info =
                     studyPlanService.getDashboardInfo(user1);
@@ -64,15 +67,6 @@ public class DashboardController {
             model.addAttribute("progress", info.getProgressPercent() + "%");
             model.addAttribute("upcoming", info.getUpcoming());
         }
-
-//        List<StudyPlan> plans = studyPlanService.getPlanForUser(email);
-//
-//        System.out.println("Study plans count = " + plans.size());
-//        plans.forEach(p ->
-//                System.out.println("Plan id=" + p.getId()
-//                        + " userId=" + p.getUser().getId()
-//                        + " progress=" + p.getProgress())
-//        );
 
 
         return "/user-and-student/dashboard";

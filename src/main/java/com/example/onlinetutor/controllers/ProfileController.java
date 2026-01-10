@@ -95,7 +95,8 @@ public class ProfileController {
             throw new RuntimeException("Cannot change focus before completing study plan");
         }
 
-        studyPlanRepo.deleteByUserId(user.getId());
+//        studyPlanRepo.deleteByUserId(user.getId());
+        studyPlanService.archiveStudyPlans(user.getId());
         user.setAptitudeTestStatus(AptitudeTestStatus.NOT_STARTED);
         user.setPreferredSubjects(new ArrayList<>(Arrays.asList(focusAreas)));
 

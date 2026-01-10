@@ -58,16 +58,17 @@
                 <button type="submit">Take Test Now</button>
             </form>
         </#if>
+        <#if progress ??>
+            <section style="margin-top: 30px;">
+                <h2>Progress</h2>
+                <p>${progress}</p>
+            </section>
 
-        <section style="margin-top: 30px;">
-            <h2>Progress</h2>
-            <p>${progress}</p>
-        </section>
-
-        <section style="margin-top: 20px;">
-            <h2>Upcoming</h2>
-            <p>${upcoming}</p>
-        </section>
+            <section style="margin-top: 20px;">
+                <h2>Upcoming</h2>
+                <p>${upcoming}</p>
+            </section>
+        </#if>
 
         <br>
 

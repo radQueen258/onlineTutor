@@ -16,7 +16,7 @@
 </form>
 
 <#if canChangeFocus>
-    <form method="post" action="/student/update-focus">
+    <form id="changeFocusForm" method="post" action="/student/update-focus">
         <p>Change Study Focus:</p>
 
         <label>Choose Grade:</label><br>
@@ -36,6 +36,15 @@
         <br><br>
         <button type="submit">Update Focus</button>
     </form>
+
+    <script>
+        document.getElementById("changeFocusForm").addEventListener("submit", function(e) {
+            const confirmed = confirm("Are you sure you want to change your study focus? This will reset your current study plan and aptitude test.");
+            if (!confirmed) {
+                e.preventDefault(); // stop form submission
+            }
+        });
+    </script>
 <#else>
     <p>You must complete your current study plan before changing your study focus.</p>
 </#if>

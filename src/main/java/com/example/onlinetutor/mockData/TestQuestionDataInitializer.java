@@ -37,10 +37,9 @@
 //                        "Question " + i + " for " + cr.getTopicName()
 //                );
 //
-//                // ✅ IMPORTANT: subject alignment
+//
 //                q.setSubject(cr.getSubject());
 //
-//                // ✅ IMPORTANT: mutable list for ElementCollection
 //                q.setOptions(new ArrayList<>(List.of(
 //                        "A",
 //                        "B",

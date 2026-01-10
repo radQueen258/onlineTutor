@@ -25,4 +25,7 @@ public class StudyPlan {
 
     private double progress;
     private boolean completed;
+
+    @Column(nullable = false)
+    private boolean archived = false;
 }

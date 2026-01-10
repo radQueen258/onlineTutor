@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface StudyPlanService {
 
-    void generatePlanForUser(User user, List<Long> weakCurriculumResourceIds);
+//    void generatePlanForUser(User user, List<Long> weakCurriculumResourceIds);
 
     List<StudyPlan> getPlanForUser(String email);
 
@@ -25,9 +25,11 @@ public interface StudyPlanService {
 
     boolean hasCompletedPlans(Long userId);
 
-    void createPlansForNewStudyFocus(Long userID, Subject[] newFocusAreas);
+//    void createPlansForNewStudyFocus(Long userID, Subject[] newFocusAreas);
 
     void generateStudyPlanFromTest(AptitudeTest test);
 
     DashboardStudyPlanInfo getDashboardInfo(User user);
+
+    void archiveStudyPlans(Long userId);
 }

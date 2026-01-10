@@ -28,11 +28,11 @@ public class StudyPlanServiceImpl implements StudyPlanService {
     @Autowired
     private ResourceRepo resourceRepo;
 
-    @Override
-    public void generatePlanForUser(
-            User user,
-            List<Long> weakCurriculumResourceIds
-    ) {
+//    @Override
+//    public void generatePlanForUser(
+//            User user,
+//            List<Long> weakCurriculumResourceIds
+//    ) {
 
 //        studyPlanRepo.deleteByUserId(user.getId());
 //
@@ -58,12 +58,13 @@ public class StudyPlanServiceImpl implements StudyPlanService {
 //                studyPlanRepo.save(plan);
 //            }
 //        }
-    }
+//    }
 
 
     @Override
     public List<StudyPlan> getPlanForUser(String email) {
-        return studyPlanRepo.findByUserEmail(email);
+//        return studyPlanRepo.findByUserEmail(email);
+        return studyPlanRepo.findByUserEmailAndArchivedFalse(email);
     }
 
     @Override
@@ -98,23 +99,23 @@ public class StudyPlanServiceImpl implements StudyPlanService {
         return true;
     }
 
-    @Override
-    public void createPlansForNewStudyFocus(Long userID, Subject[] newFocusAreas) {
-        studyPlanRepo.deleteByUserId(userID);
-
-        User user = userRepo.findById(userID).orElse(null);
-
-        for (Subject focusArea : newFocusAreas) {
-            StudyPlan plan = new StudyPlan();
-            plan.setUser(user);
-            plan.setProgress(0);
-            plan.setCompleted(false);
-//            plan.setArticle(focusArea);
-            studyPlanRepo.save(plan);
-        }
-
-//        TODO: I Must later on check well the creation of plans
-    }
+//    @Override
+//    public void createPlansForNewStudyFocus(Long userID, Subject[] newFocusAreas) {
+//        studyPlanRepo.deleteByUserId(userID);
+//
+//        User user = userRepo.findById(userID).orElse(null);
+//
+//        for (Subject focusArea : newFocusAreas) {
+//            StudyPlan plan = new StudyPlan();
+//            plan.setUser(user);
+//            plan.setProgress(0);
+//            plan.setCompleted(false);
+////            plan.setArticle(focusArea);
+//            studyPlanRepo.save(plan);
+//        }
+//
+//
+//    }
 
 
     @Override
@@ -193,15 +194,6 @@ public class StudyPlanServiceImpl implements StudyPlanService {
                 ? 0
                 : (int) ((completed * 100.0) / total);
 
-
-//        StudyPlan nextPlan = plans.stream()
-//                .filter(p -> !p.isCompleted())
-//                .findFirst()
-//                .orElse(null);
-//
-//        String upcoming = nextPlan != null
-//                ? nextPlan.getArticle().getArticleTitle()
-//                : "All articles completed";
         StudyPlan next = plans.stream()
                 .filter(p -> !p.isCompleted())
                 .findFirst()
@@ -217,6 +209,16 @@ public class StudyPlanServiceImpl implements StudyPlanService {
                 upcoming
         );
     }
+
+    @Override
+    public void archiveStudyPlans(Long userId) {
+        List<StudyPlan> plans = studyPlanRepo.findByUser_Id(userId);
+        for (StudyPlan plan : plans) {
+            plan.setArchived(true);
+            studyPlanRepo.save(plan);
+        }
+    }
+
 }
 
 
