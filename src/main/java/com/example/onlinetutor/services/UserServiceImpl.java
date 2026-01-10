@@ -136,4 +136,12 @@ public class UserServiceImpl implements UserService{
                 .allMatch(StudyPlan::isCompleted);
     }
 
+    @Override
+    public boolean isProfileComplete(User user) {
+        return user.getExamLevel() != null &&
+                user.getPreferredSubjects() != null &&
+                !user.getPreferredSubjects().isEmpty();
+    }
+
+
 }

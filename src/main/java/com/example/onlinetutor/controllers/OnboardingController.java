@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class OnboardingController {
@@ -30,13 +31,13 @@ public class OnboardingController {
     private UserRepo userRepo;
 
     @GetMapping("/onboarding")
-    public String onboarding(HttpSession session, Model model) {
+    public String onboarding(HttpSession session, Model model, Authentication authentication) {
+        User user = userRepo.findUserByEmail(authentication.getName());
 
-        Boolean testTaken = (Boolean) session.getAttribute("testTaken");
-        if (testTaken == null) {
-            session.setAttribute("testTaken", false);
+        if (user.getPreferredSubjects() != null && user.getExamLevel() != null) {
+            return "redirect:/choose-test";
         }
-        model.addAttribute("testTaken", testTaken);
+
         model.addAttribute("subjects", Arrays.asList(Subject.values()));
         model.addAttribute("examLevel10", Grade.GRADE10);
         model.addAttribute("examLevel12", Grade.GRADE12);

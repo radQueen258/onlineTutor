@@ -120,11 +120,12 @@ public class SignUpController {
         session.setAttribute("userId", savedUser.getId());
         session.setAttribute("testTaken", false);
 
-        return savedUser.getRole() == Role.TUTOR
-                ? "redirect:/tutor/workplace"
-                : savedUser.getRole() == Role.ADMIN
-                ? "redirect:/admin"
-                : "redirect:/onboarding";
+        return switch (savedUser.getRole()) {
+            case TUTOR -> "redirect:/tutor/workplace";
+            case ADMIN -> "redirect:/admin";
+            default -> "redirect:/onboarding";
+        };
+
     }
 }
 

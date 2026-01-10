@@ -24,4 +24,6 @@ public interface UserService {
     void updateFocusAreas(Long userId, Subject[] focusAreas);
 
     boolean canChangeStudyFocus(Long userId);
+
+    boolean isProfileComplete(User user);
 }

@@ -29,6 +29,9 @@ public class AptitudeTestServiceImpl implements AptitudeTestService {
     @Autowired
     private UserRepo userRepository;
 
+    @Autowired
+    private AptitudeTestRepo aptitudeTestRepository;
+
     private static final double WEAK_THRESHOLD = 0.5;
 
 
@@ -142,4 +145,5 @@ public class AptitudeTestServiceImpl implements AptitudeTestService {
     public void save(AptitudeTest completed) {
         testRepository.save(completed);
     }
+
 }

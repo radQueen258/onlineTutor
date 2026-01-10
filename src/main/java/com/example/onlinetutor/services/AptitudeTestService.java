@@ -26,4 +26,6 @@ public interface AptitudeTestService {
     AptitudeTest findById(Long testId);
 
     void save(AptitudeTest completed);
+
+//    boolean hasCompletedTest(Long userId);
 }
