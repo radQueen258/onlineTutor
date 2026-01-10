@@ -1,12 +1,10 @@
 package com.example.onlinetutor.services;
 
 import com.example.onlinetutor.enums.AptitudeTestStatus;
-import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.AptitudeTest;
 import com.example.onlinetutor.models.TestQuestion;
 import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.AptitudeTestRepo;
-import com.example.onlinetutor.repositories.TestQuestionRepo;
 import com.example.onlinetutor.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Component
 public class AptitudeTestServiceImpl implements AptitudeTestService {
@@ -23,16 +21,16 @@ public class AptitudeTestServiceImpl implements AptitudeTestService {
     @Autowired
     private AptitudeTestRepo testRepository;
 
-    @Autowired
-    private TestQuestionRepo questionRepository;
+//    @Autowired
+//    private TestQuestionRepo questionRepository;
 
     @Autowired
     private UserRepo userRepository;
 
-    @Autowired
-    private AptitudeTestRepo aptitudeTestRepository;
+//    @Autowired
+//    private AptitudeTestRepo aptitudeTestRepository;
 
-    private static final double WEAK_THRESHOLD = 0.5;
+//    private static final double WEAK_THRESHOLD = 0.5;
 
 
     @Override

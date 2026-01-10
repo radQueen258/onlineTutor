@@ -4,10 +4,7 @@ import com.example.onlinetutor.models.Article;
 import com.example.onlinetutor.models.Video;
 import com.example.onlinetutor.repositories.ArticleRepo;
 import com.example.onlinetutor.repositories.QuizQuestionRepo;
-import com.example.onlinetutor.repositories.UserRepo;
 import com.example.onlinetutor.repositories.VideoRepo;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,16 +13,16 @@ import org.springframework.stereotype.Component;
 public class ArticleServiceImpl implements ArticleService {
     @Autowired
     ArticleRepo articleRepo;
-    @Autowired
-    UserRepo userRepo;
+//    @Autowired
+//    UserRepo userRepo;
     @Autowired
     private QuizQuestionRepo quizQuestionRepo;
 
     @Autowired
     private VideoRepo videoRepo;
 
-    @Autowired
-    private VideoService videoService;
+//    @Autowired
+//    private VideoService videoService;
 
 
     @Transactional
