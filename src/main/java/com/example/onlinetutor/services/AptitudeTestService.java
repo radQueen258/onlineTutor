@@ -16,12 +16,12 @@ public interface AptitudeTestService {
     List<AptitudeTest> getAllResults();
 
     Optional<AptitudeTest> getById(Long id);
-    List<AptitudeTest> getAllTests();
+//    List<AptitudeTest> getAllTests();
     Optional<User> getUserById(Long userId);
 
-    void assignNewTest(Long userId, Subject[] focusAreas);
+//    void assignNewTest(Long userId, Subject[] focusAreas);
 
-    List<Long> extractWeakCurriculumResources (AptitudeTest test);
+//    List<Long> extractWeakCurriculumResources (AptitudeTest test);
 
     AptitudeTest findById(Long testId);
 

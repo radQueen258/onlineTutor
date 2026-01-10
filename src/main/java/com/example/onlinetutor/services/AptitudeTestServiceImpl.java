@@ -86,55 +86,54 @@ public class AptitudeTestServiceImpl implements AptitudeTestService {
         return testRepository.findById(id);
     }
 
-    @Override
-    public List<AptitudeTest> getAllTests() {
-        return testRepository.findAllByOrderByIdDesc();
-    }
+//    @Override
+//    public List<AptitudeTest> getAllTests() {
+//        return testRepository.findAllByOrderByIdDesc();
+//    }
 
     @Override
     public Optional<User> getUserById(Long userId) {
         return userRepository.findById(userId);
     }
 
-    @Override
-    public void assignNewTest(Long userId, Subject[] focusAreas) {
-        for (Subject subject : focusAreas) {
-            AptitudeTest test = new AptitudeTest();
-            test.setUserId(userId);
-//            test.setSubject(subject);
-            test.setStatus(AptitudeTestStatus.NOT_STARTED);
-            test.setScore(null);
+//    @Override
+//    public void assignNewTest(Long userId, Subject[] focusAreas) {
+//        for (Subject subject : focusAreas) {
+//            AptitudeTest test = new AptitudeTest();
+//            test.setUserId(userId);
+//            test.setStatus(AptitudeTestStatus.NOT_STARTED);
+//            test.setScore(null);
+//
+//            testRepository.save(test);
+//
+//
+//        }
+//    }
 
-            testRepository.save(test);
-
-//            TODO: I must check later on the real logic for this
-        }
-    }
-
-    @Override
-    public List<Long> extractWeakCurriculumResources(AptitudeTest test) {
-        Map<Long, List<TestQuestion>> grouped =
-                test.getQuestions().stream()
-                        .collect(Collectors.groupingBy(
-                                q -> q.getCurriculumResource().getId()
-                        ));
-
-        List<Long> weakResources = new ArrayList<>();
-
-        for (var entry : grouped.entrySet()) {
-            long correct = entry.getValue().stream()
-                    .filter(q -> q.getCorrectAnswer().equals(q.getUserAnswer()))
-                    .count();
-
-            double score = (double) correct / entry.getValue().size();
-
-            if (score < WEAK_THRESHOLD) {
-                weakResources.add(entry.getKey());
-            }
-        }
-
-        return weakResources;
-    }
+//    @Override
+//    public List<Long> extractWeakCurriculumResources(AptitudeTest test) {
+//        Map<Long, List<TestQuestion>> grouped =
+//                test.getQuestions().stream()
+//                        .collect(Collectors.groupingBy(
+//                                q -> q.getCurriculumResource().getId()
+//                        ));
+//
+//        List<Long> weakResources = new ArrayList<>();
+//
+//        for (var entry : grouped.entrySet()) {
+//            long correct = entry.getValue().stream()
+//                    .filter(q -> q.getCorrectAnswer().equals(q.getUserAnswer()))
+//                    .count();
+//
+//            double score = (double) correct / entry.getValue().size();
+//
+//            if (score < WEAK_THRESHOLD) {
+//                weakResources.add(entry.getKey());
+//            }
+//        }
+//
+//        return weakResources;
+//    }
 
     @Override
     public AptitudeTest findById(Long testId) {
