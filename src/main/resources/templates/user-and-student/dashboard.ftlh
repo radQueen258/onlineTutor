@@ -53,7 +53,7 @@
         <p>User ID: ${userId}</p>
 
         <#if needsTest>
-            <p style="color:red;">⚠️ You still need to take your aptitude test!</p>
+            <p style="color:red;"> You still need to take your aptitude test!</p>
             <form action="/aptitude-test/start" method="get">
                 <button type="submit">Take Test Now</button>
             </form>
@@ -64,18 +64,23 @@
                 <p>${progress}</p>
             </section>
 
+            <br>
+            <h2>Recommended Articles</h2>
+
             <#if recommendations?? && recommendations?size gt 0>
-                <h2>Recommended Articles</h2>
                 <ul>
                     <#list recommendations as r>
                         <li>
-                            <a href="/articles/${r.articleId}">
-                                Article #${r.articleId} (score: ${r.score})
+                            <a href="/resources/${r.resourceId}/article/${r.articleId}">
+                                ${r.title} – ${r.subject}
                             </a>
                         </li>
                     </#list>
                 </ul>
+            <#else>
+                <p>No recommended articles</p>
             </#if>
+
 
 
             <section style="margin-top: 20px;">

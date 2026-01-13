@@ -2,11 +2,14 @@ package com.example.onlinetutor.controllers;
 
 
 import com.example.onlinetutor.dto.DashboardStudyPlanInfo;
+import com.example.onlinetutor.dto.RecommendedArticleView;
 import com.example.onlinetutor.enums.AptitudeTestStatus;
+import com.example.onlinetutor.models.Article;
 import com.example.onlinetutor.models.ArticleRecommendation;
 import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.AptitudeTestRepo;
 import com.example.onlinetutor.repositories.ArticleRecommendationRepo;
+import com.example.onlinetutor.repositories.ArticleRepo;
 import com.example.onlinetutor.repositories.UserRepo;
 import com.example.onlinetutor.services.AptitudeTestService;
 import com.example.onlinetutor.services.ArticleRecommendationService;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class DashboardController {
@@ -33,6 +37,9 @@ public class DashboardController {
 
     @Autowired
     private StudyPlanService studyPlanService;
+
+    @Autowired
+    private ArticleRepo articleRepo;
 //    @Autowired
 //    private ArticleRecommendationService articleRecommendationService;
 //    @Autowired
@@ -77,7 +84,25 @@ public class DashboardController {
                 articleRecommendationRepo
                         .findTop5ByUserIdOrderByScoreDesc(userId);
 
-//        model.addAttribute("recommendations", recs);
+        List<RecommendedArticleView> recommendations = recs.stream()
+                .map(rec -> {
+                    Article article = articleRepo.findById(rec.getArticleId())
+                            .orElse(null);
+
+                    if (article == null || article.getResource() == null) {
+                        return null;
+                    }
+
+                    return new RecommendedArticleView(
+                            article.getId(),
+                            article.getResource().getId(),
+                            article.getArticleTitle(),
+                            article.getSubject(),
+                            rec.getScore()
+                    );
+                })
+                .filter(Objects::nonNull)
+                .toList();
 
 
         if (!needsTest) {
@@ -86,7 +111,8 @@ public class DashboardController {
 
             model.addAttribute("progress", info.getProgressPercent() + "%");
             model.addAttribute("upcoming", info.getUpcoming());
-            model.addAttribute("recommendations", recs);
+            model.addAttribute("recommendations", recommendations);
+
         }
 
 
