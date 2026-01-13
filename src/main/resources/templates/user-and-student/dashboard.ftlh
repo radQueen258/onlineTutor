@@ -30,7 +30,6 @@
         </ul>
 
         <form action="/logout" method="post">
-<#--            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">-->
             <button type="submit" style="
             background-color: #dc3545;
             color: white;
@@ -65,22 +64,34 @@
             </section>
 
             <br>
+            <#assign MAX_TITLE_LENGTH = 50>
+
             <h2>Recommended Articles</h2>
 
             <#if recommendations?? && recommendations?size gt 0>
                 <ul>
                     <#list recommendations as r>
+
+                        <#assign fullTitle = r.title>
+
+                        <#if fullTitle?length gt MAX_TITLE_LENGTH>
+                            <#assign shortTitle = fullTitle?substring(0, MAX_TITLE_LENGTH) + "...">
+                        <#else>
+                            <#assign shortTitle = fullTitle>
+                        </#if>
+
                         <li>
-                            <a href="/resources/${r.resourceId}/article/${r.articleId}">
-                                ${r.title} – ${r.subject}
+                            <a href="/resources/${r.resourceId}/article/${r.articleId}"
+                               title="${fullTitle}">
+                                ${shortTitle} – ${r.subject}
                             </a>
                         </li>
+
                     </#list>
                 </ul>
             <#else>
                 <p>No recommended articles</p>
             </#if>
-
 
 
             <section style="margin-top: 20px;">
