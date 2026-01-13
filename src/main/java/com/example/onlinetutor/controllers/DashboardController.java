@@ -3,10 +3,13 @@ package com.example.onlinetutor.controllers;
 
 import com.example.onlinetutor.dto.DashboardStudyPlanInfo;
 import com.example.onlinetutor.enums.AptitudeTestStatus;
-import com.example.onlinetutor.models.StudyPlan;
+import com.example.onlinetutor.models.ArticleRecommendation;
 import com.example.onlinetutor.models.User;
-import com.example.onlinetutor.repositories.StudyPlanRepo;
+import com.example.onlinetutor.repositories.AptitudeTestRepo;
+import com.example.onlinetutor.repositories.ArticleRecommendationRepo;
 import com.example.onlinetutor.repositories.UserRepo;
+import com.example.onlinetutor.services.AptitudeTestService;
+import com.example.onlinetutor.services.ArticleRecommendationService;
 import com.example.onlinetutor.services.StudyPlanService;
 import com.example.onlinetutor.services.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -30,6 +33,15 @@ public class DashboardController {
 
     @Autowired
     private StudyPlanService studyPlanService;
+//    @Autowired
+//    private ArticleRecommendationService articleRecommendationService;
+//    @Autowired
+//    private AptitudeTestService aptitudeTestService;
+//    @Autowired
+//    private AptitudeTestRepo aptitudeTestRepo;
+
+    @Autowired
+    private ArticleRecommendationRepo  articleRecommendationRepo;
 
     public DashboardController(UserRepo userRepo) {
         this.userRepo = userRepo;
@@ -60,12 +72,21 @@ public class DashboardController {
         model.addAttribute("userId", user1.getId());
         model.addAttribute("firstName", user1.getFirstName());
 
+//        --------ARTICLE RECOMMENDATION USING ML IN HF--------------
+        List<ArticleRecommendation> recs =
+                articleRecommendationRepo
+                        .findTop5ByUserIdOrderByScoreDesc(userId);
+
+//        model.addAttribute("recommendations", recs);
+
+
         if (!needsTest) {
             DashboardStudyPlanInfo info =
                     studyPlanService.getDashboardInfo(user1);
 
             model.addAttribute("progress", info.getProgressPercent() + "%");
             model.addAttribute("upcoming", info.getUpcoming());
+            model.addAttribute("recommendations", recs);
         }
 
 

@@ -2,12 +2,12 @@ package com.example.onlinetutor.services;
 
 import com.example.onlinetutor.dto.ArticleRecommendationRequest;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -27,17 +27,20 @@ public class ArticleRecommendationServiceImpl implements ArticleRecommendationSe
 
     @Override
     public Map<String, Object> recommend(ArticleRecommendationRequest request) {
+        Map<String,Object> payload = new HashMap<>();
+        payload.put("topic_weakness", request.getTopicWeakness());
+        payload.put("wrong_answers", request.getWrongAnswers());
+        payload.put("articles", request.getArticles());
+        payload.put("topK", request.getTopK());
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        ResponseEntity<Map<String,Object>> response =
+                restTemplate.exchange(
+                        recommenderUrl,
+                        HttpMethod.POST,
+                        new HttpEntity<>(payload),
+                        new ParameterizedTypeReference<Map<String,Object>>() {}
+                );
 
-        HttpEntity<ArticleRecommendationRequest> entity =
-                new HttpEntity<>(request, headers);
-
-        return restTemplate.postForObject(
-                recommenderUrl + "/recommend",
-                entity,
-                Map.class
-        );
+        return response.getBody();
     }
 }

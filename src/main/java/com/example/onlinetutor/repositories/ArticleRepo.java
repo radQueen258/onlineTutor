@@ -18,12 +18,7 @@ public interface ArticleRepo extends JpaRepository<Article,Long> {
     Long countByResource_Id(Long resourceId);
 
     List<Article> findArticlesByResource_Id(Long resourceId);
-//    Long countArticlesByResource(Resource resource);
-
-    List<Article> findAll();
-
     void deleteArticleByTutorName_Id(Long tutorNameId);
-    void deleteArticleById(Long articleId);
 
     Article findArticlesById(Long id);
 

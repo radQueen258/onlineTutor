@@ -26,23 +26,23 @@ public class AptitudeGeneratorServiceImpl implements AptitudeGeneratorService {
     @Override
     public List<TestQuestion> generateQuestionsForStudent(User user) {
 
-        // 1. Get curriculum topics based on student profile
+
         List<CurriculumResource> curriculumResources =
                 curriculumResourceRepo.findBySubjectInAndGrade(
                         user.getPreferredSubjects(),
                         user.getExamLevel()
                 );
 
-        // 2. Fetch all questions for those topics
+
         List<TestQuestion> allQuestions =
                 testQuestionRepo.findByCurriculumResources(curriculumResources);
 
-        // 3. Group by topic
+
         Map<CurriculumResource, List<TestQuestion>> byResource =
                 allQuestions.stream()
                         .collect(Collectors.groupingBy(TestQuestion::getCurriculumResource));
 
-        // 4. Pick 1–2 questions per topic
+
         List<TestQuestion> selected = new ArrayList<>();
 
         for (var entry : byResource.entrySet()) {

@@ -13,19 +13,19 @@ import java.util.Optional;
 public interface AptitudeTestService {
     AptitudeTest startTest(Long userId, List<TestQuestion> generatedQuestions);
     AptitudeTest submitTest(Long testId, Map<Long, String> answers);
+
+    Map<String, Object> buildRecommendationPayload(
+            AptitudeTest test,
+            Map<String, Double> topicWeakness
+    );
+
     List<AptitudeTest> getAllResults();
 
     Optional<AptitudeTest> getById(Long id);
-//    List<AptitudeTest> getAllTests();
     Optional<User> getUserById(Long userId);
-
-//    void assignNewTest(Long userId, Subject[] focusAreas);
-
-//    List<Long> extractWeakCurriculumResources (AptitudeTest test);
 
     AptitudeTest findById(Long testId);
 
     void save(AptitudeTest completed);
 
-//    boolean hasCompletedTest(Long userId);
 }

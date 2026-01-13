@@ -64,6 +64,20 @@
                 <p>${progress}</p>
             </section>
 
+            <#if recommendations?? && recommendations?size gt 0>
+                <h2>Recommended Articles</h2>
+                <ul>
+                    <#list recommendations as r>
+                        <li>
+                            <a href="/articles/${r.articleId}">
+                                Article #${r.articleId} (score: ${r.score})
+                            </a>
+                        </li>
+                    </#list>
+                </ul>
+            </#if>
+
+
             <section style="margin-top: 20px;">
                 <h2>Upcoming</h2>
                 <p>${upcoming}</p>
