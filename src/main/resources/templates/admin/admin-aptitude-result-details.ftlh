@@ -12,7 +12,7 @@
 <h2>Aptitude Test Details</h2>
 
 <p><strong>User ID:</strong> ${test.userId}</p>
-<#if test.score??has_content>
+<#if test.score?has_content>
     <p><strong>Score:</strong> ${test.score}</p>
     <#else>
     <p><strong>Score:</strong> 0 </p>

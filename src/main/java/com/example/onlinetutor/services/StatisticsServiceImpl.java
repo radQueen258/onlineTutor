@@ -28,8 +28,20 @@ public class StatisticsServiceImpl implements StatisticsService{
     @Override
     public Map<String, Object> getOverallStatistics() {
         Map<String, Object> stats = new HashMap<>();
-        stats.put("mostReadArtcle", "Intro to Java");
-        stats.put("averageScore", 85);
+
+        List<Object[]> failed = testResultRepo.findMostFailedArticles();
+        if (!failed.isEmpty()) {
+            stats.put("Most failed article", failed.get(0)[0]);
+        }
+        long totalAttempts = testResultRepo.count();
+        long passedAttempts = testResultRepo.countByPassed(true);
+
+        double passRate = totalAttempts == 0
+                ? 0
+                : (passedAttempts * 100.0) / totalAttempts;
+
+        stats.put("Quiz attempts", totalAttempts);
+        stats.put("Pass rate (%)", passRate);
         return stats;
     }
 

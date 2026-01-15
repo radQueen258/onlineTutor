@@ -26,8 +26,11 @@
                 <td>${item.studentsFailed}</td>
                 <td>
                     <#if item.commonMistakes?? && (item.commonMistakes?size > 0)>
+                        <#assign mistakeKeys = item.commonMistakes?keys>
+                        <#assign max = (mistakeKeys?size > 3)?then(3, mistakeKeys?size)>
+
                         <ul>
-                            <#list item.commonMistakes?keys as question>
+                            <#list mistakeKeys[0..max-1] as question>
                                 <li>${question}: ${item.commonMistakes[question]}</li>
                             </#list>
                         </ul>

@@ -52,16 +52,6 @@
     </div>
 
     <div>
-        <h3>Overall Statistics</h3>
-        <#if statistics??>
-            <ul>
-                <#list statistics?keys as key>
-                    <li>${key}: ${statistics[key]}</li>
-                </#list>
-            </ul>
-        <#else>
-            <p>No statistics available.</p>
-        </#if>
         <a href="/admin/statistics">View Detailed Stats</a>
     </div>
 </div>

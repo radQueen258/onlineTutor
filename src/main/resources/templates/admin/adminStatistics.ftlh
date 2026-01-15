@@ -31,12 +31,26 @@
 <h1>Overall Statistics</h1>
 
 <#if stats?? && stats?size gt 0>
-    <table border="1" cellpadding="8">
-        <tr><th>Metric</th><th>Value</th></tr>
+    <table border="1" cellpadding="8" style="border-collapse:collapse; max-width:600px;">
+        <tr style="background:#0f2b4c;color:white;">
+            <th style="text-align:left;">Metric</th>
+            <th style="text-align:left;">Value</th>
+        </tr>
+
         <#list stats?keys as key>
             <tr>
                 <td>${key}</td>
-                <td>${stats[key]}</td>
+                <td>
+                    <#if stats[key]??>
+                        <#if key == "Pass rate (%)">
+                            ${stats[key]?string["0.0"]}%
+                        <#else>
+                            ${stats[key]!N/A}
+                        </#if>
+                    <#else>
+                        N/A
+                    </#if>
+                </td>
             </tr>
         </#list>
     </table>
@@ -45,6 +59,7 @@
 </#if>
 
 <a href="/admin/dashboard">← Back to Dashboard</a>
+
 
 </body>
 </html>

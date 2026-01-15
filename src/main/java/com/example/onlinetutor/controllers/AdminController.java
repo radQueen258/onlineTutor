@@ -252,7 +252,7 @@ public class AdminController {
     public String analytics(Model model, Principal principal) {
         User tutor = userRepo.findByEmail(principal.getName()).orElseThrow();
         List<TutorAnalyticsDTO> stats = statisticsService.getTutorAnalytics(tutor.getId());
-        System.out.println("HERE IS THE DATA: " +stats);
+//        System.out.println("HERE IS THE DATA: " +stats);
         model.addAttribute("stats", stats);
         return "/admin/admin-analytics";
     }

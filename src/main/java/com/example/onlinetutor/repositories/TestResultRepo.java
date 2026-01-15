@@ -19,4 +19,15 @@ public interface TestResultRepo extends JpaRepository<TestResult, Long> {
 
     void deleteByStudent_Id(Long id);
 
+    @Query("""
+    SELECT tr.article.articleTitle, COUNT(tr)
+    FROM TestResult tr
+    WHERE tr.passed = false
+    GROUP BY tr.article.articleTitle
+    ORDER BY COUNT(tr) DESC
+""")
+    List<Object[]> findMostFailedArticles();
+
+
+    long countByPassed(boolean b);
 }
