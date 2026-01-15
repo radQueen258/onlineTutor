@@ -3,8 +3,11 @@ package com.example.onlinetutor.controllers;
 import com.example.onlinetutor.enums.AptitudeTestStatus;
 import com.example.onlinetutor.models.AptitudeTest;
 import com.example.onlinetutor.models.StudyPlan;
+import com.example.onlinetutor.models.TestResult;
 import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.AptitudeTestRepo;
+import com.example.onlinetutor.repositories.TestResultRepo;
+import com.example.onlinetutor.repositories.UserRepo;
 import com.example.onlinetutor.services.AptitudeTestService;
 import com.example.onlinetutor.services.QuizQuestionService;
 import com.example.onlinetutor.services.StudyPlanService;
@@ -38,6 +41,12 @@ public class StudyPlanController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private TestResultRepo testResultRepo;
+
+    @Autowired
+    private UserRepo userRepo;
+
     @GetMapping("/study-plan")
     public String studyPlan(Model model, Principal principal) {
         List<StudyPlan> plans = studyPlanService.getPlanForUser(principal.getName());
@@ -64,15 +73,27 @@ public class StudyPlanController {
     @PostMapping("/submit/{planId}")
     public String submitQuiz(@PathVariable Long planId,
                              @RequestParam Map<String, String> answers,
-                             Model model) {
+                             Model model, Principal principal) {
         var plan = studyPlanService.getById(planId);
-        int score = quizQuestionService.evaluateQuiz(plan.getArticle().getId(), answers);
+        User student = userRepo.findByEmail(principal.getName()).orElseThrow();
+        int score = quizQuestionService.evaluateAndSaveQuiz(plan.getArticle().getId(), answers, student);
+
 
         if (score >= 2) { // todo: POR AGORA VAMOS USAR ASSIM O CRITERIO PARA PASSAR
             plan.setCompleted(true);
             plan.setProgress(1.0);
             studyPlanService.savePlan(plan);
         }
+
+        boolean passed = score >= 2;
+
+        TestResult result = new TestResult();
+        result.setArticle(plan.getArticle());
+        result.setStudent(plan.getUser());
+        result.setPassed(passed);
+
+        testResultRepo.save(result);
+
 
         model.addAttribute("score", score);
         model.addAttribute("article", plan.getArticle());

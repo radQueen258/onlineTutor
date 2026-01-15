@@ -30,7 +30,6 @@
 
 <h1>Manage Articles</h1>
 
-<a href="/admin/article/new">Create New Article</a>
 
 <table border="1" cellpadding="8">
     <tr>

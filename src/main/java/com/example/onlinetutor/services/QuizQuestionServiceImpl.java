@@ -1,16 +1,12 @@
 package com.example.onlinetutor.services;
 
-import com.example.onlinetutor.dto.TutorAnalyticsDTO;
-import com.example.onlinetutor.models.Article;
+import com.example.onlinetutor.models.QuizAnswer;
 import com.example.onlinetutor.models.QuizQuestion;
-import com.example.onlinetutor.repositories.ArticleRepo;
-import com.example.onlinetutor.repositories.QuizQuestionRepo;
-import com.example.onlinetutor.repositories.TestQuestionRepo;
-import com.example.onlinetutor.repositories.TestResultRepo;
+import com.example.onlinetutor.models.User;
+import com.example.onlinetutor.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +16,9 @@ public class QuizQuestionServiceImpl implements QuizQuestionService {
     @Autowired
     private QuizQuestionRepo quizQuestionRepo;
 
+    @Autowired
+    private QuizAnswerRepo quizAnswerRepo;
+
 
     @Override
     public List<QuizQuestion> getQuizByArticleId(Long articleId) {
@@ -27,27 +26,51 @@ public class QuizQuestionServiceImpl implements QuizQuestionService {
     }
 
     @Override
-    public int evaluateQuiz(Long articleId, Map<String, String> answers) {
-        List<QuizQuestion> questions = getQuizByArticleId(articleId);
+    public int evaluateAndSaveQuiz(Long articleId, Map<String, String> answers, User student) {
+        List<QuizQuestion> questions =
+                quizQuestionRepo.findByArticleId(articleId);
+
         int score = 0;
 
-        for (QuizQuestion q : questions) {
-            String userAnswer = answers.get("q" + q.getId());
-            if (userAnswer != null && userAnswer.equalsIgnoreCase(q.getCorrectAnswer())) {
+        for (QuizQuestion question : questions) {
+            String submittedAnswer =
+                    answers.get("q" + question.getId());
+
+            boolean correct = submittedAnswer != null
+                    && question.getCorrectAnswer().equals(submittedAnswer);
+
+            if (correct) {
                 score++;
             }
+
+//            Here it saves the answers of the student
+            QuizAnswer qa = new QuizAnswer();
+            qa.setQuestion(question);
+            qa.setCorrect(correct);
+            System.out.println("Answers map: " + answers);
+
+            quizAnswerRepo.save(qa);
         }
+
         return score;
     }
 
     @Override
     public Map<String, Long> findQuestionMistakeStats(Long articleId) {
-        List<Object[]> rows = quizQuestionRepo.findCommonMistakesByArticleId(articleId);
-        Map<String, Long> map = new LinkedHashMap<>();
-        for (Object[] row : rows) {
-            map.put((String) row[0], (Long) row[1]);
+        List<Object[]> rawStats =
+                quizAnswerRepo.findMistakeStatsByArticle(articleId);
+
+        Map<String, Long> result = new LinkedHashMap<>();
+
+        for (Object[] row : rawStats) {
+            String question = (String) row[0];
+            Long mistakes = (Long) row[1];
+            result.put(question, mistakes);
         }
-        return map;
+
+        return result;
     }
+
+
 
 }

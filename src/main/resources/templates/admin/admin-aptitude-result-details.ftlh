@@ -12,7 +12,13 @@
 <h2>Aptitude Test Details</h2>
 
 <p><strong>User ID:</strong> ${test.userId}</p>
-<p><strong>Score:</strong> ${test.score}</p>
+<#if test.score??has_content>
+    <p><strong>Score:</strong> ${test.score}</p>
+    <#else>
+    <p><strong>Score:</strong> 0 </p>
+</#if>
+
+
 <p><strong>Status:</strong> ${test.status}</p>
 
 <#if test.questions?has_content>
@@ -22,19 +28,12 @@
             <th>Question</th>
             <th>User Answer</th>
             <th>Correct Answer</th>
-<#--            <th>Correct?</th>-->
         </tr>
         <#list test.questions as q>
             <tr>
                 <td>${q.questionText}</td>
                 <td>${q.userAnswer!'-'}</td>
                 <td>${q.correctAnswer!'-'}</td>
-<#--                <td>-->
-<#--                    <#if q.isCorrect??>-->
-<#--                        <#if q.isCorrect>✅</#if>-->
-<#--                        <#if !q.isCorrect>❌</#if>-->
-<#--                    <#else>-</#if>-->
-<#--                </td>-->
             </tr>
         </#list>
     </table>
