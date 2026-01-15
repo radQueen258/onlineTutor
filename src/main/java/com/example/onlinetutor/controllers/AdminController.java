@@ -2,6 +2,7 @@ package com.example.onlinetutor.controllers;
 
 import com.example.onlinetutor.dto.TutorAnalyticsDTO;
 import com.example.onlinetutor.enums.Grade;
+import com.example.onlinetutor.enums.Role;
 import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.*;
 import com.example.onlinetutor.repositories.*;
@@ -58,8 +59,11 @@ public class AdminController {
     @GetMapping("/admin/dashboard")
     public String adminDashboard(Model model, Principal principal) {
         User admin = userRepo.findByEmail(principal.getName()).orElseThrow();
-        model.addAttribute("adminName", admin.getFirstName()); 
-        model.addAttribute("totalUsers", userRepo.count());
+        long totalStudents = userRepo.countByRole(Role.STUDENT);
+        long totalTutors = userRepo.countByRole(Role.TUTOR);
+        model.addAttribute("adminName", admin.getFirstName());
+        model.addAttribute("totalStudents", totalStudents);
+        model.addAttribute("totalTutors", totalTutors);
         model.addAttribute("totalArticles",  articleRepo.count());
         model.addAttribute("totalVideos",  videoRepo.count());
         model.addAttribute("statistics", statisticsService.getOverallStatistics());
@@ -87,6 +91,8 @@ public class AdminController {
     @GetMapping("/admin/users")
     public String viewUsers(Model model) {
         model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("userStudent", userRepo.findAllByRole(Role.STUDENT));
+        model.addAttribute("userTutor", userRepo.findAllByRole(Role.TUTOR));
         return "/admin/adminUsers";
     }
 
@@ -252,7 +258,6 @@ public class AdminController {
     public String analytics(Model model, Principal principal) {
         User tutor = userRepo.findByEmail(principal.getName()).orElseThrow();
         List<TutorAnalyticsDTO> stats = statisticsService.getTutorAnalytics(tutor.getId());
-//        System.out.println("HERE IS THE DATA: " +stats);
         model.addAttribute("stats", stats);
         return "/admin/admin-analytics";
     }

@@ -34,8 +34,12 @@
     <p>Here’s a quick overview of what’s going on in the system.</p>
 
     <div>
-        <h3>Registered Users</h3>
-        <p>Total: ${totalUsers}</p>
+        <h3>Registered Students</h3>
+        <p>Total: ${totalStudents}</p>
+        <br>
+        <h3>Registered Tutors</h3>
+        <p>Total: ${totalTutors}</p>
+
         <a href="/admin/users">Manage Users</a>
     </div>
 
