@@ -1,6 +1,7 @@
 package com.example.onlinetutor.models;
 
 import com.example.onlinetutor.enums.*;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,7 +30,9 @@ public class User {
     private String firstName;
     private String lastName;
     private String schoolName;
-    private boolean isVerified = false;
+
+    @Column(nullable = false)
+    private boolean isVerified;
 
 
     @Enumerated(EnumType.STRING)

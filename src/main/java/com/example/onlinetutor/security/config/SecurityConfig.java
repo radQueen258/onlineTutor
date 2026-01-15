@@ -100,7 +100,7 @@ public class SecurityConfig {
                 .requestMatchers("/choose-test/**", "/videos/**"
                 ,"/resources/**", "/article/**", "/exam-trends/**", "/study/**"
                 , "/study-plan/**", "/submit/**", "/tutor/**","/admin/**", "/statistics","/debug/**","/api/**").permitAll()
-                .requestMatchers("/error").permitAll()
+                .requestMatchers("/error/**", "/waiting-room/**").permitAll()
                 .requestMatchers("/aptitude-test/**").permitAll()
                 .anyRequest().permitAll()
         );
