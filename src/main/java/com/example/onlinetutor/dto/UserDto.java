@@ -22,6 +22,7 @@ public class UserDto {
     private String lastname;
     private Gender gender;
     private String schoolName;
+    private boolean isVerified;
 
 
     public static UserDto from(User user){
@@ -32,6 +33,7 @@ public class UserDto {
                 .lastname(user.getLastName())
                 .gender(user.getGender())
                 .schoolName(user.getSchoolName())
+                .isVerified(user.isVerified())
                 .build();
     }
 

@@ -44,7 +44,8 @@ public class SignUpServiceImpl implements SignUpService{
                 .lastName(form.getLastName())
                 .gender(form.getGender())
                 .role(form.getRole())
-                .idCard(idCard);
+                .idCard(idCard)
+                .isVerified(true);
 
         if (form.getRole() == Role.STUDENT) {
             userBuilder.schoolName(form.getSchoolName());

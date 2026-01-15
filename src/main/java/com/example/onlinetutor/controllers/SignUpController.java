@@ -5,6 +5,8 @@ import com.example.onlinetutor.dto.VerificationResult;
 import com.example.onlinetutor.enums.Role;
 import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.User;
+import com.example.onlinetutor.repositories.UserRepo;
+import com.example.onlinetutor.services.AptitudeTestService;
 import com.example.onlinetutor.services.IdVerificationServiceImpl;
 import com.example.onlinetutor.services.SignUpService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,14 +19,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class SignUpController {
@@ -37,6 +38,9 @@ public class SignUpController {
     private IdVerificationServiceImpl idVerificationServiceImpl;
 
     private VerificationResult verificationResult;
+
+    @Autowired
+    private UserRepo userRepo;
 
     @GetMapping("/signUp")
     public String signUpPage(Model model) {
@@ -60,15 +64,9 @@ public class SignUpController {
             return "/user-and-student/sign_up_page";
         }
 
-        System.out.println("Front filename: " + frontImage.getOriginalFilename());
-        System.out.println("Front size: " + frontImage.getSize());
-
-        System.out.println("Back filename: " + backImage.getOriginalFilename());
-        System.out.println("Back size: " + backImage.getSize());
-
-
+        VerificationResult verificationResult;
         try {
-            VerificationResult result =
+             verificationResult =
                     idVerificationServiceImpl.verifyFrontAndBack(
                             frontImage.getBytes(),
                             frontImage.getOriginalFilename(),
@@ -76,16 +74,12 @@ public class SignUpController {
                             backImage.getOriginalFilename()
                     );
 
-            System.out.println("THE RESULT IS: " + result.getProbability());
-            System.out.println("Accepted: " + result.isAccepted());
-            System.out.println("Method: " + result.getMethod());
 
-
-            if (!result.isAccepted()) {
+            if (!verificationResult.isAccepted()) {
                 model.addAttribute(
                         "errorMessage",
                         "ID verification failed (confidence: " +
-                                String.format("%.2f", result.getProbability()) + ")"
+                                String.format("%.2f", verificationResult.getProbability()) + ")"
                 );
                 return "/error/notId";
             }
@@ -123,9 +117,29 @@ public class SignUpController {
         return switch (savedUser.getRole()) {
             case TUTOR -> "redirect:/tutor/workplace";
             case ADMIN -> "redirect:/admin";
-            default -> "redirect:/onboarding";
+            default -> "redirect:/waiting-room";
         };
 
+    }
+
+    @GetMapping("/waiting-room")
+    public String waitingRoom(HttpSession session, Model model) {
+        Long userId = (Long) session.getAttribute("userId");
+        if (userId == null) {
+            return "redirect:/signUp"; // fallback
+        }
+        model.addAttribute("userId", userId);
+        return "/user-and-student/waiting-room";
+    }
+
+    @GetMapping("/signup/status/{userId}")
+    @ResponseBody
+    public Map<String, Object> checkVerification(@PathVariable Long userId) {
+
+        User user = userRepo.findById(userId).orElseThrow();
+        Map<String, Object> response = new HashMap<>();
+        response.put("verified", user.isVerified());
+        return response;
     }
 }
 

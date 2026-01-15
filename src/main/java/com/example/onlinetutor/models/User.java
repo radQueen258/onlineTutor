@@ -29,6 +29,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String schoolName;
+    private boolean isVerified = false;
 
 
     @Enumerated(EnumType.STRING)
