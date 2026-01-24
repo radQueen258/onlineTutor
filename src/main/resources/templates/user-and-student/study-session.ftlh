@@ -43,6 +43,35 @@
 
 <p>${article.articleContent}</p>
 
+<#--                       AI CHAT TUTOR                          -->
+<hr>
+
+<textarea id="aiQuestion" rows="4" maxlength="300"
+          placeholder="Ask about this article..."></textarea>
+
+<button onclick="askAi()">Ask AI</button>
+
+<div id="aiAnswer" style="margin-top: 15px;"></div>
+
+<script>
+    function askAi() {
+        const question = document.getElementById("aiQuestion").value;
+
+        fetch("/articles/${article.id}/ask-ai", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ question })
+        })
+            .then(r => r.text())
+            .then(answer => {
+                document.getElementById("aiAnswer").innerText = answer;
+            });
+    }
+</script>
+
+
 <h3>Quick Quiz</h3>
 
 <form method="post" action="/submit/${plan.id}">

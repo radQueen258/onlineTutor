@@ -124,24 +124,22 @@ public class StudyPlanController {
 
 //    --------------- AI TUTOR CONTROLLER -----------------------
 
-    @PostMapping("/api/articles/{id}/ask-ai")
-    public ResponseEntity<String> askArticleAi(
+    @PostMapping("/articles/{id}/ask-ai")
+    @ResponseBody
+    public String askArticleAi(
             @PathVariable Long id,
             @RequestBody Map<String, String> payload
     ) {
         Article article = articleService.findById(id);
 
-        AITutorRequest req = new AITutorRequest(
-                article.getSubject(),
-                article.getArticleTitle(),
-                article.getArticleContent(),
-                article.getResource(),
-                payload.get("question")
-        );
+        AITutorRequest req = new AITutorRequest();
+        req.setSubject(article.getSubject().toString());
+        req.setTitle(article.getArticleTitle());
+        req.setDescription(article.getArticleContent());
+        req.setResource(article.getResource().getTopicName());
+        req.setQuestion(payload.get("question"));
 
-        return ResponseEntity.ok(
-                aiTutorService.askArticleTutor(req)
-        );
+        return aiTutorService.askArticleTutor(req);
     }
 
 

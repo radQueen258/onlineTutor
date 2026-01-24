@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AITutorRequest {
-    private Subject subject;
+    private String subject;
     private String title;
     private String description;
-    private Resource resource;
+    private String resource;
     private String question;
 }
