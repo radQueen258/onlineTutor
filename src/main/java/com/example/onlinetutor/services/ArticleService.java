@@ -5,4 +5,6 @@ import com.example.onlinetutor.models.Article;
 public interface ArticleService {
 
     void safeDeleteArticle(Long articleId);
+
+    Article findById(Long id);
 }

@@ -1,18 +1,14 @@
 package com.example.onlinetutor.controllers;
 
+import com.example.onlinetutor.dto.AITutorRequest;
 import com.example.onlinetutor.enums.AptitudeTestStatus;
-import com.example.onlinetutor.models.AptitudeTest;
-import com.example.onlinetutor.models.StudyPlan;
-import com.example.onlinetutor.models.TestResult;
-import com.example.onlinetutor.models.User;
+import com.example.onlinetutor.models.*;
 import com.example.onlinetutor.repositories.AptitudeTestRepo;
 import com.example.onlinetutor.repositories.TestResultRepo;
 import com.example.onlinetutor.repositories.UserRepo;
-import com.example.onlinetutor.services.AptitudeTestService;
-import com.example.onlinetutor.services.QuizQuestionService;
-import com.example.onlinetutor.services.StudyPlanService;
-import com.example.onlinetutor.services.UserService;
+import com.example.onlinetutor.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -36,16 +32,16 @@ public class StudyPlanController {
     private AptitudeTestRepo aptitudeTestRepo;
 
     @Autowired
-    private AptitudeTestService aptitudeTestService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
     private TestResultRepo testResultRepo;
 
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    private AITutorService aiTutorService;
+
+    @Autowired
+    private ArticleService articleService;
 
     @GetMapping("/study-plan")
     public String studyPlan(Model model, Principal principal) {
@@ -125,5 +121,28 @@ public class StudyPlanController {
 
         return "redirect:/study-plan";
     }
+
+//    --------------- AI TUTOR CONTROLLER -----------------------
+
+    @PostMapping("/api/articles/{id}/ask-ai")
+    public ResponseEntity<String> askArticleAi(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> payload
+    ) {
+        Article article = articleService.findById(id);
+
+        AITutorRequest req = new AITutorRequest(
+                article.getSubject(),
+                article.getArticleTitle(),
+                article.getArticleContent(),
+                article.getResource(),
+                payload.get("question")
+        );
+
+        return ResponseEntity.ok(
+                aiTutorService.askArticleTutor(req)
+        );
+    }
+
 
 }

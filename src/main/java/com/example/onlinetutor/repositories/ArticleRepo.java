@@ -23,4 +23,6 @@ public interface ArticleRepo extends JpaRepository<Article,Long> {
     Article findArticlesById(Long id);
 
     List<Article> findByResourceIn(Collection<Resource> resources);
+
+//    Article findById(Long articleId);
 }

@@ -13,16 +13,13 @@ import org.springframework.stereotype.Component;
 public class ArticleServiceImpl implements ArticleService {
     @Autowired
     ArticleRepo articleRepo;
-//    @Autowired
-//    UserRepo userRepo;
+
     @Autowired
     private QuizQuestionRepo quizQuestionRepo;
 
     @Autowired
     private VideoRepo videoRepo;
 
-//    @Autowired
-//    private VideoService videoService;
 
 
     @Transactional
@@ -49,6 +46,11 @@ public class ArticleServiceImpl implements ArticleService {
         articleRepo.delete(article);
     }
 
+    @Override
+    public Article findById(Long id) {
+        Article article = articleRepo.findArticlesById(id);
+        return article;
+    }
 
 
 }
