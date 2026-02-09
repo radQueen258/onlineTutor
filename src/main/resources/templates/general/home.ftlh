@@ -353,10 +353,10 @@
         <h2>LIFESTYLE</h2>
         <p>A Good Education opens doors to limitless possibilities.<br>Be the change you want to see!</p>
         <div class="hero-buttons">
-            <a href="/signIn" class="btn-tutor">Become a Tutor</a>
-            <a href="/signIn" class="btn-study">Start Studying</a>
-<#--            <button class="hero-btn btn-tutor">Become a Tutor</button>-->
-<#--            <button class="hero-btn btn-study">Start Studying</button>-->
+<#--            <a href="/signIn" class="btn-tutor">Become a Tutor</a>-->
+<#--            <a href="/signIn" class="btn-study">Start Studying</a>-->
+            <a href="/signIn"> <button class="hero-btn btn-tutor">Become a Tutor</button> </a>
+            <a href="/signIn"> <button class="hero-btn btn-study">Start Studying</button> </a>
         </div>
     </div>
 

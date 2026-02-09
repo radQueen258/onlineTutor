@@ -2,68 +2,228 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Resources</title>
+    <title>Major Resources</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            background-color: #F4F7FA;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        aside {
+            width: 280px;
+            background-color: #0F3456;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 40px 0;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .brand {
+            padding: 0 40px;
+            font-size: 18px;
+            font-weight: 600;
+            font-style: italic;
+            margin-bottom: 60px;
+        }
+
+        nav {
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 40px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .nav-item i {
+            width: 30px;
+            font-size: 22px;
+            margin-right: 15px;
+        }
+
+        .nav-item.active {
+            background-color: #82613E;
+            margin-right: 15px;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .sidebar-footer {
+            padding: 0 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .logout-btn {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .profile-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Main */
+        main {
+            flex-grow: 1;
+            padding: 60px 80px;
+            overflow-y: auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .resources-card {
+            background-color: #F9FBFF;
+            border: 1px solid #E0E7FF;
+            border-radius: 12px;
+            padding: 40px 60px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .table-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .resource-list {
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+
+        .resource-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topic-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .topic-name:hover {
+            text-decoration: underline;
+        }
+
+        .action-link {
+            color: #3498DB;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .action-link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
+
 <body>
-<div style="display: flex; height: 100vh;">
-    <!-- Sidebar -->
-    <nav style="width: 200px; background-color: #1f3a5f; color: white; padding: 20px;">
-        <h3>Website Name</h3>
-        <ul style="list-style: none; padding: 0;">
-            <li><a href="/dashboard" style="color: white; text-decoration: none;">Dashboard</a></li>
-            <li><a href="/study-plan" style="color: white; text-decoration: none;">Study Plan</a></li>
-            <li><a href="/resources" style="color: burlywood; text-decoration: none;">Resources</a></li>
-            <li><a href="/exam-trends" style="color: white; text-decoration: none;">Exam Trends</a></li>
-        </ul>
-        <div style="margin-top: auto;">
-            <a href="/profile" style="color: white;">Profile</a>
-        </div>
+
+<aside>
+    <div class="brand">Website Name</div>
+
+    <nav>
+        <a href="/dashboard" class="nav-item">
+            <i class="fa-solid fa-house"></i> Dashboard
+        </a>
+        <a href="/study-plan" class="nav-item">
+            <i class="fa-solid fa-book-open"></i> Study Plan
+        </a>
+        <a href="/resources" class="nav-item active">
+            <i class="fa-solid fa-play"></i> Resources
+        </a>
+        <a href="/exam-trends" class="nav-item">
+            <i class="fa-solid fa-chart-pie"></i> Exam Trends
+        </a>
     </nav>
 
-    <form action="/logout" method="post">
-        <button type="submit" style="
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;">
-            Logout
-        </button>
-    </form>
+    <div class="sidebar-footer">
+        <form action="/logout" method="post">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+        <a href="/profile" class="profile-link">Profile</a>
+    </div>
+</aside>
 
-    <br>
-
-    <!-- Main Content -->
-    <main style="flex: 1; padding: 30px;">
+<main>
+    <header>
         <h1>Resources</h1>
-        <div style="margin-top: 40px; border: 1px solid #ccc; border-radius: 6px; padding: 20px; background-color: #f9f9f9;">
-            <table style="width: 100%;">
-                <thead>
-                <tr>
-                    <th style="text-align: left;">Major Topic</th>
-                    <th style="text-align: left;">Articles & Videos</th>
-                </tr>
-                </thead>
-                <tbody>
-                <#list resources as resource>
-                    <tr>
-                        <td>
-                            <a href="/resources/article/${resource.id}"
-                               style="color: black; text-decoration: none;">
-                                ${resource.topicName}
-                            </a>
-                        </td>
-                        <td>
-                            <a href="/resources/${resource.id}/articles-and-videos"
-                               style="color: blue;">Click Here</a>
-                        </td>
-                    </tr>
-                </#list>
-                </tbody>
-            </table>
+    </header>
+
+    <section class="resources-card">
+        <div class="table-header">
+            <h2>Major Topic</h2>
+            <h2>Articles & Videos</h2>
         </div>
-    </main>
-</div>
+
+        <div class="resource-list">
+            <#list resources as resource>
+                <div class="resource-row">
+                    <a href="/resources/article/${resource.id}"
+                       class="topic-name">
+                        ${resource.topicName}
+                    </a>
+
+                    <a href="/resources/${resource.id}/articles-and-videos"
+                       class="action-link">
+                        Click Here
+                    </a>
+                </div>
+            </#list>
+        </div>
+    </section>
+</main>
+
 </body>
 </html>
