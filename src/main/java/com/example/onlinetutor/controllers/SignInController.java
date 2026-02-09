@@ -12,6 +12,6 @@ public class SignInController {
     public String getSignInPage() {
         System.out.println("Subjects in model: " + Arrays.toString(Subject.values()));
 
-        return "/user-and-student/sign_in_page";
+        return "/general/sign_in_page";
     }
 }

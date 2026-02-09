@@ -34,7 +34,9 @@
 
     <!-- Main Content -->
     <main style="flex: 1; padding: 30px;">
-        <h1>Resources</h1>
+        <#list resourceName as name>
+        <h1>Resources - ${name.topicName}</h1>
+        </#list>
         <div style="margin-top: 40px; border: 1px solid #ccc; border-radius: 6px; padding: 20px; background-color: #f9f9f9;">
             <table style="width: 100%;">
                 <thead>

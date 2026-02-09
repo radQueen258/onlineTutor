@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 public interface ResourceRepo extends JpaRepository<Resource,Long> {
+
     List<Resource> findResourceById(Long resourceId);
 
     void deleteByTutor_Id(Long tutorId);
@@ -26,4 +27,8 @@ public interface ResourceRepo extends JpaRepository<Resource,Long> {
     List<Resource> findByCurriculumResourceIn(
             Collection<CurriculumResource> curriculumResources
     );
+
+//    String findResourceTopicNameById(Long resourceId);
+
+//    Resource findResourceById(Long id);
 }

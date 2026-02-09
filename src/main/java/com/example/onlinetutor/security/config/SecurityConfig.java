@@ -92,8 +92,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable());
 
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/signUp").permitAll()
-                .requestMatchers("/signIn").permitAll()
+                .requestMatchers("/signIn","/signUp", "/features", "/about","/contact").permitAll()
                 .requestMatchers("/dashboard/**").hasAnyAuthority("STUDENT", "TEACHER", "ADMIN")
                 .requestMatchers("/onboarding/**").permitAll()
                 .requestMatchers("/setGoals/**").permitAll()

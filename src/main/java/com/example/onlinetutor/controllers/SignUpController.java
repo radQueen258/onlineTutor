@@ -45,7 +45,7 @@ public class SignUpController {
     @GetMapping("/signUp")
     public String signUpPage(Model model) {
         model.addAttribute("subjects", Arrays.asList(Subject.values()));
-        return "/user-and-student/sign_up_page";
+        return "/general/sign_up_page";
     }
 
     @PostMapping("/signUp")
@@ -61,7 +61,7 @@ public class SignUpController {
         if (frontImage.isEmpty() || backImage.isEmpty()) {
             model.addAttribute("errorMessage",
                     "Please upload both front and back images of your ID.");
-            return "/user-and-student/sign_up_page";
+            return "/general/sign_up_page";
         }
 
         VerificationResult verificationResult;
@@ -90,7 +90,7 @@ public class SignUpController {
                     "errorMessage",
                     "ID verification service error: " + e.getMessage()
             );
-            return "/user-and-student/sign_up_page";
+            return "/general/sign_up_page";
         }
 
 
@@ -129,7 +129,7 @@ public class SignUpController {
             return "redirect:/signUp"; // fallback
         }
         model.addAttribute("userId", userId);
-        return "/user-and-student/waiting-room";
+        return "/general/waiting-room";
     }
 
     @GetMapping("/signup/status/{userId}")

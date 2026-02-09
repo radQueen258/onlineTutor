@@ -64,7 +64,12 @@ public class ResourcesController {
     public String openArticlesAndVideosPage(@PathVariable Long resourceId,
                                             Model model) {
         List<Article> articleList = articleRepo.findArticlesByResource_Id(resourceId);
+//        String resourceName = resourceRepo.findResourceTopicNameById(resourceId);
+
+        List<Resource> resources = resourceRepo.findResourceById(resourceId);
+//        List<String> name = resources.
         model.addAttribute("articleList", articleList);
+        model.addAttribute("resourceName", resources);
         return "user-and-student/articles-and-videos-page";
     }
 
