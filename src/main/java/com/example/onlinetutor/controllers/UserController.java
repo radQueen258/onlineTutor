@@ -19,7 +19,7 @@ public class UserController {
 
     @GetMapping("/features")
     public String featuresPage() {
-        return "/general/feautures";
+        return "/general/features";
     }
 
     @GetMapping("/about")

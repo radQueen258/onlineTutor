@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration - APPNAME</title>
+    <title>Registration - ONLINE TUTOR</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
 
     <style>
-        /* ====== YOUR ORIGINAL CSS (UNCHANGED) ====== */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,600&display=swap');
 
         body {
@@ -90,6 +89,21 @@
             font-weight: 600;
             cursor: pointer;
             font-size: 16px;
+        }
+
+        .globe-icon-container {
+            position: absolute;
+            right: 50px;
+            width: 45px;
+            height: 45px;
+            border: 2px solid #f08c2d;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #000;
+            font-size: 18px;
+            cursor: pointer;
         }
 
         main {
@@ -255,6 +269,10 @@
             <a href="/signUp"><button class="btn-register-nav">Register</button></a>
         </div>
     </nav>
+
+    <div class="globe-icon-container">
+        <i class="fa-solid fa-globe"></i>
+    </div>
 </header>
 
 <main>
@@ -324,12 +342,22 @@
         </div>
 
         <!-- Files -->
+        <div class="input-group file-upload">
         <input type="file" name="frontImage" required>
+        </div>
+
+        <div class="input-group file-upload">
         <input type="file" name="backImage" required>
+        </div>
 
         <!-- Auth -->
+        <div class="input-group">
         <input name="email" type="email" placeholder="Email*" required>
+        </div>
+
+        <div class="input-group">
         <input name="password" type="password" placeholder="Password*" required>
+        </div>
 
         <button type="submit" class="btn-register-form">Register</button>
     </form>
