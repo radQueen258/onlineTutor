@@ -88,12 +88,20 @@ public class AdminController {
 
 //    ---------------VIEW ALL USERSS -----------------
 
-    @GetMapping("/admin/users")
+    @GetMapping("/admin/users/tutors")
     public String viewUsers(Model model) {
         model.addAttribute("users", userRepo.findAll());
         model.addAttribute("userStudent", userRepo.findAllByRole(Role.STUDENT));
         model.addAttribute("userTutor", userRepo.findAllByRole(Role.TUTOR));
         return "/admin/adminUsers";
+    }
+
+    @GetMapping("/admin/users/students")
+    public String viewStudents(Model model) {
+        model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("userStudent", userRepo.findAllByRole(Role.STUDENT));
+//        model.addAttribute("userTutor", userRepo.findAllByRole(Role.TUTOR));
+        return "/admin/adminStudents";
     }
 
     @PostMapping("/admin/users/delete/{id}")

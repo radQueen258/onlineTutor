@@ -2,30 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Overall Statistics</title>
+    <title>Registered Users</title>
 
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             background: #f4f6f9;
-            color: #333;
         }
 
-        /* Sidebar */
         .sidebar {
             width: 220px;
             position: fixed;
-            left: 0;
-            top: 0;
             height: 100vh;
             background: #0f2b4c;
             color: white;
             padding: 15px;
-        }
-
-        .sidebar h3 {
-            margin-top: 0;
         }
 
         .sidebar a {
@@ -33,7 +25,6 @@
             color: white;
             text-decoration: none;
             margin: 10px 0;
-            font-size: 14px;
         }
 
         .logout-btn {
@@ -41,13 +32,11 @@
             background: #dc3545;
             border: none;
             color: white;
-            padding: 8px 12px;
+            padding: 8px;
             border-radius: 6px;
-            cursor: pointer;
             width: 100%;
         }
 
-        /* Main content */
         .content {
             margin-left: 240px;
             padding: 25px;
@@ -55,27 +44,27 @@
 
         .card {
             background: white;
-            padding: 25px;
+            padding: 20px;
             border-radius: 12px;
-            max-width: 700px;
+            margin-bottom: 30px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
-        h1 {
-            margin-top: 0;
+        h1, h2 {
             color: #0f2b4c;
+            margin-top: 0;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         th {
             background: #0f2b4c;
             color: white;
-            padding: 12px;
+            padding: 10px;
             text-align: left;
         }
 
@@ -84,15 +73,21 @@
             border-bottom: 1px solid #e0e0e0;
         }
 
+        .delete-btn {
+            background: #dc3545;
+            border: none;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
         .back-link {
-            display: inline-block;
-            margin-top: 20px;
             text-decoration: none;
             background: #0f2b4c;
             color: white;
             padding: 8px 14px;
             border-radius: 6px;
-            font-size: 14px;
         }
     </style>
 </head>
@@ -101,7 +96,6 @@
 
 <div class="sidebar">
     <h3>Website Name</h3>
-
     <a href="/admin/workplace">Go to Workplace</a>
     <a href="/admin/aptitude-results">General Aptitude Results</a>
 
@@ -111,39 +105,39 @@
 </div>
 
 <div class="content">
+    <h1>Registered Students</h1>
+
     <div class="card">
-        <h1>Overall Statistics</h1>
+        <h2>Students</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
 
-        <#if stats?? && stats?size gt 0>
-            <table>
+            <#list userStudent as user>
                 <tr>
-                    <th>Metric</th>
-                    <th>Value</th>
+                    <td>${user.id}</td>
+                    <td>${user.firstName} ${user.lastName}</td>
+                    <td>${user.email}</td>
+                    <td>${user.role}</td>
+                    <td>
+                        <form action="/admin/users/delete/${user.id}" method="post">
+                            <button class="delete-btn"
+                                    onclick="return confirm('Are you sure you want to delete this user?');">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
                 </tr>
-
-                <#list stats?keys as key>
-                    <tr>
-                        <td>${key}</td>
-                        <td>
-                            <#if stats[key]??>
-                                <#if key == "Pass rate (%)">
-                                    ${stats[key]?string["0.0"]}%
-                                <#else>
-                                    ${stats[key]!N/A}
-                                </#if>
-                            <#else>
-                                N/A
-                            </#if>
-                        </td>
-                    </tr>
-                </#list>
-            </table>
-        <#else>
-            <p>No statistics available yet.</p>
-        </#if>
-
-        <a class="back-link" href="/admin/dashboard">← Back to Dashboard</a>
+            </#list>
+        </table>
     </div>
+
+    <a class="back-link" href="/admin/dashboard">← Back to Dashboard</a>
 </div>
 
 </body>
