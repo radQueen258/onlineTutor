@@ -148,14 +148,14 @@
 
 <body>
 
-<header>
-    <h1>Admin Analytics</h1>
-</header>
+<#--<header>-->
+<#--    <h1>Admin Analytics</h1>-->
+<#--</header>-->
 
 <main>
     <div class="card">
 
-        <h2 class="card-title">Article Performance Overview</h2>
+        <h2 class="card-title">Admin Performance Overview</h2>
 
         <#if stats?size == 0>
             <div class="empty">

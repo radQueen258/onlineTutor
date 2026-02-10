@@ -1,104 +1,215 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin - Resources' Articles</title>
-</head>
-<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor - Resources' Articles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
 
-<div style="width:220px;float:left;background:#0f2b4c;color:white;height:100vh;">
-    <h3 style="padding:10px;">Website Name</h3>
-    <ul style="list-style:none;padding:0;">
-        <li><a href="/admin/analytics" style="color:white;text-decoration:none;">View Analytics</a></li>
-        <li><a href="/admin/dashboard" style="color:white;text-decoration:none;">Admin Dashboard</a></li>
-        <li><a href="/admin/workplace" style="color:white;text-decoration:none;">Go to Workplace</a></li>
+        body {
+            background-color: #f0f4f9;
+            min-height: 100vh;
+            display: flex;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-        <li><a href="/admin/resources/new" style="color:white;text-decoration:none;">Create Resource</a></li>
-    </ul>
+        .profile-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
 
-    <form action="/logout" method="post">
-        <button type="submit" style="
+        /* Sidebar */
+        aside.sidebar {
+            width: 280px;
+            background-color: #113255;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 40px 0;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+            z-index: 100;
+        }
+
+        .sidebar-brand { padding: 0 30px; font-size: 18px; font-weight: 700; margin-bottom: 60px; }
+        .nav-menu { list-style: none; flex-grow: 1; }
+        .nav-item { padding: 15px 30px; font-size: 16px; font-weight: 500; margin-bottom: 10px; cursor: pointer; }
+        .nav-item a { color: white; text-decoration: none; }
+        .nav-item:hover { background-color: #8b6b45; border-radius: 10px; }
+        .sidebar-footer { padding: 0 30px; margin-top: auto; }
+        .logout-btn {
             background-color: #dc3545;
             color: white;
             border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;">
-            Logout
-        </button>
-    </form>
-</div>
-
-<div style="margin-left:240px;padding:20px;">
-
-    <#if resources?size == 0>
-        <p>You don’t have any resources yet.</p>
-        <li><a href="/admin/resources/new" style="color:white;text-decoration:none;">Create Resource</a></li>
-    <#else>
-        <#list resources as resource>
-            <div style="margin-bottom: 30px;">
-                <h2 style="border-bottom:1px solid #ccc;">${resource.topicName}</h2>
-
-                <#if resource.articles?? && exists >
-                    <#list resource.articles as article>
-                        <div style="margin-bottom: 25px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
-                            <h3>${article.articleTitle}</h3>
-                            <p><strong>Subject:</strong> ${article.subject}</p>
-                            <a href="/admin/resources/${resource.id}/article/${article.id}">See Article</a>
-                            <a href="/admin/article/edit/${article.id}">Edit Article</a>
-
-                            <#if article.video??>
-                                <div style="margin: 12px 0; padding: 10px; background: #f8f8f8; border-radius: 8px;">
-                                    <strong>${article.video.videoTitle}</strong><br>
-                                    <small>${article.video.videoDescription!""}</small>
-
-                                    <#-- Extract YouTube video ID -->
-                                    <#assign videoUrl = article.video.videoUrl>
-                                    <#assign videoId = (videoUrl?matches("v=([^&]+)"))?then(
-                                    videoUrl?replace(".*v=([^&]+).*", "$1"),
-                                    videoUrl?replace(".*/([^/?]+)$", "$1")
-                                    ) />
-
-                                    <br>
-                                    <button type="button" onclick="toggleVideo('video-${article.video.id}')"
-                                            style="margin-top:8px;padding:5px 10px;border:none;background:#007bff;color:white;border-radius:6px;cursor:pointer;">
-                                        Show / Hide Video
-                                    </button>
-
-                                    <div id="video-${article.video.id}" style="display:none;margin-top:10px;">
-                                        <iframe width="420" height="236"
-                                                src="https://www.youtube.com/embed/${videoId}"
-                                                title="${article.video.videoTitle}"
-                                                frameborder="0"
-                                                allowfullscreen>
-                                        </iframe>
-                                    </div>
-                                </div>
-                                <a href="/admin/video/edit/${article.video.id}">Edit Video</a>
-                            <#else>
-                                <p>No videos yet for this article.</p>
-                                <p><a href="/admin/resources/${resource.id}/article/${article.id}/upload-video">Add Video</a></p>
-                            </#if>
-                        </div>
-                    </#list>
-
-                    <p><a href="/admin/resources/${resource.id}/article/new">Add Article</a></p>
-                <#else>
-                    <p>No articles yet for this resource.</p>
-                    <p><a href="/admin/resources/${resource.id}/article/new">Add Article</a></p>
-                </#if>
-            </div>
-        </#list>
-    </#if>
-
-    <script>
-        function toggleVideo(id) {
-            const el = document.getElementById(id);
-            if (!el) return;
-            el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
         }
-    </script>
 
-</div>
+        /* Main Content */
+        main.content {
+            flex-grow: 1;
+            margin-left: 280px;
+            padding: 40px 60px;
+            position: relative;
+            max-width: 1200px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 40px 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        h2.resource-title {
+            font-size: 24px;
+            font-weight: 700;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        .article-card {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .article-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; color: #000; }
+        .article-card p { font-size: 16px; margin-bottom: 8px; color: #333; }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 18px;
+            margin-right: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border: none;
+        }
+
+        .btn-primary { background-color: #007bff; color: white; }
+        .btn-primary:hover { background-color: #0056b3; }
+
+        .btn-secondary { background-color: #f1b981; color: #000; }
+        .btn-secondary:hover { background-color: #e0a95f; }
+
+        .video-card {
+            background-color: #f8f8f8;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 12px 0;
+        }
+
+        iframe {
+            width: 100%;
+            max-width: 420px;
+            height: 236px;
+            border: none;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 1024px) {
+            main.content { margin-left: 0; padding: 20px; }
+            aside.sidebar { display: none; }
+            iframe { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="sidebar-brand">Website Name</div>
+    <ul class="nav-menu">
+        <li class="nav-item"><a href="/admin/workplace">Workplace</a></li>
+        <li class="nav-item"><a href="/admin/analytics">View Analytics</a></li>
+        <li class="nav-item"><a href="/admin/dashboard">Admin Dashboard</a></li>
+    </ul>
+    <div class="sidebar-footer">
+        <form action="/logout" method="post">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+        <a href="/admin/profile" class="profile-link">Profile</a>
+    </div>
+</aside>
+
+<main class="content">
+    <div class="card">
+        <#if resources?size == 0>
+            <p>You don’t have any resources yet.</p>
+            <a href="/admin/resources/new" class="btn btn-secondary">Create Resource</a>
+        <#else>
+            <#list resources as resource>
+                <div class="resource-section">
+                    <h2 class="resource-title">${resource.topicName}</h2>
+
+                    <#if resource.articles?? && (resource.articles?size > 0)>
+                        <#list resource.articles as article>
+                            <div class="article-card">
+                                <h3>${article.articleTitle}</h3>
+                                <p><strong>Subject:</strong> ${article.subject}</p>
+
+                                <a href="/admin/resources/${resource.id}/article/${article.id}" class="btn btn-primary">See Article</a>
+                                <a href="/admin/article/edit/${article.id}" class="btn btn-secondary">Edit Article</a>
+
+                                <#if article.video??>
+                                    <div class="video-card">
+                                        <strong>${article.video.videoTitle}</strong><br>
+                                        <small>${article.video.videoDescription!""}</small><br>
+                                        <button type="button" class="btn btn-primary" onclick="toggleVideo('video-${article.video.id}')">Show / Hide Video</button>
+                                        <div id="video-${article.video.id}" style="display:none;">
+                                            <iframe src="https://www.youtube.com/embed/${(article.video.videoUrl?matches('v=([^&]+)'))?then(article.video.videoUrl?replace('.*v=([^&]+).*','$1'), article.video.videoUrl?replace('.*/([^/?]+)$','$1'))}"
+                                                    title="${article.video.videoTitle}" allowfullscreen></iframe>
+                                        </div>
+                                    </div>
+                                    <a href="/admin/video/edit/${article.video.id}" class="btn btn-secondary">Edit Video</a>
+                                <#else>
+                                    <p>No videos yet for this article.</p>
+                                </#if>
+
+                                <a href="/admin/resources/${resource.id}/article/${article.id}/upload-video" class="btn btn-primary">Add Video</a>
+                            </div>
+                        </#list>
+
+                        <a href="/admin/resources/${resource.id}/article/new" class="btn btn-primary">Add Article</a>
+                    <#else>
+                        <p>No articles yet for this resource.</p>
+                        <a href="/admin/resources/${resource.id}/article/new" class="btn btn-primary">Add Article</a>
+                    </#if>
+                </div>
+            </#list>
+        </#if>
+    </div>
+</main>
+
+<script>
+    function toggleVideo(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
+    }
+</script>
+
 </body>
 </html>
