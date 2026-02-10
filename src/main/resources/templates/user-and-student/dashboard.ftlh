@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
@@ -20,13 +19,16 @@
 
         body {
             background-color: #f0f4f8;
-            display: flex;
             min-height: 100vh;
         }
 
-        /* Sidebar */
+        /* SIDEBAR */
         aside {
-            width: 280px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 260px;
             background-color: #0F3456;
             color: white;
             display: flex;
@@ -37,11 +39,11 @@
         }
 
         .brand {
-            padding: 0 40px;
+            padding: 0 32px;
             font-size: 18px;
             font-weight: 600;
             font-style: italic;
-            margin-bottom: 60px;
+            margin-bottom: 50px;
         }
 
         nav {
@@ -51,43 +53,42 @@
         .nav-item {
             display: flex;
             align-items: center;
-            padding: 15px 40px;
+            padding: 14px 32px;
             color: white;
             text-decoration: none;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 500;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .nav-item i {
-            width: 30px;
-            font-size: 22px;
-            margin-right: 15px;
+            width: 26px;
+            font-size: 20px;
+            margin-right: 14px;
         }
 
         .nav-item.active {
             background-color: #82613E;
-            margin-right: 15px;
-            border-top-right-radius: 10px;
-            border-bottom-right-radius: 10px;
+            margin-right: 16px;
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
         }
 
         .sidebar-footer {
-            padding: 0 40px;
+            padding: 0 32px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
         }
 
         .logout-btn {
             background-color: #dc3545;
-            color: #fff;
+            color: white;
             border: none;
-            padding: 10px 14px;
+            padding: 10px;
             border-radius: 10px;
             font-weight: 600;
             cursor: pointer;
-            width: 100%;
         }
 
         .profile-link {
@@ -96,36 +97,20 @@
             font-weight: 500;
         }
 
-        .aptitude-warning {
-            color: #b42318;
-            background-color: #fdecea;
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-
-
-        /* Main */
+        /* MAIN CONTENT */
         main {
-            margin-left: 280px;
-            padding: 60px 80px;
-            width: 100%;
+            margin-left: 260px;
+            padding: 60px 70px;
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.4rem;
             margin-bottom: 10px;
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
         .subtitle {
-            color: #333;
-            margin-bottom: 60px;
+            color: #444;
+            margin-bottom: 50px;
         }
 
         .dashboard-grid {
@@ -134,44 +119,58 @@
             gap: 40px;
         }
 
-        .top-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 40px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-
-        .progress-card {
-            width: 420px;
-        }
-
-        .progress-value {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-        }
-
-        .continue-box {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-top: 100px;
+        .aptitude-warning {
+            background-color: #fdecea;
+            color: #b42318;
+            padding: 16px 20px;
+            border-radius: 14px;
+            font-weight: 600;
+            max-width: 520px;
         }
 
         .continue-btn {
             background-color: #fbc02d;
             border: none;
-            padding: 15px 40px;
+            padding: 14px 36px;
             border-radius: 30px;
             font-weight: 700;
             cursor: pointer;
+            font-size: 15px;
+        }
+
+        /* TOP ROW */
+        .top-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: stretch;
+        }
+
+        .card {
+            background: white;
+            border-radius: 28px;
+            padding: 36px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .progress-card h2 {
+            margin-bottom: 20px;
+        }
+
+        .progress-value {
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .continue-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 24px;
+            background: white;
+            border-radius: 28px;
+            padding: 36px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
 
         .upcoming {
@@ -179,6 +178,7 @@
             color: #333;
         }
 
+        /* RESOURCES */
         .resources-card h2 {
             margin-bottom: 30px;
         }
@@ -186,27 +186,38 @@
         .resource-item {
             display: flex;
             align-items: center;
-            gap: 20px;
-            font-size: 1.2rem;
-            margin-bottom: 20px;
+            gap: 16px;
+            font-size: 1.1rem;
+            margin-bottom: 18px;
         }
 
+        .resource-item i {
+            color: #82613E;
+        }
+
+        .resource-item a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* RESPONSIVE */
         @media (max-width: 1024px) {
             aside {
                 width: 80px;
             }
-            .brand, .nav-item span {
+
+            .brand,
+            .nav-item span {
                 display: none;
             }
+
             main {
                 margin-left: 80px;
                 padding: 40px;
             }
+
             .top-row {
-                flex-direction: column;
-            }
-            .continue-box {
-                margin-top: 20px;
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -220,16 +231,16 @@
 
     <nav>
         <a href="/dashboard" class="nav-item active">
-            <i class="fa-solid fa-house"></i> Dashboard
+            <i class="fa-solid fa-house"></i><span>Dashboard</span>
         </a>
         <a href="/study-plan" class="nav-item">
-            <i class="fa-solid fa-book-open"></i> Study Plan
+            <i class="fa-solid fa-book-open"></i><span>Study Plan</span>
         </a>
         <a href="/resources" class="nav-item">
-            <i class="fa-solid fa-play"></i> Resources
+            <i class="fa-solid fa-play"></i><span>Resources</span>
         </a>
         <a href="/exam-trends" class="nav-item">
-            <i class="fa-solid fa-chart-pie"></i> Exam Trends
+            <i class="fa-solid fa-chart-pie"></i><span>Exam Trends</span>
         </a>
     </nav>
 
@@ -250,10 +261,12 @@
     <div class="dashboard-grid">
 
         <#if needsTest>
-            <p class="aptitude-warning">You still need to take your aptitude test!</p>
-            <form action="/aptitude-test/start" method="get">
-                <button class="continue-btn">Take Test Now</button>
-            </form>
+            <div>
+                <p class="aptitude-warning">You still need to take your aptitude test!</p>
+                <form action="/aptitude-test/start" method="get" style="margin-top: 20px;">
+                    <button class="continue-btn">Take Test Now</button>
+                </form>
+            </div>
         </#if>
 
         <#if progress??>
