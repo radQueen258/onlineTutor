@@ -4,28 +4,70 @@
     <meta charset="UTF-8">
     <title>Registered Users</title>
 
+    <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f6f9;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            display: flex;
+            min-height: 100vh;
+            background-color: #f0f4f9;
+            color: #333;
         }
 
-        .sidebar {
-            width: 220px;
-            position: fixed;
-            height: 100vh;
-            background: #0f2b4c;
+        aside {
+            width: 260px;
+            background-color: #0F3456;
             color: white;
-            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 0;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
         }
 
-        .sidebar a {
-            display: block;
+        .brand {
+            padding: 0 40px;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 60px;
+        }
+
+        nav {
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 40px;
             color: white;
             text-decoration: none;
-            margin: 10px 0;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 10px;
         }
+
+        .nav-item i {
+            width: 26px;
+            margin-right: 12px;
+        }
+
+        .nav-item:hover {
+            background-color: #123c5e;
+        }
+
+        .sidebar-footer {
+            padding: 0 40px;
+        }
+
 
         .logout-btn {
             margin-top: 20px;
@@ -38,8 +80,8 @@
         }
 
         .content {
-            margin-left: 240px;
-            padding: 25px;
+            flex-grow: 1;
+            padding: 50px 60px;
         }
 
         .card {
@@ -66,11 +108,13 @@
             color: white;
             padding: 10px;
             text-align: left;
+            line-height: 1.4;
         }
 
         td {
             padding: 10px;
             border-bottom: 1px solid #e0e0e0;
+            line-height: 1.4;
         }
 
         .delete-btn {
@@ -94,17 +138,30 @@
 
 <body>
 
-<div class="sidebar">
-    <h3>Website Name</h3>
-    <a href="/admin/workplace">Go to Workplace</a>
-    <a href="/admin/aptitude-results">General Aptitude Results</a>
+<aside>
+    <div class="brand">Website Name</div>
 
-    <form action="/logout" method="post">
-        <button class="logout-btn">Logout</button>
-    </form>
-</div>
+    <nav>
+        <a href="/admin/workplace" class="nav-item">
+            <i class="fa-solid fa-briefcase"></i>
+            Workplace
+        </a>
 
-<div class="content">
+        <a href="/admin/aptitude-results" class="nav-item">
+            <i class="fa-solid fa-chart-line"></i>
+            Aptitude Results
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <form action="/logout" method="post">
+            <button class="logout-btn">Logout</button>
+        </form>
+    </div>
+</aside>
+
+
+<main class="content">
     <h1>Registered Users</h1>
 
     <div class="card">
@@ -139,7 +196,7 @@
 
 
     <a class="back-link" href="/admin/dashboard">← Back to Dashboard</a>
-</div>
+</main>
 
 </body>
 </html>
