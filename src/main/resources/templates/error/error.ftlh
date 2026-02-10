@@ -68,7 +68,7 @@
     <h1>Oops! Something went wrong</h1>
     <p>${message!"An unexpected error occurred."}</p>
 
-    <a href="/signIn">Go to Home</a>
+    <a href="/">Go to Home</a>
 </div>
 
 </body>

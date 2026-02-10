@@ -71,7 +71,7 @@
     <h2>This is not a valid ID</h2>
     <p>Please upload a valid identification document to continue your registration.</p>
 
-    <a href="/signUp" class="btn">Register Again</a>
+    <a href="/signUp" class="btn">Try Again</a>
 </div>
 
 </body>

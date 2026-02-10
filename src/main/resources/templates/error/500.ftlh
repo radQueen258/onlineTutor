@@ -64,7 +64,7 @@
     <h1>500 — Server Error</h1>
     <p>Something went wrong on our side. Please try again later.</p>
 
-    <a href="/signIn">Go to Home</a>
+    <a href="/">Go to Home</a>
 </div>
 
 </body>

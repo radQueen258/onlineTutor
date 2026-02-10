@@ -64,7 +64,7 @@
     <h1>Redirection Error</h1>
     <p>Something went wrong while redirecting you.</p>
 
-    <a href="/signIn">Go to Home</a>
+    <a href="/">Go to Home</a>
 </div>
 
 </body>

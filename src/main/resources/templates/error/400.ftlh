@@ -64,7 +64,7 @@
     <h1>400 — Bad Request</h1>
     <p>The request could not be understood by the server.</p>
 
-    <a href="/signIn">Go to Home</a>
+    <a href="/">Go to Home</a>
 </div>
 
 </body>
