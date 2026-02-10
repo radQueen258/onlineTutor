@@ -238,7 +238,7 @@
 
 <header>
     <div class="header-top">
-        <a href="/profile" class="icon-btn">
+        <a href="/tutor/profile" class="icon-btn">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
         <div class="lang-btn">
@@ -263,23 +263,16 @@
         <!-- Change Password (unchanged logic) -->
         <div class="profile-section">
             <h3 class="section-title">Change Password</h3>
-            <form method="post" action="/student/update-password">
+            <form method="post" action="/tutor/update-password">
                 <input type="password" name="newPassword" required>
                 <button type="submit" class="btn">Change Password</button>
             </form>
         </div>
 
-        <!-- Change Focus (unchanged logic) -->
-        <#if canChangeFocus>
+
             <div class="profile-section">
                 <h3 class="section-title">Study Focus</h3>
-                <form id="changeFocusForm" method="post" action="/student/update-focus">
-                    <label>Choose Grade</label>
-                    <select name="grade" required>
-                        <#list grades as g>
-                            <option value="${g}">${g}</option>
-                        </#list>
-                    </select>
+                <form id="changeFocusForm" method="post" action="/tutor/update-focus">
 
                     <label>Select Subjects</label>
                     <div class="checkbox-group">
@@ -296,16 +289,11 @@
 
             <script>
                 document.getElementById("changeFocusForm").addEventListener("submit", function(e) {
-                    if (!confirm("Are you sure you want to change your study focus? This will reset your current study plan and aptitude test.")) {
+                    if (!confirm("Are you sure you want to change your subject focus?")) {
                         e.preventDefault();
                     }
                 });
             </script>
-        <#else>
-            <p class="warning">
-                You must complete your current study plan before changing your study focus.
-            </p>
-        </#if>
 
     </div>
 </main>

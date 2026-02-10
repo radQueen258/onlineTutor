@@ -19,6 +19,12 @@
             position: relative;
         }
 
+        .profile-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
         /* Sidebar */
         aside.sidebar {
             width: 280px;
@@ -144,6 +150,7 @@
         <form action="/logout" method="post">
             <button type="submit" class="logout-btn">Logout</button>
         </form>
+        <a href="/tutor/profile" class="profile-link">Profile</a>
     </div>
 </aside>
 

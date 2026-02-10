@@ -136,7 +136,7 @@
         <form action="/logout" method="post">
             <button type="submit" class="logout-btn">Logout</button>
         </form>
-        <a href="/profile" class="profile-link">Profile</a>
+        <a href="/tutor/profile" class="profile-link">Profile</a>
     </div>
 </aside>
 

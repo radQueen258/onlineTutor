@@ -64,7 +64,12 @@
             max-width: 1200px;
         }
 
-        /* Card container like student resources/profile page */
+        .profile-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
         .card {
             background-color: #ffffff;
             border-radius: 15px;
@@ -147,7 +152,7 @@
         <form action="/logout" method="post">
             <button type="submit" class="logout-btn">Logout</button>
         </form>
-        <a href="/profile" class="profile-link">Profile</a>
+        <a href="/tutor/profile" class="profile-link">Profile</a>
     </div>
 </aside>
 
@@ -160,11 +165,6 @@
 
     <br>
     <div class="card">
-<#--        <header class="page-header">-->
-<#--            <h2>Welcome, ${tutorName}!</h2>-->
-<#--            <h2>Resources</h2>-->
-<#--            <a href="/tutor/resources/new" class="create-resource-btn">Create Resource</a>-->
-<#--        </header>-->
 
         <#if resources?? && (resources?size > 0)>
             <table>

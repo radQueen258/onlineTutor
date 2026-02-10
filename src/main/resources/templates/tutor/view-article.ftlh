@@ -192,22 +192,16 @@
     <div class="brand">Website Name</div>
 
     <nav>
-        <a href="/tutor/workplace" class="nav-item">
-            <i class="fa-solid fa-house"></i> Workplace
-        </a>
-        <a href="/tutor/resources/new" class="nav-item active">
-            <i class="fa-solid fa-play"></i> Create Resource
-        </a>
-        <a href="/tutor/analytics" class="nav-item">
-            <i class="fa-solid fa-chart-pie"></i> Analysis
-        </a>
+        <a href="/tutor/workplace" class="nav-item">Workplace</a>
+        <a href="/tutor/resources/new" class="nav-item active">Create Resource</a>
+        <a href="/tutor/analytics" class="nav-item">Analysis</a>
     </nav>
 
     <div class="sidebar-footer">
         <form action="/logout" method="post">
             <button type="submit" class="logout-btn">Logout</button>
         </form>
-        <a href="/profile" class="profile-link">Profile</a>
+        <a href="/tutor/profile" class="profile-link">Profile</a>
     </div>
 </aside>
 
