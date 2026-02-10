@@ -118,7 +118,7 @@ public class AdminController {
             userService.deleteUserAndDependencies(id);
             redirectAttributes.addFlashAttribute("successMessage", "User deleted successfully.");
         }
-        return "redirect:/admin/users";
+        return "redirect:/admin/dashboard";
     }
 
 //    -----------------METHODS FOR ARTICLES----------------------
