@@ -362,7 +362,9 @@ public class AdminController {
     public String adminViewVideos(@PathVariable Long videoId,
                                   Model model, Principal principal) {
         Video video = videoRepo.getVideoById(videoId);
+        Long resourceId = video.getResource().getId();
         model.addAttribute("video", video);
+        model.addAttribute("resourceId", resourceId);
         return  "/admin/admin-view-video";
     }
 

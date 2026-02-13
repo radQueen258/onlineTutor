@@ -177,7 +177,7 @@
 
             <#list userTutor as user>
                 <tr>
-                    <td>${user.id}</td>
+                    <td>${user.id?c}</td>
                     <td>${user.firstName} ${user.lastName}</td>
                     <td>${user.email}</td>
                     <td>${user.role}</td>

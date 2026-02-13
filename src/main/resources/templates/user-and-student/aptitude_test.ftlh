@@ -172,7 +172,7 @@
     <h1>Name of the WebApp</h1>
 </header>
 
-<form action="/aptitude-test/submit/${test.id}" method="post" id="aptitudeForm">
+<form action="/aptitude-test/submit/${test.id?c}" method="post" id="aptitudeForm">
     <input type="hidden" name="status" value="COMPLETED">
 
     <main class="container">
@@ -196,12 +196,12 @@
                 </div>
 
                 <div class="options-container">
-                    <#list question.options as option>
+                    <#list question.optionEntities as option>
                         <label class="option">
                             <input type="radio"
-                                   name="answer_${question.id}"
+                                   name="answer_${question.id?c}"
                                    value="${option}">
-                            ${option}
+                            ${option.optionValue} - ${option.options}
                         </label>
                     </#list>
                 </div>

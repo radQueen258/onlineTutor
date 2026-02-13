@@ -211,13 +211,13 @@
             <div class="resource-list">
                 <#list articleList as article>
                     <div class="resource-row">
-                        <a href="/resources/${resourceId}/article/${article.id}"
+                        <a href="/resources/${resourceId?c}/article/${article.id?c}"
                            class="topic-name">
                             ${article.articleTitle}
                         </a>
 
                         <#if article.video??>
-                            <a href="/resources/${resourceId}/video/${article.video.id}"
+                            <a href="/resources/${resourceId?c}/video/${article.video.id?c}"
                                class="action-link">
                                 Click Here
                             </a>

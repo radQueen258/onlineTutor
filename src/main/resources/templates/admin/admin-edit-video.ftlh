@@ -26,7 +26,7 @@
 <main class="card">
     <h2>Edit Video</h2>
 
-    <form action="/admin/video/edit/${video.id}" method="post">
+    <form action="/admin/video/edit/${video.id?c}" method="post">
         <label>Video Title:</label>
         <input type="text" name="videoTitle" value="${video.videoTitle}" required>
 

@@ -80,7 +80,7 @@
 <main class="card">
     <h2>Add a Video to Article: ${article.articleTitle}</h2>
 
-    <form action="/tutor/resources/${article.resource.id}/article/${article.id}/upload-video/save" method="post">
+    <form action="/tutor/resources/${article.resource.id?c}/article/${article.id?c}/upload-video/save" method="post">
         <label>Video Title:</label>
         <input type="text" name="videoTitle" required>
 

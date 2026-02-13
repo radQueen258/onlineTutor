@@ -120,8 +120,8 @@
         <#if tests?has_content>
             <#list tests as test>
                 <tr>
-                    <td>${test.id}</td>
-                    <td>${test.userId}</td>
+                    <td>${test.id?c}</td>
+                    <td>${test.userId?c}</td>
                     <td>${test.score!'-'}</td>
                     <td>
                         <span class="status ${test.status}">
@@ -129,7 +129,7 @@
                         </span>
                     </td>
                     <td>
-                        <a class="btn-view" href="/admin/aptitude-results/${test.id}">
+                        <a class="btn-view" href="/admin/aptitude-results/${test.id?c}">
                             View Details
                         </a>
                     </td>

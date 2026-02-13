@@ -218,7 +218,7 @@
 <main>
 
     <div class="header-actions">
-        <a href="/resources/${resourceId}/articles-and-videos" class="back-btn">
+        <a href="/resources/${resourceId?c}/articles-and-videos" class="back-btn">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
     </div>
@@ -241,7 +241,7 @@
     </div>
 
     <#if article.video??>
-        <a href="/resources/${resourceId}/video/${article.video.id}"
+        <a href="/resources/${resourceId?c}/video/${article.video.id?c}"
            class="watch-video-btn">
             Watch<br>Related Video
         </a>

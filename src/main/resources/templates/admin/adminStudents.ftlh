@@ -175,12 +175,12 @@
 
             <#list userStudent as user>
                 <tr>
-                    <td>${user.id}</td>
+                    <td>${user.id?c}</td>
                     <td>${user.firstName} ${user.lastName}</td>
                     <td>${user.email}</td>
                     <td>${user.role}</td>
                     <td>
-                        <form action="/admin/users/delete/${user.id}" method="post">
+                        <form action="/admin/users/delete/${user.id?c}" method="post">
                             <button class="delete-btn"
                                     onclick="return confirm('Are you sure you want to delete this user?');">
                                 Delete

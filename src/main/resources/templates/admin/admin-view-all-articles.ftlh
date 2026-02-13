@@ -177,13 +177,13 @@
                                     <div class="video-card">
                                         <strong>${article.video.videoTitle}</strong><br>
                                         <small>${article.video.videoDescription!""}</small><br>
-                                        <button type="button" class="btn btn-primary" onclick="toggleVideo('video-${article.video.id}')">Show / Hide Video</button>
-                                        <div id="video-${article.video.id}" style="display:none;">
+                                        <button type="button" class="btn btn-primary" onclick="toggleVideo('video-${article.video.id?c}')">Show / Hide Video</button>
+                                        <div id="video-${article.video.id?c}" style="display:none;">
                                             <iframe src="https://www.youtube.com/embed/${(article.video.videoUrl?matches('v=([^&]+)'))?then(article.video.videoUrl?replace('.*v=([^&]+).*','$1'), article.video.videoUrl?replace('.*/([^/?]+)$','$1'))}"
                                                     title="${article.video.videoTitle}" allowfullscreen></iframe>
                                         </div>
                                     </div>
-                                    <a href="/admin/video/edit/${article.video.id}" class="btn btn-secondary">Edit Video</a>
+                                    <a href="/admin/video/edit/${article.video.id?c}" class="btn btn-secondary">Edit Video</a>
                                 <#else>
                                     <p>No videos yet for this article.</p>
                                 </#if>

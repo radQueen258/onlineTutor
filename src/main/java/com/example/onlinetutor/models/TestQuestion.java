@@ -44,4 +44,9 @@ public class TestQuestion {
     @JoinColumn(name = "curriculum_resource_id")
     private CurriculumResource curriculumResource;
 
+    @ToString.Exclude
+    @OneToMany(mappedBy = "testQuestion", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<TestQuestionOption> optionEntities = new ArrayList<>();
+
+
 }

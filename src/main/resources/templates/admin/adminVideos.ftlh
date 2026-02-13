@@ -184,13 +184,13 @@
 
             <#list videos as video>
                 <tr>
-                    <td>${video.id}</td>
+                    <td>${video.id?c}</td>
                     <td>${video.videoTitle}</td>
                     <td>${video.article.tutorName.firstName}</td>
                     <td>
-                        <a class="btn-view" href="/admin/videos/${video.id}">Check</a>
+                        <a class="btn-view" href="/admin/videos/${video.id?c}">Check</a>
 
-                        <form action="/admin/videos/delete/${video.id}" method="post" style="display:inline;">
+                        <form action="/admin/videos/delete/${video.id?c}" method="post" style="display:inline;">
                             <button class="btn-delete"
                                     onclick="return confirm('Are you sure you want to delete this video?');">
                                 Delete

@@ -207,7 +207,7 @@
 
     <main>
         <div class="header-actions">
-            <a href="/tutor/resources/${resourceId}/articles" class="back-btn">
+            <a href="/tutor/resources/${resourceId?c}/articles" class="back-btn">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
         </div>

@@ -93,7 +93,7 @@
     <div class="info-grid">
         <div class="info-box">
             <strong>User ID</strong>
-            <p>${test.userId}</p>
+            <p>${test.userId?c}</p>
         </div>
 
         <div class="info-box">

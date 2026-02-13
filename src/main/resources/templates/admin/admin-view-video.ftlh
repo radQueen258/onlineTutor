@@ -164,7 +164,7 @@
 
         <header>
             <div class="header-left">
-                <a href="/resources/${resourceId}/articles-and-videos" class="back-btn">
+                <a href="/resources/${resourceId?c}/articles-and-videos" class="back-btn">
                     <i class="fa-solid fa-arrow-left"></i>
                 </a>
                 <h1>Video</h1>
