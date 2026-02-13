@@ -29,7 +29,7 @@
         <select name="curriculumResourceId" required>
             <option value="" disabled selected>Select a topic</option>
             <#list curriculumResources as cr>
-                <option value="${cr.id}">${cr.topicName} (${cr.grade})</option>
+                <option value="${cr.id?c}">${cr.topicName} (${cr.grade})</option>
             </#list>
         </select>
 

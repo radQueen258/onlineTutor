@@ -190,16 +190,16 @@
 
             <#list articles as article>
                 <tr>
-                    <td>${article.id}</td>
+                    <td>${article.id?c}</td>
                     <td>${article.articleTitle}</td>
                     <td>${article.tutorName.firstName}</td>
                     <td>
                         <a class="btn-upload"
-                           href="/admin/resources/${article.resource.id}/article/${article.id}/upload-video">
+                           href="/admin/resources/${article.resource.id?c}/article/${article.id?c}/upload-video">
                             Upload Video
                         </a>
 
-                        <form action="/admin/articles/delete/${article.id}"
+                        <form action="/admin/articles/delete/${article.id?c}"
                               method="post"
                               style="display:inline;">
                             <button class="btn-delete"

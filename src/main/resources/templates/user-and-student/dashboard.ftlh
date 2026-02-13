@@ -306,7 +306,7 @@
 
                             <li class="resource-item">
                                 <i class="fa-regular fa-circle-play"></i>
-                                <a href="/resources/${r.resourceId}/article/${r.articleId}"
+                                <a href="/resources/${r.resourceId?c}/article/${r.articleId?c}"
                                    title="${fullTitle}">
                                     ${shortTitle} – ${r.subject}
                                 </a>

@@ -96,7 +96,7 @@
         <label>Select Curriculum Topic</label>
         <select name="curriculumResourceId" required>
             <#list curriculumResources as cr>
-                <option value="${cr.id}">
+                <option value="${cr.id?c}">
                     ${cr.topicName} (${cr.subject}, ${cr.grade})
                 </option>
             </#list>

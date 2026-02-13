@@ -28,7 +28,7 @@
 <main class="card">
     <h2>Edit Article</h2>
 
-    <form action="/tutor/article/edit/${article.id}" method="post">
+    <form action="/tutor/article/edit/${article.id?c}" method="post">
         <label>Title:</label>
         <input type="text" name="articleTitle" value="${article.articleTitle}" required>
 

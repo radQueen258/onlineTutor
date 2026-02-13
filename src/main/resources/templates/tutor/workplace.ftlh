@@ -183,10 +183,10 @@
                             <#else>0</#if>
                         </td>
                         <td>
-                            <a href="/tutor/resources/${resource.id}/articles">View Articles</a>
+                            <a href="/tutor/resources/${resource.id?c}/articles">View Articles</a>
                         </td>
                         <td>
-                            <form action="/tutor/resources/${resource.id}/delete" method="post" style="display:inline;">
+                            <form action="/tutor/resources/${resource.id?c}/delete" method="post" style="display:inline;">
                                 <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this resource?');">
                                     Delete
                                 </button>

@@ -170,8 +170,8 @@
                                 <h3>${article.articleTitle}</h3>
                                 <p><strong>Subject:</strong> ${article.subject}</p>
 
-                                <a href="/tutor/resources/${resource.id}/article/${article.id}" class="btn btn-primary">See Article</a>
-                                <a href="/tutor/article/edit/${article.id}" class="btn btn-secondary">Edit Article</a>
+                                <a href="/tutor/resources/${resource.id?c}/article/${article.id?c}" class="btn btn-primary">See Article</a>
+                                <a href="/tutor/article/edit/${article.id?c}" class="btn btn-secondary">Edit Article</a>
 
                                 <#if article.video??>
                                     <div class="video-card">
@@ -188,14 +188,14 @@
                                     <p>No videos yet for this article.</p>
                                 </#if>
 
-                                <a href="/tutor/resources/${resource.id}/article/${article.id}/upload-video" class="btn btn-primary">Add Video</a>
+                                <a href="/tutor/resources/${resource.id?c}/article/${article.id?c}/upload-video" class="btn btn-primary">Add Video</a>
                             </div>
                         </#list>
 
-                        <a href="/tutor/resources/${resource.id}/article/new" class="btn btn-primary">Add Article</a>
+                        <a href="/tutor/resources/${resource.id?c}/article/new" class="btn btn-primary">Add Article</a>
                     <#else>
                         <p>No articles yet for this resource.</p>
-                        <a href="/tutor/resources/${resource.id}/article/new" class="btn btn-primary">Add Article</a>
+                        <a href="/tutor/resources/${resource.id?c}/article/new" class="btn btn-primary">Add Article</a>
                     </#if>
                 </div>
             </#list>

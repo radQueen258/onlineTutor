@@ -230,7 +230,7 @@
     <div class="quiz">
         <h3>Quick Quiz</h3>
 
-        <form method="post" action="/submit/${plan.id}">
+        <form method="post" action="/submit/${plan.id?c}">
             <#list quiz as q>
                 <div class="question-block">
                     <p>${q.question}</p>
@@ -238,7 +238,7 @@
                     <#list q.shuffledAnswers as ans>
                         <label>
                             <input type="radio"
-                                   name="q${q.id}"
+                                   name="q${q.id?c}"
                                    value="${ans}"
                                    required>
                             ${ans}

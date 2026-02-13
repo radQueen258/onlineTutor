@@ -183,7 +183,7 @@
                             <#else>0</#if>
                         </td>
                         <td>
-                            <a href="/admin/resources/${resource.id}/articles">View Articles</a>
+                            <a href="/admin/resources/${resource.id?c}/articles">View Articles</a>
                         </td>
 <#--                        <td>-->
 <#--                            <form action="/admin/resources/${resource.id}/delete" method="post" style="display:inline;">-->

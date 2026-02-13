@@ -210,12 +210,12 @@
         <div class="resource-list">
             <#list resources as resource>
                 <div class="resource-row">
-                    <a href="/resources/article/${resource.id}"
+                    <a href="/resources/article/${resource.id?c}"
                        class="topic-name">
                         ${resource.topicName}
                     </a>
 
-                    <a href="/resources/${resource.id}/articles-and-videos"
+                    <a href="/resources/${resource.id?c}/articles-and-videos"
                        class="action-link">
                         Click Here
                     </a>
