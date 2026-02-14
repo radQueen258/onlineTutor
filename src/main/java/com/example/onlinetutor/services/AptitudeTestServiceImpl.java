@@ -41,6 +41,16 @@ public class AptitudeTestServiceImpl implements AptitudeTestService {
 
     @Override
     public AptitudeTest startTest(Long userId, List<TestQuestion> generatedQuestions) {
+//        checking if the aptitude test for that user already exists
+
+        Optional<AptitudeTest> existingOpt =
+                testRepository.findAptitudeTestByUserIdAndStatus(userId, AptitudeTestStatus.IN_PROGRESS);
+
+        if (existingOpt.isPresent()) {
+            return existingOpt.get(); // Return existing test
+        }
+
+//        IF not create a new test
         AptitudeTest test = new AptitudeTest();
         test.setUserId(userId);
         test.setStatus(AptitudeTestStatus.IN_PROGRESS);
@@ -48,8 +58,8 @@ public class AptitudeTestServiceImpl implements AptitudeTestService {
         for (TestQuestion q : generatedQuestions) {
             q.setAptitudeTest(test);
 
-            if (q.getOptions() == null) {
-                q.setOptions(new ArrayList<>());
+            if (q.getOptionEntities() == null) {
+                q.setOptionEntities(new ArrayList<>());
             }
         }
 

@@ -23,13 +23,13 @@ public class TestQuestion {
     @Enumerated(EnumType.STRING)
     private Subject subject;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(
-            name = "test_question_options",
-            joinColumns = @JoinColumn(name = "test_question_id")
-    )
-    @Column(name = "option_value")
-    private List<String> options = new ArrayList<>();
+//    @ElementCollection(fetch = FetchType.EAGER)
+//    @CollectionTable(
+//            name = "test_question_options",
+//            joinColumns = @JoinColumn(name = "test_question_id")
+//    )
+//    @Column(name = "option_value")
+//    private List<String> options = new ArrayList<>();
 
 
     private String correctAnswer;

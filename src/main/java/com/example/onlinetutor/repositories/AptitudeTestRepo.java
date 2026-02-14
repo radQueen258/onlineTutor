@@ -1,5 +1,6 @@
 package com.example.onlinetutor.repositories;
 
+import com.example.onlinetutor.enums.AptitudeTestStatus;
 import com.example.onlinetutor.models.AptitudeTest;
 import com.example.onlinetutor.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +16,6 @@ public interface AptitudeTestRepo extends JpaRepository<AptitudeTest,Long> {
     Optional<AptitudeTest> findByUserId(Long userId);
     void deleteByUserId(Long userId);
     List<AptitudeTest> findAllByOrderByIdDesc();
+
+    Optional<AptitudeTest> findAptitudeTestByUserIdAndStatus(Long userId, AptitudeTestStatus status);
 }

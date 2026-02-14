@@ -200,7 +200,7 @@
                         <label class="option">
                             <input type="radio"
                                    name="answer_${question.id?c}"
-                                   value="${option}">
+                                   value="${option.optionValue}">
                             ${option.optionValue} - ${option.options}
                         </label>
                     </#list>
