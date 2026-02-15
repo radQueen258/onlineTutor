@@ -18,9 +18,11 @@ public interface CurriculumResourceRepo extends JpaRepository<CurriculumResource
 
     List<CurriculumResource> findBySubjectAndGrade(Subject subject, Grade grade);
 
-    Optional<CurriculumResource> findByTopicName(String linearEquations);
+    Optional<CurriculumResource> findByTopicName(String topicName);
 
     List<CurriculumResource> findBySubjectInAndGrade(Collection<Subject> subjects, Grade grade);
 
     List<CurriculumResource> findByGrade(Grade grade);
+
+//    Optional<CurriculumResource> findByTopicName(String topicName);
 }

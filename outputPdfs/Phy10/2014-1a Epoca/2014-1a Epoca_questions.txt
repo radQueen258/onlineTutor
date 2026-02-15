@@ -1,0 +1,20 @@
+Q0: (2,0)
+
+Q5: (1,0)
+
+Q0: 2014/10" Classe/ Exame de Fisica/_1°Epoca
+
+Q1: Determine a :
+
+Q0: . . R= 62
+
+Q0: c) intensidade da corrente que flui através do resistor R3. Rs= 42. (1,0)
+
+Q5: b) resisténcia do respectivo filamento. (1,5)
+
+Q5: Quais sao as palavras que preenchem correctamente as lacunas, na frase seguinte?
+
+Q0: Um péndulo simples, de comprimento L = 1,6 m, é posto a oscilar num lugar onde
+
+Q5: b) a frequéncia das oscilagées. (1,5)
+

@@ -1,0 +1,38 @@
+2013 / 10* Classe / Exame de Fisica / 1° Epoca
+
+No circuito eléctrico representado na figura X, Y e Z sao instrumentos de medida de
+grandezas eléctricas. Sabendo que o instrumento X regista uma corrente de 3A,
+
+calcule: Riz3Q X  R=50
+
+a) aresisténcia total do circuito. (2,0)
+b) 0 valor indicado pelo instrumento Z. i? R3=10 (1,0)
+c) o valor indicado pelo instrumento Y. ao (1,5)
+Numa experiéncia realizada com um resistor encontram-se os seguintes dados:
+U(V) 3 4,5 75 9,0 10,5 12
+I(A) 0,5 0,75 1,25 1,5 1,75 2,0
+
+a) Qual é o valor da resisténcia do resistor? (5)
+b) Qual é a poténcia dissipada no resistor quando a tens4o nos extremos é de 12V? (1,5)
+c) Que energia se dissipa em 20s quando o condutor é percorrido pela corrente de (1,5)
+
+1,5A?
+Assinale com (V) as afirmacoes verdadeiras e com (F), as falsas. (1,5)
+A Um condutor de seco transversal constante e comprimento L, tem uma
+
+resisténcia eléctrica R. Cortando o fio em 4 partes de comprimentos iguais,
+
+a resisténcia de cada uma sera de R/4.
+B Quando um condutor é percorrido por uma corrente de 2A em 2s, a carga que
+
+atravessa a sua seccdo transversal é de 4C.
+C Os condutores metalicos sao geralmente maus condutores de electricidade e calor.
+O grafico refere-se 4 propagagao de uma onda de frequéncia 10 Hz, produzida em
+uma corda. i<— 30 m ——!
+a) Classifique-a quanto a natureza. . t (1,0)
+b) Determine a amplitude e o comprimento de om | (1,5)
+
+onda. |
+c) Determine o periodo. oO : (1,0)
+
+FIM

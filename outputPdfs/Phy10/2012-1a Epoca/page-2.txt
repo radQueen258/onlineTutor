@@ -1,0 +1,42 @@
+2012/10* Classe/ Exame de Fisica/ 1° Epoca
+
+Considere 0 circuito eléctrico dado cuja ddp entre os pontos A e B (Vag) € de 90 volts.
+
+Determine a:
+
+a) resisténcia equivalente. Ri = 100 R2= 600 (2,0)
+
+b) intensidade da corrente no resistor B
+
+Rz = 60. (1,5)
+c) energia dissipada no ___ resistor
+
+R3 = 30Q, durante 1 minuto, quando (1,5)
+
+passa por ele uma corrente de 2 Ampéres.
+Das afirmag6es que se seguem, assinale com “V” as que sdo verdadeiras e com “F” as
+falsas.
+A Todo corpo mergulhado num liquido sofre, por parte deste, uma forga vertical para
+
+cima, cuja intensidade é igual ao peso do liquido deslocado pelo corpo. (0,5)
+B Um corpo electrizado negativamente possui excesso de protées. (0,5)
+C Um corpo permanece em equilibrio em qualquer ponto do liquido se o seu peso for
+
+igual A forga de impulsao ( Fp= F; ). (0,5)
+D A passagem de uma corrente eléctrica através de um resistor €é sempre acompanhada
+
+pela libertagao de energia térmica ou calorifica. (0,5)
+E Um espelho plano fornece uma imagem virtual, invertida e simétrica. (0,5)
+Um péndulo simples de comprimento L = 0,10m executa oscilag6ées de pequena
+abertura angular de modo que a esfera pendular realize um M.H.S.
+Determine 0 perfodo do péndulo e a respectiva frequéncia (use: g =10m/s”) (3,5)
+Qual das opgées completa correctamente a seguinte frase?
+
+(1,0)
+
+O periodo das oscilagdes de um péndulo simples nao depende do (da)...
+A comprimento do péndulo.
+
+B_ massa da esfera pendular.
+
+FIM

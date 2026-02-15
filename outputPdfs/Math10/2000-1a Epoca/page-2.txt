@@ -1,0 +1,38 @@
+Exame de Matematica 10." classe
+
+5. Qual é 0 maior numero inteiro que satisfaz o seguinte sistema: (12)
+2-x
+<*>
+5 2
+2x+4
+3 <0
+6. Existird algum triangulo [ABC], tal que AC=AB e B #C ? Justifique.a resposta. ag
+7. Prove que (1+ tg x)-cos x= sen x+cosx. (22)
+
+8. Considere as funcdes f(x) =x?-2x+1 e g(x) =log, x.
+
+a) Determine o dominio de g. ©
+b) Represente f e g no mesmo S.C.O. ey
+c) Para que valores de x a funcao f é crescente? 6
+4) A partir do grafico resolva: g (x) < f(x). ao
+e) Indique os zeros da fungao g. ©)
+
+9. Uma vendedeira do mercado vende diariamente 5 tipos de mariscoem kg, designados da
+seguinte maneira:
+
+A - Peixe-serra;
+B - Carapau;
+
+C - Sardinha;
+D - Améijoa;
+
+E - Camarao.
+
+As quantidades estao indicadas no grafico de barras.
+
+A BC D -—E *
+
+a) Qual é 0 marisco que mais se vende diariamente? Indique a quantidade. (8)
+
+b) A partir do grafico construa uma tabela de frequéncias absolutas e frequéncias relativas (12)
+percentuais. =

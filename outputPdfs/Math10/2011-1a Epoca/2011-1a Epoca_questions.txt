@@ -1,0 +1,30 @@
+Q5: 333 _ 66
+
+Q5: c) {h2}=[1:2] (0,5)
+
+Q5: 2. Determine o valor numérico das seguintes expressGes:
+
+Q0: sen30' + 1 (1,5)
+
+Q3: Determine o valor de m de modo que 0 polinémio p(x)=(m+4)x°+2x° +.x+1
+
+Q0: 4. Calcule o produto do polinémio P(x)=x° -4x° +x+6 por x+3.
+
+Q7: 5. Resolva a equagiio 2senx—1=0, sabendo que xe [0;7]. (2,0)
+
+Q0: b) Quantos alunos nao gostam de nenhuma das disciplinas? (0,5)
+
+Q5: d) Qual é a percentagem dos alunos que gostam de Biologia? (1,0)
+
+Q0: b) Determine a altura média dos alunos. (2,0)
+
+Q5: Considere o grafico da fungao f(x) = ax +b representado na figura abaixo. Determine:
+
+Q2: b) O valor de b.
+
+Q1: . c) A variagao do sinal da fungao.
+
+Q0: 4 d) A expresso analitica de f (x).
+
+Q0: FIM
+

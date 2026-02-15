@@ -1,0 +1,22 @@
+Q2: “O aroma das carnes excitava o olfacto, fazendo crescer rios de saliva em todas as bocas.”
+
+Q4: “Os rapazes ja tornados homens passavam entre elas como heréis. (...) maravilhada quando
+
+Q7: Composigaéo:
+
+Q0: (1,0)
+
+Q0: (1,0)
+
+Q0: (1,0)
+
+Q9: (0,6)
+
+Q8: (0,7)
+
+Q0: (5)
+
+Q0: (1,0)
+
+Q5: (4,0)
+
