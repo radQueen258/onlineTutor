@@ -288,36 +288,67 @@
 
             </div>
 
-            <div class="card resources-card">
-                <h2>Recommended Articles</h2>
+        <div class="card resources-card">
+            <h2>Recommended Articles</h2>
+            <h2>Your Exam History</h2>
 
-                <#assign MAX_TITLE_LENGTH = 50>
+            <#if exams?? && exams?size gt 0>
+                <#list exams as exam>
+                    <div class="exam-card">
+                        <h3>${exam.subject} — ${exam.dateTaken}</h3>
+                         <p>Score: ${(exam.examScore)!0?string["0.##"]}%</p>
 
-                <#if recommendations?? && recommendations?size gt 0>
-                    <ul class="resource-list">
-                        <#list recommendations as r>
+                        <#assign weakTopics = examWeakTopics[exam.id]>
+                        <#if weakTopics?? && weakTopics?size gt 0>
+                            <h4>Suggested Topics to Review:</h4>
+                            <ul>
+                                <#list weakTopics as topic>
+                                    <li><strong>${topic.topic}</strong>: ${topic.explanation}</li>
+                                </#list>
+                            </ul>
+                        </#if>
 
-                            <#assign fullTitle = r.title>
-                            <#if fullTitle?length gt MAX_TITLE_LENGTH>
-                                <#assign shortTitle = fullTitle?substring(0, MAX_TITLE_LENGTH) + "...">
-                            <#else>
-                                <#assign shortTitle = fullTitle>
-                            </#if>
+                        <form action="/exam/${exam.id}/retake" method="post" style="margin-top: 10px;">
+                            <button type="submit" class="continue-btn">Retake Exam</button>
+                        </form>
+                    </div>
+                </#list>
+            <#else>
+                <p>You haven’t taken any exams yet.</p>
+            </#if>
 
-                            <li class="resource-item">
-                                <i class="fa-regular fa-circle-play"></i>
-                                <a href="/resources/${r.resourceId?c}/article/${r.articleId?c}"
-                                   title="${fullTitle}">
-                                    ${shortTitle} – ${r.subject}
-                                </a>
-                            </li>
+        </div>
 
-                        </#list>
-                    </ul>
-                <#else>
-                    <p>No recommended articles</p>
-                </#if>
-            </div>
+<#--            <div class="card resources-card">-->
+<#--                <h2>Recommended Articles</h2>-->
+
+<#--                <#assign MAX_TITLE_LENGTH = 50>-->
+
+<#--                <#if recommendations?? && recommendations?size gt 0>-->
+<#--                    <ul class="resource-list">-->
+<#--                        <#list recommendations as r>-->
+
+<#--                            <#assign fullTitle = r.title>-->
+<#--                            <#if fullTitle?length gt MAX_TITLE_LENGTH>-->
+<#--                                <#assign shortTitle = fullTitle?substring(0, MAX_TITLE_LENGTH) + "...">-->
+<#--                            <#else>-->
+<#--                                <#assign shortTitle = fullTitle>-->
+<#--                            </#if>-->
+
+<#--                            <li class="resource-item">-->
+<#--                                <i class="fa-regular fa-circle-play"></i>-->
+<#--                                <a href="/resources/${r.resourceId?c}/article/${r.articleId?c}"-->
+<#--                                   title="${fullTitle}">-->
+<#--                                    ${shortTitle} – ${r.subject}-->
+<#--                                </a>-->
+<#--                            </li>-->
+
+<#--                        </#list>-->
+<#--                    </ul>-->
+<#--                <#else>-->
+<#--                    <p>No recommended articles</p>-->
+<#--                </#if>-->
+<#--            </div>-->
         </#if>
 
     </div>

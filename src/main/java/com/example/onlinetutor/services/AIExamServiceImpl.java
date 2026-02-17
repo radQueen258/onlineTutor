@@ -39,6 +39,9 @@ public class AIExamServiceImpl implements AIExamService{
     @Autowired
     private GeneratedQuestionRepo generatedQuestionRepo;
 
+    @Autowired
+    private CurriculumResourceRepo curriculumResourceRepo;
+
     private String buildPrompt(String baseText) {
         return """
 You are an expert national exam creator.
@@ -167,23 +170,97 @@ Base questions:
     }
 
 
+    private String generateWeakTopicsJson(Subject subject, List<GeneratedQuestion> wrongQuestions) throws Exception {
+
+        List<CurriculumResource> resources = curriculumResourceRepo.findBySubject(subject);
+
+
+        String questionsText = wrongQuestions.stream()
+                .map(q -> "- " + q.getQuestionText())
+                .collect(Collectors.joining("\n"));
+
+        String resourceList = resources.stream()
+                .map(r -> r.getTopicName())
+                .collect(Collectors.joining(", "));
+
+        String prompt = """
+            You are an academic tutor AI.
+
+            Subject: %s
+
+            The student answered these questions incorrectly:
+            %s
+
+            From the following list of topics:
+            %s
+
+            Identify which topics the student is weak in. Return JSON ONLY in this format:
+
+            {
+              "weakTopics": [
+                {
+                  "topic": "topic name from the list",
+                  "explanation": "short explanation of difficulty"
+                }
+              ]
+            }
+            """.formatted(subject, questionsText, resourceList);
+
+        //  Call AI
+        String aiResponse = openRouterClient.sendPrompt(prompt);
+
+        // Clean AI response
+        aiResponse = aiResponse.trim();
+        if (aiResponse.startsWith("```")) {
+            aiResponse = aiResponse
+                    .replace("```json", "")
+                    .replace("```", "")
+                    .trim();
+        }
+
+        int firstBrace = aiResponse.indexOf("{");
+        int lastBrace = aiResponse.lastIndexOf("}");
+        if (firstBrace == -1 || lastBrace == -1) {
+            throw new RuntimeException("AI did not return valid JSON for weak topics.");
+        }
+
+        String cleanJson = aiResponse.substring(firstBrace, lastBrace + 1);
+
+
+        JSONObject json = new JSONObject(cleanJson);
+
+        if (!json.has("weakTopics")) {
+            throw new RuntimeException("AI JSON missing 'weakTopics' field.");
+        }
+
+        JSONArray weakTopicsArray = json.getJSONArray("weakTopics");
+
+        return weakTopicsArray.toString();
+    }
+
+
+
+
+
     @Transactional
     @Override
     public GradeResponse gradeExam(Long examId, Long userId, Subject subject, Map<Long, Integer> answers) {
+        // 1️⃣ Fetch the exam
         StudentExam exam = studentExamRepo.findById(examId)
                 .orElseThrow(() -> new RuntimeException("Exam not found"));
 
-        List<GeneratedQuestion> questions = generatedQuestionRepo
-                .findByStudentExam_Id(exam.getId());
+        List<GeneratedQuestion> questions = generatedQuestionRepo.findByStudentExam_Id(exam.getId());
 
         int correctCount = 0;
+        List<GeneratedQuestion> wrongQuestions = new ArrayList<>();
 
+        // 2️⃣ Grade each question
         for (GeneratedQuestion q : questions) {
-
             Integer selected = answers.get(q.getId());
-            boolean isCorrect = selected.equals(q.getCorrectOptionIndex());
+            boolean isCorrect = selected != null && selected.equals(q.getCorrectOptionIndex());
 
             if (isCorrect) correctCount++;
+            else wrongQuestions.add(q);
 
             StudentAnswer answer = StudentAnswer.builder()
                     .studentExam(exam)
@@ -195,14 +272,27 @@ Base questions:
             studentAnswerRepo.save(answer);
         }
 
+        // 3️⃣ Calculate score
         double score = (correctCount * 100.0) / questions.size();
-
         exam.setExamScore(score);
         exam.setStatus(ExamStatus.COMPLETED);
+
+        // 4️⃣ Generate weak topics JSON only if there are wrong questions
+        if (!wrongQuestions.isEmpty()) {
+            String weakTopicsJson = null;
+            try {
+                weakTopicsJson = generateWeakTopicsJson(subject, wrongQuestions);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            exam.setSuggestionsJson(weakTopicsJson);
+        }
+
         studentExamRepo.save(exam);
 
-        return new GradeResponse(score);
+        return new GradeResponse(exam.getId(), score);
     }
+
 
 
 }

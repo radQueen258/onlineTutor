@@ -6,16 +6,18 @@ import com.example.onlinetutor.dto.RecommendedArticleView;
 import com.example.onlinetutor.enums.AptitudeTestStatus;
 import com.example.onlinetutor.models.Article;
 import com.example.onlinetutor.models.ArticleRecommendation;
+import com.example.onlinetutor.models.StudentExam;
 import com.example.onlinetutor.models.User;
-import com.example.onlinetutor.repositories.AptitudeTestRepo;
-import com.example.onlinetutor.repositories.ArticleRecommendationRepo;
-import com.example.onlinetutor.repositories.ArticleRepo;
-import com.example.onlinetutor.repositories.UserRepo;
+import com.example.onlinetutor.repositories.*;
 import com.example.onlinetutor.services.AptitudeTestService;
 import com.example.onlinetutor.services.ArticleRecommendationService;
 import com.example.onlinetutor.services.StudyPlanService;
 import com.example.onlinetutor.services.UserService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -24,8 +26,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.util.List;
-import java.util.Objects;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class DashboardController {
@@ -40,6 +43,14 @@ public class DashboardController {
 
     @Autowired
     private ArticleRepo articleRepo;
+
+    @Autowired
+    private StudentExamRepo studentExamRepo;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+    @Autowired
+    private AptitudeTestService aptitudeTestService;
 //    @Autowired
 //    private ArticleRecommendationService articleRecommendationService;
 //    @Autowired
@@ -64,6 +75,8 @@ public class DashboardController {
                 new RuntimeException("User not found"));
 
         Long userId = user1.getId();
+
+        List<StudentExam> exams = studentExamRepo.findByUserIdOrderByDateTakenDesc(userId);
 
         if (user1.getAptitudeTestStatus() !=  AptitudeTestStatus.COMPLETED) {
             userService.updateAptitudeTestStatus(userId, status);
@@ -114,6 +127,43 @@ public class DashboardController {
             model.addAttribute("recommendations", recommendations);
 
         }
+
+
+//        ===================EXAM SCORES AND WEAK TOPICS=======================
+        Map<Long, List<Map<String, String>>> examWeakTopics = new HashMap<>();
+        for (StudentExam exam : exams) {
+            List<Map<String, String>> weakTopics = new ArrayList<>();
+            if (exam.getSuggestionsJson() != null && !exam.getSuggestionsJson().isBlank()) {
+                try {
+                    JSONObject obj = new JSONObject(exam.getSuggestionsJson());
+                    JSONArray arr = obj.optJSONArray("weakTopics");
+                    if (arr != null) {
+                        for (int i = 0; i < arr.length(); i++) {
+                            JSONObject t = arr.getJSONObject(i);
+                            Map<String, String> topic = new HashMap<>();
+                            topic.put("topic", t.optString("topic", ""));
+                            topic.put("explanation", t.optString("explanation", ""));
+                            weakTopics.add(topic);
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            examWeakTopics.put(exam.getId(), weakTopics);
+        }
+
+        model.addAttribute("user", user1);
+        model.addAttribute("examWeakTopics", examWeakTopics);
+        model.addAttribute("exams", exams.stream()
+                .map(e -> Map.of(
+                        "subject", e.getSubject(),
+                        "dateTaken", e.getDateTaken().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                        "score", e.getExamScore()
+                ))
+                .collect(Collectors.toList()));
+
+
 
 
         return "/user-and-student/dashboard";

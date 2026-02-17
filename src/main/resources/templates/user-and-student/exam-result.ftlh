@@ -176,21 +176,28 @@
     </div>
 
 
-<#--     Weak Topics Section -->
-<#--    <#if weakTopics?? && weakTopics?size gt 0>-->
-<#--        <div class="weak-topics">-->
-<#--            <h3>Topics to Review:</h3>-->
-<#--            <ul>-->
-<#--                <#list weakTopics as topic>-->
-<#--                    <li>${topic}</li>-->
-<#--                </#list>-->
-<#--            </ul>-->
-<#--        </div>-->
-<#--    </#if>-->
+    <#if weakTopics?? && weakTopics?size gt 0>
+        <div class="weak-topics">
+            <h3>Topics to Review:</h3>
+            <ul>
+                <#list weakTopics as topic>
+                    <li>
+                        <strong>${topic.topic}</strong>: ${topic.explanation}
+                    </li>
+                </#list>
+            </ul>
+        </div>
+    </#if>
 
     <a href="/dashboard" class="btn-dashboard">
         Go to Dashboard
     </a>
+
+    <#-- Retake Button -->
+    <form action="/exam/${examId}/retake" method="post" style="margin-top: 20px;">
+        <button type="submit" class="continue-btn">Retake Exam</button>
+    </form>
+
 
 </main>
 

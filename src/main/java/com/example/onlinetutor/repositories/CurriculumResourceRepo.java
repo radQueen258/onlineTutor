@@ -24,5 +24,7 @@ public interface CurriculumResourceRepo extends JpaRepository<CurriculumResource
 
     List<CurriculumResource> findByGrade(Grade grade);
 
+    List<CurriculumResource> findBySubject(Subject subject);
+
 //    Optional<CurriculumResource> findByTopicName(String topicName);
 }
