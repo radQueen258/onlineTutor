@@ -38,5 +38,5 @@ public class ExamQuestion {
     @Column(name = "exam_option_text")
     private List<String> examOptions;
 
-    private String examCorrectAnswer;
+    private Integer examCorrectAnswer;
 }

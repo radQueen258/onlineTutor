@@ -96,6 +96,7 @@ public class SecurityConfig {
                 .requestMatchers("/dashboard/**").hasAnyAuthority("STUDENT", "TEACHER", "ADMIN")
                 .requestMatchers("/onboarding/**").permitAll()
                 .requestMatchers("/setGoals/**").permitAll()
+                .requestMatchers("/exam/**").permitAll()
                 .requestMatchers("/choose-test/**", "/videos/**"
                 ,"/resources/**", "/article/**", "/exam-trends/**", "/study/**"
                 , "/study-plan/**", "/submit/**", "/tutor/**","/admin/**", "/statistics","/debug/**","/api/**").permitAll()
