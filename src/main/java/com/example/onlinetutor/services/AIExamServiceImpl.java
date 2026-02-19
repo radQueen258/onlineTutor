@@ -3,6 +3,7 @@ package com.example.onlinetutor.services;
 import com.example.onlinetutor.dto.GeneratedExamResponse;
 import com.example.onlinetutor.dto.GradeResponse;
 import com.example.onlinetutor.enums.ExamStatus;
+import com.example.onlinetutor.enums.Grade;
 import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.*;
 import com.example.onlinetutor.repositories.*;
@@ -88,8 +89,9 @@ Base questions:
 
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+        Grade grade = user.getExamLevel();
 
-        List<ExamQuestion> baseQuestions = examQuestionRepo.findBySubject(subject);
+        List<ExamQuestion> baseQuestions = examQuestionRepo.findBySubjectAndGrade(subject, grade);
         Collections.shuffle(baseQuestions);
 
         String baseText = baseQuestions.stream()

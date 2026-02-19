@@ -313,6 +313,7 @@
                                 </#list>
                             </ul>
                         </#if>
+                        <br>
 <#--                        <form action="/exam/${exam.id}/retake" method="post" style="margin-top: 10px;">-->
 <#--                            <button type="submit" class="continue-btn">Retake Exam</button>-->
 <#--                        </form>-->
@@ -321,6 +322,19 @@
             <#else>
                 <p>You haven’t taken any exams yet.</p>
             </#if>
+            <br>
+
+            <#list selectedSubjects as subject>
+                <div class="subject-card">
+                    <h3>${subject}</h3>
+
+                    <form method="get" action="/exam/start">
+                        <input type="hidden" name="userId" value="${user.id?c}">
+                        <input type="hidden" name="subject" value="${subject}">
+                        <button type="submit">Start Exam</button>
+                    </form>
+                </div>
+            </#list>
 
         </div>
 

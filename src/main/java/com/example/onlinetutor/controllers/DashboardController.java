@@ -156,6 +156,9 @@ public class DashboardController {
                 ))
                 .collect(Collectors.toList()));
 
+        model.addAttribute("selectedSubjects", user1.getPreferredSubjects());
+        model.addAttribute("studentGrade", user1.getExamLevel());
+
 
 
 

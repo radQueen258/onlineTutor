@@ -1,5 +1,6 @@
 package com.example.onlinetutor.models;
 
+import com.example.onlinetutor.enums.Grade;
 import com.example.onlinetutor.enums.Subject;
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,6 +22,10 @@ public class ExamQuestion {
 
     @Enumerated(EnumType.STRING)
     private Subject subject;
+
+    @Enumerated(EnumType.STRING)
+    private Grade grade;
+
 
     @ManyToMany
     @JoinTable(
