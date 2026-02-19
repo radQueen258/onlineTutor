@@ -4,10 +4,7 @@ package com.example.onlinetutor.controllers;
 import com.example.onlinetutor.dto.DashboardStudyPlanInfo;
 import com.example.onlinetutor.dto.RecommendedArticleView;
 import com.example.onlinetutor.enums.AptitudeTestStatus;
-import com.example.onlinetutor.models.Article;
-import com.example.onlinetutor.models.ArticleRecommendation;
-import com.example.onlinetutor.models.StudentExam;
-import com.example.onlinetutor.models.User;
+import com.example.onlinetutor.models.*;
 import com.example.onlinetutor.repositories.*;
 import com.example.onlinetutor.services.AptitudeTestService;
 import com.example.onlinetutor.services.ArticleRecommendationService;
@@ -46,6 +43,9 @@ public class DashboardController {
 
     @Autowired
     private StudentExamRepo studentExamRepo;
+
+    @Autowired
+    private StudentExamRecomRepo studentExamRecomRepo;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -130,33 +130,26 @@ public class DashboardController {
 
 
 //        ===================EXAM SCORES AND WEAK TOPICS=======================
-        Map<Long, List<Map<String, String>>> examWeakTopics = new HashMap<>();
+        Map<String, List<CurriculumResource>> examWeakTopics = new HashMap<>();
+
         for (StudentExam exam : exams) {
-            List<Map<String, String>> weakTopics = new ArrayList<>();
-            if (exam.getSuggestionsJson() != null && !exam.getSuggestionsJson().isBlank()) {
-                try {
-                    JSONObject obj = new JSONObject(exam.getSuggestionsJson());
-                    JSONArray arr = obj.optJSONArray("weakTopics");
-                    if (arr != null) {
-                        for (int i = 0; i < arr.length(); i++) {
-                            JSONObject t = arr.getJSONObject(i);
-                            Map<String, String> topic = new HashMap<>();
-                            topic.put("topic", t.optString("topic", ""));
-                            topic.put("explanation", t.optString("explanation", ""));
-                            weakTopics.add(topic);
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            examWeakTopics.put(exam.getId(), weakTopics);
+            List<StudentExamRecom> recoms =
+                    studentExamRecomRepo.findByStudentExam_Id(exam.getId());
+
+            List<CurriculumResource> resources = recoms.stream()
+                    .flatMap(r -> r.getRecommendedResources().stream())
+                    .distinct()
+                    .toList();
+
+            examWeakTopics.put(String.valueOf(exam.getId()), resources);
         }
+
 
         model.addAttribute("user", user1);
         model.addAttribute("examWeakTopics", examWeakTopics);
         model.addAttribute("exams", exams.stream()
                 .map(e -> Map.of(
+                        "id", e.getId(),
                         "subject", e.getSubject(),
                         "dateTaken", e.getDateTaken().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
                         "score", e.getExamScore()

@@ -210,8 +210,7 @@
         <div class="resource-list">
             <#list resources as resource>
                 <div class="resource-row">
-                    <a href="/resources/article/${resource.id?c}"
-                       class="topic-name">
+                    <a class="topic-name">
                         ${resource.topicName}
                     </a>
 

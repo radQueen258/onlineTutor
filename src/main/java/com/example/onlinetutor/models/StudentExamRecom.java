@@ -2,9 +2,17 @@ package com.example.onlinetutor.models;
 
 import com.example.onlinetutor.enums.Subject;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class StudentExamRecom {
 
@@ -12,6 +20,9 @@ public class StudentExamRecom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    private StudentExam studentExam;
 
     @ManyToOne
     private User user;

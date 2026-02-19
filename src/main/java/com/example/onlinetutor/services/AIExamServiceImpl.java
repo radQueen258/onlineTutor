@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -41,6 +38,11 @@ public class AIExamServiceImpl implements AIExamService{
 
     @Autowired
     private CurriculumResourceRepo curriculumResourceRepo;
+
+
+    @Autowired
+    private StudentExamRecomRepo studentExamRecomRepo;
+
 
     private String buildPrompt(String baseText) {
         return """
@@ -245,7 +247,7 @@ Base questions:
     @Transactional
     @Override
     public GradeResponse gradeExam(Long examId, Long userId, Subject subject, Map<Long, Integer> answers) {
-        // 1️⃣ Fetch the exam
+
         StudentExam exam = studentExamRepo.findById(examId)
                 .orElseThrow(() -> new RuntimeException("Exam not found"));
 
@@ -254,7 +256,7 @@ Base questions:
         int correctCount = 0;
         List<GeneratedQuestion> wrongQuestions = new ArrayList<>();
 
-        // 2️⃣ Grade each question
+
         for (GeneratedQuestion q : questions) {
             Integer selected = answers.get(q.getId());
             boolean isCorrect = selected != null && selected.equals(q.getCorrectOptionIndex());
@@ -272,21 +274,54 @@ Base questions:
             studentAnswerRepo.save(answer);
         }
 
-        // 3️⃣ Calculate score
         double score = (correctCount * 100.0) / questions.size();
         exam.setExamScore(score);
         exam.setStatus(ExamStatus.COMPLETED);
 
-        // 4️⃣ Generate weak topics JSON only if there are wrong questions
         if (!wrongQuestions.isEmpty()) {
-            String weakTopicsJson = null;
             try {
-                weakTopicsJson = generateWeakTopicsJson(subject, wrongQuestions);
+
+                // Remove old recommendations for this exam
+                studentExamRecomRepo.deleteByStudentExam_Id(exam.getId());
+
+
+                // Generate AI JSON
+                String weakTopicsJson = generateWeakTopicsJson(subject, wrongQuestions);
+
+                JSONArray arr = new JSONArray(weakTopicsJson);
+
+//                 Get all curriculum resources for subject
+                List<CurriculumResource> allResources =
+                        curriculumResourceRepo.findBySubject(subject);
+
+                Set<CurriculumResource> matchedResources = new HashSet<>();
+
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject obj = arr.getJSONObject(i);
+                    String topicName = obj.getString("topic");
+
+                    for (CurriculumResource resource : allResources) {
+                        if (resource.getTopicName().equalsIgnoreCase(topicName)) {
+                            matchedResources.add(resource);
+                        }
+                    }
+                }
+
+
+                StudentExamRecom recom = new StudentExamRecom();
+                recom.setStudentExam(exam);
+                recom.setUser(exam.getUser());
+                recom.setSubject(subject);
+                recom.setRecommendedResources(new ArrayList<>(matchedResources));
+
+
+                studentExamRecomRepo.save(recom);
+
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Failed to save recommendations", e);
             }
-            exam.setSuggestionsJson(weakTopicsJson);
         }
+
 
         studentExamRepo.save(exam);
 

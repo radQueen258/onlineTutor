@@ -289,28 +289,33 @@
             </div>
 
         <div class="card resources-card">
-            <h2>Recommended Articles</h2>
             <h2>Your Exam History</h2>
 
             <#if exams?? && exams?size gt 0>
                 <#list exams as exam>
                     <div class="exam-card">
                         <h3>${exam.subject} — ${exam.dateTaken}</h3>
-                         <p>Score: ${(exam.examScore)!0?string["0.##"]}%</p>
+                         <p>Score: ${(exam.score)!0?string["0.##"]}%</p>
+                        <br>
 
-                        <#assign weakTopics = examWeakTopics[exam.id]>
+                        <#assign weakTopics = examWeakTopics[exam.id?string]>
                         <#if weakTopics?? && weakTopics?size gt 0>
                             <h4>Suggested Topics to Review:</h4>
                             <ul>
-                                <#list weakTopics as topic>
-                                    <li><strong>${topic.topic}</strong>: ${topic.explanation}</li>
+                                <#list weakTopics as resource>
+                                    <li>
+                                        <a href="/resources/${resource.id?c}/articles-and-videos">
+                                            <strong>${resource.topicName}</strong>
+                                        </a>
+
+<#--                                        ${resource.description}-->
+                                    </li>
                                 </#list>
                             </ul>
                         </#if>
-
-                        <form action="/exam/${exam.id}/retake" method="post" style="margin-top: 10px;">
-                            <button type="submit" class="continue-btn">Retake Exam</button>
-                        </form>
+<#--                        <form action="/exam/${exam.id}/retake" method="post" style="margin-top: 10px;">-->
+<#--                            <button type="submit" class="continue-btn">Retake Exam</button>-->
+<#--                        </form>-->
                     </div>
                 </#list>
             <#else>
