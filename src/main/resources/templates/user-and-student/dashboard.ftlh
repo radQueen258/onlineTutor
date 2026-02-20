@@ -304,10 +304,7 @@
                             <ul>
                                 <#list weakTopics as resource>
                                     <li>
-                                        <a href="/resources/${resource.id?c}/articles-and-videos">
                                             <strong>${resource.topicName}</strong>
-                                        </a>
-
 <#--                                        ${resource.description}-->
                                     </li>
                                 </#list>
