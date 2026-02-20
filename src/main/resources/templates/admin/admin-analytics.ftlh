@@ -5,6 +5,7 @@
     <title>Admin Analytics</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
@@ -162,6 +163,9 @@
                 No quiz data available yet.
             </div>
         <#else>
+            <div style="margin-bottom:40px;">
+                <canvas id="articleChart"></canvas>
+            </div>
             <table>
                 <thead>
                 <tr>
@@ -203,6 +207,50 @@
 
     </div>
 </main>
+
+<script>
+    const articleLabels = [
+        <#list stats as item>
+        "${item.articleTitle}"<#if item_has_next>,</#if>
+        </#list>
+    ];
+
+    const passedData = [
+        <#list stats as item>
+        ${item.studentsPassed}<#if item_has_next>,</#if>
+        </#list>
+    ];
+
+    const failedData = [
+        <#list stats as item>
+        ${item.studentsFailed}<#if item_has_next>,</#if>
+        </#list>
+    ];
+
+    new Chart(document.getElementById('articleChart'), {
+        type: 'bar',
+        data: {
+            labels: articleLabels,
+            datasets: [
+                {
+                    label: 'Passed',
+                    data: passedData
+                },
+                {
+                    label: 'Failed',
+                    data: failedData
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { stacked: true },
+                y: { stacked: true }
+            }
+        }
+    });
+</script>
 
 </body>
 </html>

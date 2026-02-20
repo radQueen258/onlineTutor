@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Overall Statistics</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         body {
@@ -138,6 +139,14 @@
                     </tr>
                 </#list>
             </table>
+
+            <div style="margin-top:40px;">
+                <canvas id="attemptChart"></canvas>
+            </div>
+
+            <div style="margin-top:40px; width:300px;">
+                <canvas id="passRateChart"></canvas>
+            </div>
         <#else>
             <p>No statistics available yet.</p>
         </#if>
@@ -146,5 +155,40 @@
     </div>
 </div>
 
+
+<script>
+    const totalAttempts = ${stats["Quiz attempts"]!0};
+    const passRate = ${stats["Pass rate (%)"]!0};
+
+    // Bar Chart - Attempts
+    new Chart(document.getElementById('attemptChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Quiz Attempts'],
+            datasets: [{
+                label: 'Total Attempts',
+                data: [totalAttempts],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+
+    // Doughnut Chart - Pass Rate
+    new Chart(document.getElementById('passRateChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Passed %', 'Failed %'],
+            datasets: [{
+                data: [passRate, 100 - passRate]
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+</script>
 </body>
 </html>

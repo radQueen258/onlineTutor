@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Aptitude Test Results</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         body {
@@ -108,6 +109,10 @@
         <a class="back-link" href="/admin/dashboard">← Back to Dashboard</a>
     </div>
 
+    <div style="margin-bottom:40px;">
+        <canvas id="aptitudeChart"></canvas>
+    </div>
+
     <table>
         <tr>
             <th>ID</th>
@@ -145,6 +150,35 @@
     </table>
 
 </div>
+
+<script>
+    const statuses = [
+        <#list tests as test>
+        "${test.status}"<#if test_has_next>,</#if>
+        </#list>
+    ];
+
+    let passed = 0;
+    let failed = 0;
+
+    statuses.forEach(status => {
+        if (status === "PASSED") passed++;
+        if (status === "FAILED") failed++;
+    });
+
+    new Chart(document.getElementById('aptitudeChart'), {
+        type: 'pie',
+        data: {
+            labels: ['Passed', 'Failed'],
+            datasets: [{
+                data: [passed, failed]
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+</script>
 
 </body>
 </html>

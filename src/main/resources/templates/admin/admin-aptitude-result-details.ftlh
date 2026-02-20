@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Aptitude Test Details</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         body {
