@@ -201,6 +201,14 @@
         <h1>Resources</h1>
     </header>
 
+    <form method="get" action="/resources" style="margin-bottom: 20px;">
+        <input type="text" name="keyword" value="${keyword!""}"
+               placeholder="Search topic..." />
+
+        <button type="submit">Search</button>
+    </form>
+    <br>
+
     <section class="resources-card">
         <div class="table-header">
             <h2>Major Topic</h2>
@@ -220,6 +228,30 @@
                     </a>
                 </div>
             </#list>
+            <br>
+
+            <div class="pagination">
+
+                <#if currentPage gt 0>
+                    <a href="/resources?page=${currentPage - 1}&keyword=${keyword!""}">
+                        Previous
+                    </a>
+                </#if>
+
+                <#list 0..(totalPages - 1) as i>
+                    <a href="/resources?page=${i}&keyword=${keyword!""}"
+                            <#if i == currentPage> style="font-weight:bold;" </#if>>
+                        ${i + 1}
+                    </a>
+                </#list>
+
+                <#if currentPage lt totalPages - 1>
+                    <a href="/resources?page=${currentPage + 1}&keyword=${keyword!""}">
+                        Next
+                    </a>
+                </#if>
+
+            </div>
         </div>
     </section>
 </main>

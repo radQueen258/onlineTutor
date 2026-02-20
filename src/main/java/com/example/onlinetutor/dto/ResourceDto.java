@@ -1,5 +1,6 @@
 package com.example.onlinetutor.dto;
 
+import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.Article;
 import com.example.onlinetutor.models.Resource;
 import com.example.onlinetutor.models.Video;
@@ -21,6 +22,7 @@ public class ResourceDto {
     private String topicName;
     private List<Article> articles;
     private Video video;
+    private Subject subject;
 
     public static ResourceDto from(Resource resource) {
         return ResourceDto.builder()
@@ -28,6 +30,7 @@ public class ResourceDto {
                 .topicName(resource.getTopicName())
                 .articles(resource.getArticles())
                 .video(resource.getVideo())
+                .subject(resource.getSubject())
                 .build();
     }
 

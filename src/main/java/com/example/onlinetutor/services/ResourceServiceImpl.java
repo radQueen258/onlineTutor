@@ -11,6 +11,10 @@ import com.example.onlinetutor.repositories.CurriculumResourceRepo;
 import com.example.onlinetutor.repositories.ResourceRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -115,6 +119,29 @@ public class ResourceServiceImpl implements ResourceService {
                 .build();
 
         return resourceRepo.save(resource);
+    }
+
+    private ResourceDto convertToDto(Resource resource) {
+        return ResourceDto.builder()
+                .id(resource.getId())
+                .topicName(resource.getTopicName())
+                .subject(resource.getSubject())
+                .build();
+    }
+
+    @Override
+    public Page<ResourceDto> getResources(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("topicName").ascending());
+
+        Page<Resource> resourcePage;
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            resourcePage = resourceRepo.findByTopicNameContainingIgnoreCase(keyword, pageable);
+        } else {
+            resourcePage = resourceRepo.findAll(pageable);
+        }
+
+        return resourcePage.map(this::convertToDto);
     }
 
 

@@ -1,5 +1,6 @@
 package com.example.onlinetutor.controllers;
 
+import com.example.onlinetutor.dto.ResourceDto;
 import com.example.onlinetutor.models.Article;
 import com.example.onlinetutor.models.Resource;
 import com.example.onlinetutor.models.Video;
@@ -8,11 +9,13 @@ import com.example.onlinetutor.repositories.ResourceRepo;
 import com.example.onlinetutor.repositories.VideoRepo;
 import com.example.onlinetutor.services.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -30,8 +33,19 @@ public class ResourcesController {
 
 
     @GetMapping("/resources")
-    public String showResources(Model model) {
-        model.addAttribute("resources", resourceService.getAllResources());
+    public String showResources(
+            @RequestParam(defaultValue = "") String keyword,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam (defaultValue = "6") int size,
+            Model model) {
+
+        Page<ResourceDto> resourcePage = resourceService.getResources(keyword, page, size);
+
+        model.addAttribute("resources", resourcePage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", resourcePage.getTotalPages());
+        model.addAttribute("keyword", keyword);
+//        model.addAttribute("resources", resourceService.getAllResources());
         return "/user-and-student/resources";
     }
 
