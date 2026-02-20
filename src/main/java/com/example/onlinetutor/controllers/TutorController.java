@@ -270,16 +270,22 @@ public class TutorController {
             article.setImageUrl(updatedArticle.getImageUrl());
         }
 
-        // Update questions
-        for (int i = 0; i < 3; i++) {
-            QuizQuestion q = article.getQuestions().get(i);
-            QuizQuestion incoming = updatedArticle.getQuestions().get(i);
+        if (updatedArticle.getQuestions() != null) {
 
-            q.setQuestion(incoming.getQuestion());
-            q.setCorrectAnswer(incoming.getCorrectAnswer());
-            q.setWrongAnswer1(incoming.getWrongAnswer1());
-            q.setWrongAnswer2(incoming.getWrongAnswer2());
-            q.setWrongAnswer3(incoming.getWrongAnswer3());
+            for (int i = 0; i < updatedArticle.getQuestions().size(); i++) {
+
+                if (i < article.getQuestions().size()) {
+
+                    QuizQuestion existing = article.getQuestions().get(i);
+                    QuizQuestion incoming = updatedArticle.getQuestions().get(i);
+
+                    existing.setQuestion(incoming.getQuestion());
+                    existing.setCorrectAnswer(incoming.getCorrectAnswer());
+                    existing.setWrongAnswer1(incoming.getWrongAnswer1());
+                    existing.setWrongAnswer2(incoming.getWrongAnswer2());
+                    existing.setWrongAnswer3(incoming.getWrongAnswer3());
+                }
+            }
         }
 
         articleRepo.save(article);

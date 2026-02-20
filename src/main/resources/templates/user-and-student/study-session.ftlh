@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Study Session</title>
-
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
@@ -211,7 +211,7 @@
     <h2>${article.articleTitle}</h2>
 
     <div class="article">
-        ${article.articleContent}
+        ${article.articleContent?no_esc}
     </div>
 
     <!-- AI TUTOR -->

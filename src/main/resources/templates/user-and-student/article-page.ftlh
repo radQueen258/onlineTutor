@@ -5,6 +5,7 @@
     <title>${article.articleTitle}</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -231,7 +232,7 @@
     </div>
 
     <div class="article-body">
-        <p>${article.articleContent}</p>
+        <p>${article.articleContent?no_esc}</p>
 
         <#if article.imageUrl??>
             <div class="illustration-container">

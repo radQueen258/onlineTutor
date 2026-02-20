@@ -6,11 +6,35 @@
     <title>Edit Article</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin:0; padding:0; font-family:'Inter',sans-serif;}
-        body { background:#d7c4ae; min-height:100vh; display:flex; justify-content:center; align-items:flex-start; padding:20px; }
-        .card { background:#fff; border-radius:15px; padding:50px 60px; box-shadow:0 15px 40px rgba(0,0,0,0.15); width:100%; max-width:800px; display:flex; flex-direction:column; gap:25px;}
+        * {
+            box-sizing: border-box;
+            /*margin:0; padding:0;*/
+            /*font-family:'Inter',sans-serif;*/
+        }
+        body {
+            margin:0;
+            font-family:'Inter',sans-serif;
+            background:#d7c4ae;
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:flex-start;
+            padding:20px;
+        }
+        .card {
+            background:#fff;
+            border-radius:15px;
+            padding:50px 60px;
+            box-shadow:0 15px 40px rgba(0,0,0,0.15);
+            width:100%;
+            max-width:800px;
+            display:flex;
+            flex-direction:column;
+            gap:25px;
+        }
         h2 { font-size:28px; font-weight:800; color:#000; margin-bottom:20px; }
         label { font-weight:600; margin-bottom:6px; display:block; color:#000;}
         input[type="text"], textarea { width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:2px solid #ccc; font-size:14px;}
@@ -61,6 +85,27 @@
         </div>
     </form>
 </main>
+
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script>
+    tinymce.init({
+        selector: 'textarea[name="articleContent"]',
+        height: 500,
+        plugins: 'lists link image table code help wordcount',
+        toolbar: `
+            undo redo |
+            blocks |
+            bold italic underline |
+            alignleft aligncenter alignright alignjustify |
+            bullist numlist outdent indent |
+            link image table |
+            code
+        `,
+        menubar: 'file edit view insert format tools table help',
+        branding: false
+    });
+</script>
 
 </body>
 </html>

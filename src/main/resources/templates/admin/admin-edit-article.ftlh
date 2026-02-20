@@ -5,11 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Article</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin:0; padding:0; font-family:'Inter',sans-serif;}
-        body { background:#d7c4ae; min-height:100vh; display:flex; justify-content:center; align-items:flex-start; padding:20px; }
+        * {
+            box-sizing: border-box;
+            /*margin:0; padding:0; */
+            /*font-family:'Inter',sans-serif;*/
+        }
+        body {
+            margin:0;
+            font-family:'Inter',sans-serif;
+            background:#d7c4ae;
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:flex-start;
+            padding:20px;
+        }
         .card { background:#fff; border-radius:15px; padding:50px 60px; box-shadow:0 15px 40px rgba(0,0,0,0.15); width:100%; max-width:800px; display:flex; flex-direction:column; gap:25px;}
         h2 { font-size:28px; font-weight:800; color:#000; margin-bottom:20px; }
         label { font-weight:600; margin-bottom:6px; display:block; color:#000;}
@@ -36,7 +50,7 @@
         <input type="text" name="imageUrl" value="${article.imageUrl!""}">
 
         <label>Content:</label>
-        <textarea name="articleContent" rows="8" required>${article.articleContent}</textarea>
+        <textarea name="articleContent" rows="8" required>${article.articleContent?no_esc}</textarea>
 
         <h3>Multiple Choice Questions</h3>
         <#list article.questions as q>

@@ -397,6 +397,25 @@ public class AdminController {
             article.setImageUrl(updatedArticle.getImageUrl());
         }
 
+        if (updatedArticle.getQuestions() != null) {
+
+            for (int i = 0; i < updatedArticle.getQuestions().size(); i++) {
+
+                if (i < article.getQuestions().size()) {
+
+                    QuizQuestion existing = article.getQuestions().get(i);
+                    QuizQuestion incoming = updatedArticle.getQuestions().get(i);
+
+                    existing.setQuestion(incoming.getQuestion());
+                    existing.setCorrectAnswer(incoming.getCorrectAnswer());
+                    existing.setWrongAnswer1(incoming.getWrongAnswer1());
+                    existing.setWrongAnswer2(incoming.getWrongAnswer2());
+                    existing.setWrongAnswer3(incoming.getWrongAnswer3());
+                }
+            }
+        }
+
+
         articleRepo.save(article);
         return "redirect:/admin/workplace";
     }

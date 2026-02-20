@@ -4,13 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create New Article</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        * { box-sizing: border-box;
+            /*margin: 0; padding: 0; */
+            /*font-family: 'Inter', sans-serif; */
+        }
 
         body {
+            margin:0;
+            font-family:'Inter',sans-serif;
             background-color: #d7c4ae;
             min-height: 100vh;
             display: flex;
@@ -117,7 +123,7 @@
         <input type="text" id="title" name="articleTitle" value="${article.articleTitle!}" placeholder="Enter the article title" required>
 
         <label for="content">Content:</label>
-        <textarea id="content" name="articleContent" rows="8" placeholder="Write your article content here...">${article.articleContent!}</textarea>
+        <textarea id="content" name="articleContent" placeholder="Write your article content here...">${article.articleContent!}</textarea>
 
         <h3>Multiple Choice Questions (3 required)</h3>
 
@@ -148,6 +154,27 @@
         </div>
     </form>
 </main>
+
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script>
+    tinymce.init({
+        selector: 'textarea[name="articleContent"]',
+        height: 500,
+        plugins: 'lists link image table code help wordcount',
+        toolbar: `
+            undo redo |
+            blocks |
+            bold italic underline |
+            alignleft aligncenter alignright alignjustify |
+            bullist numlist outdent indent |
+            link image table |
+            code
+        `,
+        menubar: 'file edit view insert format tools table help',
+        branding: false
+    });
+</script>
 
 </body>
 </html>
