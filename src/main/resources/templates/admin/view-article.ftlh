@@ -141,17 +141,43 @@
             margin-bottom: 25px;
         }
 
-        .illustration-container {
-            margin: 40px 0;
+        .article-layout {
             display: flex;
-            justify-content: flex-start;
-            padding-left: 40px;
+            gap: 50px;
+            align-items: flex-start;
         }
 
-        .illustration-container img {
-            max-width: 400px;
-            height: auto;
+        .article-text {
+            flex: 2;
+            line-height: 1.7;
+            font-size: 16px;
         }
+
+        .article-image {
+            flex: 1;
+            position: sticky;
+            top: 120px;
+        }
+
+        .article-image img {
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        /*.illustration-container {*/
+        /*    margin: 40px 0;*/
+        /*    display: flex;*/
+        /*    justify-content: flex-start;*/
+        /*    padding-left: 40px;*/
+        /*}*/
+
+        /*.illustration-container img {*/
+        /*    max-width: 400px;*/
+        /*    height: auto;*/
+        /*}*/
 
         /* Watch Video Button */
         .watch-video-btn {
@@ -180,6 +206,20 @@
                 position: static;
                 margin-top: 30px;
                 width: 100%;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .article-layout {
+                flex-direction: column;
+            }
+
+            .article-image {
+                position: static;
+            }
+
+            .article-image img {
+                max-width: 100%;
             }
         }
     </style>
@@ -219,15 +259,29 @@
         </p>
     </div>
 
-    <div class="article-body">
-        <p>${article.articleContent?no_esc}</p>
+    <div class="article-layout">
 
-        <#if article.imageUrl??>
-            <div class="illustration-container">
+        <div class="article-text">
+            ${article.articleContent?no_esc}
+        </div>
+
+        <#if article.imageUrl?? && article.imageUrl?has_content>
+            <div class="article-image">
                 <img src="${article.imageUrl}" alt="Article Illustration">
             </div>
         </#if>
+
     </div>
+
+<#--    <div class="article-body">-->
+<#--        <p>${article.articleContent?no_esc}</p>-->
+
+<#--        <#if article.imageUrl??>-->
+<#--            <div class="illustration-container">-->
+<#--                <img src="${article.imageUrl}" alt="Article Illustration">-->
+<#--            </div>-->
+<#--        </#if>-->
+<#--    </div>-->
 
 </main>
 
