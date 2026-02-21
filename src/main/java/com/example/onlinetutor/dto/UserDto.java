@@ -21,7 +21,7 @@ public class UserDto {
     private String firstname;
     private String lastname;
     private Gender gender;
-    private String schoolName;
+    private Long schoolName;
     private boolean isVerified;
 
 
@@ -32,7 +32,7 @@ public class UserDto {
                 .firstname(user.getFirstName())
                 .lastname(user.getLastName())
                 .gender(user.getGender())
-                .schoolName(user.getSchoolName())
+                .schoolName(user.getSchool().getId())
                 .isVerified(user.isVerified())
                 .build();
     }

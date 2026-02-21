@@ -29,7 +29,11 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
-    private String schoolName;
+//    private String schoolName;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "school_id")
+    private School school;
 
     @Column(nullable = false)
     private boolean isVerified;

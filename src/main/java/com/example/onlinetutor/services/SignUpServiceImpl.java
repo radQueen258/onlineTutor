@@ -4,7 +4,9 @@ import com.example.onlinetutor.dto.UserForm;
 import com.example.onlinetutor.enums.Role;
 import com.example.onlinetutor.models.ConfirmationToken;
 import com.example.onlinetutor.models.IdCard;
+import com.example.onlinetutor.models.School;
 import com.example.onlinetutor.models.User;
+import com.example.onlinetutor.repositories.SchoolRepo;
 import com.example.onlinetutor.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +30,8 @@ public class SignUpServiceImpl implements SignUpService{
     @Autowired
     private ConfirmationTokenService confirmationTokenService;
 
+    @Autowired
+    private SchoolRepo schoolRepo;
 
     @Override
     public User addUser(UserForm form) {
@@ -48,7 +52,10 @@ public class SignUpServiceImpl implements SignUpService{
                 .isVerified(true);
 
         if (form.getRole() == Role.STUDENT) {
-            userBuilder.schoolName(form.getSchoolName());
+            Long schoolId = form.getSchoolId(); // new field in UserForm
+            School school = schoolRepo.findById(schoolId)
+                    .orElseThrow(() -> new RuntimeException("School not found"));
+            userBuilder.school(school);
         }
 
         if (form.getRole() == Role.TUTOR) {

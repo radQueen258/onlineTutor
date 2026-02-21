@@ -5,6 +5,7 @@ import com.example.onlinetutor.dto.VerificationResult;
 import com.example.onlinetutor.enums.Role;
 import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.User;
+import com.example.onlinetutor.repositories.SchoolRepo;
 import com.example.onlinetutor.repositories.UserRepo;
 import com.example.onlinetutor.services.AptitudeTestService;
 import com.example.onlinetutor.services.IdVerificationServiceImpl;
@@ -40,11 +41,15 @@ public class SignUpController {
     private VerificationResult verificationResult;
 
     @Autowired
+    private SchoolRepo schoolRepo;
+
+    @Autowired
     private UserRepo userRepo;
 
     @GetMapping("/signUp")
     public String signUpPage(Model model) {
         model.addAttribute("subjects", Arrays.asList(Subject.values()));
+        model.addAttribute("schools", schoolRepo.findAll());
         return "/general/sign_up_page";
     }
 

@@ -142,21 +142,21 @@
             font-style: italic;
         }
 
-        .message {
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 14px;
-        }
+        /*.message {*/
+        /*    margin-bottom: 10px;*/
+        /*    padding: 10px;*/
+        /*    border-radius: 10px;*/
+        /*    font-size: 14px;*/
+        /*}*/
 
-        .user {
-            background: #e3f2fd;
-            align-self: flex-end;
-        }
+        /*.user {*/
+        /*    background: #e3f2fd;*/
+        /*    align-self: flex-end;*/
+        /*}*/
 
-        .ai {
-            background: #f5f5f5;
-        }
+        /*.ai {*/
+        /*    background: #f5f5f5;*/
+        /*}*/
 
         textarea {
             width: 100%;
