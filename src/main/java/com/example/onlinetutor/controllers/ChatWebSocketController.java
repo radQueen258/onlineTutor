@@ -54,12 +54,15 @@ public class ChatWebSocketController {
 
         chatMessageRepo.save(message);
 
+        boolean isMine = sender.getId().equals(message.getSender().getId());
+
         ChatMessageResponseDTO response = ChatMessageResponseDTO.builder()
                 .id(message.getId())
                 .senderId(sender.getId())
                 .senderName(sender.getFirstName())
                 .content(message.getContent())
                 .timestamp(message.getTimestamp())
+                .mine(isMine)
                 .build();
 
         messagingTemplate.convertAndSend(

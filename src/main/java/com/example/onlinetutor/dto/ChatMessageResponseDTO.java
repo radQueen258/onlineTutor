@@ -18,4 +18,5 @@ public class ChatMessageResponseDTO {
     private String senderName;
     private String content;
     private LocalDateTime timestamp;
+    private boolean mine;
 }

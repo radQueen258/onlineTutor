@@ -169,6 +169,25 @@
     }
 
     connect();
+
+
+    stompClient.subscribe('/topic/chat/' + chatRoomId, function(messageOutput) {
+        const msg = JSON.parse(messageOutput.body);
+
+        // Create a message element
+        const messageDiv = document.createElement('div');
+        messageDiv.className = msg.mine ? 'message-sent' : 'message-received';
+
+        // Show content + time
+        const timeString = new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        messageDiv.innerHTML = `<span class="msg-content">${msg.content}</span>
+                            <span class="msg-time">${timeString}</span>`;
+
+        document.getElementById('chatMessages').appendChild(messageDiv);
+
+        // Scroll to bottom
+        document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+    });
 </script>
 
 </body>
