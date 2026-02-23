@@ -239,6 +239,9 @@
         <a href="/resources" class="nav-item">
             <i class="fa-solid fa-play"></i><span>Resources</span>
         </a>
+        <a href="/chat/student" class="nav-item">
+            <i class="fa-solid fa-chart-pie"></i><span>Contact a Tutor</span>
+        </a>
         <a href="/exam-trends" class="nav-item">
             <i class="fa-solid fa-chart-pie"></i><span>Exam Trends</span>
         </a>

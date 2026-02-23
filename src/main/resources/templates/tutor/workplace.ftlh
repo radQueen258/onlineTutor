@@ -148,6 +148,9 @@
     <ul class="nav-menu">
         <li class="nav-item"><a href="/tutor/analytics">View Analytics</a></li>
     </ul>
+    <ul class="nav-menu">
+        <li class="nav-item"><a href="/chat/teacher">Help a Student</a></li>
+    </ul>
     <div class="sidebar-footer">
         <form action="/logout" method="post">
             <button type="submit" class="logout-btn">Logout</button>
