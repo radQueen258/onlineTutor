@@ -1,5 +1,6 @@
 package com.example.onlinetutor.controllers;
 
+import com.example.onlinetutor.dto.ChatMessageResponseDTO;
 import com.example.onlinetutor.enums.Role;
 import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.ChatRoom;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.security.Principal;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -54,7 +56,22 @@ public class ChatController {
                     return chatRoomRepo.save(newRoom);
                 });
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        List<ChatMessageResponseDTO> messages =
+                chatRoom.getMessages().stream()
+                        .map(msg -> ChatMessageResponseDTO.builder()
+                                .id(msg.getId())
+                                .senderId(msg.getSender().getId())
+                                .senderName(msg.getSender().getFirstName())
+                                .content(msg.getContent())
+                                .time(msg.getTimestamp().format(formatter))
+                                .mine(msg.getSender().getId().equals(student.getId())) // or tutor.getId()
+                                .build())
+                        .toList();
+
         model.addAttribute("chatRoom", chatRoom);
+        model.addAttribute("messages", messages);
         model.addAttribute("currentUser", student);
 
         return "user-and-student/contact_teacher";
@@ -68,6 +85,7 @@ public class ChatController {
         List<ChatRoom> rooms = chatRoomRepo.findByStudent(student);
 
         model.addAttribute("chatRooms", rooms);
+        model.addAttribute("currentUser", student);
         model.addAttribute("subjects", student.getPreferredSubjects());
 
         return "user-and-student/student_chat_hub";
@@ -76,10 +94,8 @@ public class ChatController {
 
     /*
      ============================================
-     TEACHER: View All Chats For His Subjects
+     TUTOR: View All Chats For His Subjects
      ============================================
-     URL:
-     /chat/teacher
      */
     @GetMapping("/chat/teacher")
     public String teacherChats(Model model, Principal principal) {
@@ -128,7 +144,22 @@ public class ChatController {
             throw new RuntimeException("Access denied");
         }
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        List<ChatMessageResponseDTO> messages =
+                chatRoom.getMessages().stream()
+                        .map(msg -> ChatMessageResponseDTO.builder()
+                                .id(msg.getId())
+                                .senderId(msg.getSender().getId())
+                                .senderName(msg.getSender().getFirstName())
+                                .content(msg.getContent())
+                                .time(msg.getTimestamp().format(formatter))
+                                .mine(msg.getSender().getId().equals(tutor.getId())) // or tutor.getId()
+                                .build())
+                        .toList();
+
         model.addAttribute("chatRoom", chatRoom);
+        model.addAttribute("messages", messages);
         model.addAttribute("currentUser", tutor);
 
         return "tutor/contact_student";

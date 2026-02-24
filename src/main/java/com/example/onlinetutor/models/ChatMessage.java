@@ -34,4 +34,10 @@ public class ChatMessage {
 
     @Column(nullable = false)
     private LocalDateTime timestamp;
+
+    @ManyToOne
+    private User receiver;
+
+    @Column(nullable = false)
+    private boolean read = false;
 }

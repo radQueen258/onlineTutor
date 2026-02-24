@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 public class ChatWebSocketController {
@@ -55,13 +56,15 @@ public class ChatWebSocketController {
         chatMessageRepo.save(message);
 
         boolean isMine = sender.getId().equals(message.getSender().getId());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
 
         ChatMessageResponseDTO response = ChatMessageResponseDTO.builder()
                 .id(message.getId())
                 .senderId(sender.getId())
                 .senderName(sender.getFirstName())
                 .content(message.getContent())
-                .timestamp(message.getTimestamp())
+                .time(message.getTimestamp().format(formatter))
                 .mine(isMine)
                 .build();
 
