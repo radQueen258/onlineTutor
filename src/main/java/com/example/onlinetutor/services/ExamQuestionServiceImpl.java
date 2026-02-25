@@ -1,5 +1,6 @@
 package com.example.onlinetutor.services;
 
+import com.example.onlinetutor.enums.Grade;
 import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.ExamQuestion;
 import com.example.onlinetutor.repositories.ExamQuestionRepo;
@@ -39,6 +40,7 @@ public class ExamQuestionServiceImpl {
                             ExamQuestion question = ExamQuestion.builder()
                                     .subject(subject)
                                     .examQuestionText(questionText)
+                                    .grade(Grade.GRADE12)
                                     .examOptions(new ArrayList<>()) // empty for now
                                     .examCorrectAnswer(null) // empty for now
                                     .build();

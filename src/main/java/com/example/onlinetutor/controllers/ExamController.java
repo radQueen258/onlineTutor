@@ -11,6 +11,7 @@ import com.example.onlinetutor.repositories.StudentAnswerRepo;
 import com.example.onlinetutor.repositories.StudentExamRepo;
 import com.example.onlinetutor.services.AIExamService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,6 +133,12 @@ public class ExamController {
         studentExamRepo.save(oldExam);
 
         return "redirect:/exam/start?subject=" + oldExam.getSubject();
+    }
+
+    @PostMapping("/exam/abandon")
+    @Transactional
+    public void abandonExam(@RequestBody Long examId) {
+        studentExamRepo.deleteById(examId);
     }
 
 

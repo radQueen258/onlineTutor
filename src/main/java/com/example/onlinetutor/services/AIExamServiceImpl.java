@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -45,32 +46,46 @@ public class AIExamServiceImpl implements AIExamService{
     private StudentExamRecomRepo studentExamRecomRepo;
 
 
-    private String buildPrompt(String baseText) {
+    private String buildPrompt(String baseText, Subject subject) {
+
+        String languageInstruction = switch (subject) {
+            case ENGLISH -> "Keep everything in English.";
+            default -> "Keep everything in Portuguese.";
+        };
+
         return """
 You are an expert national exam creator.
 
 Your task:
-Generate a NEW exam in Portuguese based on the base questions below.
+Generate a NEW exam based on the base questions below.
+
+IMPORTANT:
+- If a question requires a reading text or context, you MUST create a short supporting text before the question.
+- The supporting text must appear inside the question field, before the question itself.
+- If no text is needed, create a normal standalone question.
+- Do NOT reference any external or missing text.
 
 STRICT RULES:
 - Generate exactly 7 multiple choice questions.
 - Each question must have exactly 4 options.
 - Options must be inside an array.
 - The correct answer must be the LETTER only: A, B, C, or D.
-- Keep everything in Portuguese.
 - Return ONLY valid JSON.
 - Do NOT include explanations.
 - Do NOT include markdown.
 - Do NOT include ```json.
 - Do NOT include any text before or after the JSON.
+- Inside JSON strings, do NOT use real line breaks.
+- If needed, use \\\\n instead.
+- """ + languageInstruction + """
 
 Return EXACTLY in this format:
 
 {
   "questions": [
     {
-      "question": "Pergunta aqui",
-      "options": ["Opção A", "Opção B", "Opção C", "Opção D"],
+      "question": "Texto de apoio aqui (if needed)\n\nPergunta aqui",
+      "options": ["Option A", "Option B", "Option C", "Option D"],
       "correct": "A"
     }
   ]
@@ -99,7 +114,7 @@ Base questions:
                 .map(ExamQuestion::getExamQuestionText)
                 .collect(Collectors.joining("\n"));
 
-        String prompt = buildPrompt(baseText);
+        String prompt = buildPrompt(baseText, subject);
 
         String aiResponse = openRouterClient.sendPrompt(prompt);
 
@@ -124,8 +139,33 @@ Base questions:
 
         String cleanJson = aiResponse.substring(firstBrace, lastBrace + 1);
 
+        cleanJson = cleanJson.replace("\r", "");
+
+        StringBuilder fixedJson = new StringBuilder();
+        boolean insideString = false;
+
+        for (int i = 0; i < cleanJson.length(); i++) {
+            char c = cleanJson.charAt(i);
+
+            if (c == '"') {
+                insideString = !insideString;
+            }
+
+            if (insideString && c == '\n') {
+                fixedJson.append("\\n");
+            } else {
+                fixedJson.append(c);
+            }
+        }
+
+        cleanJson = fixedJson.toString();
+
         JSONObject json = new JSONObject(cleanJson);
         JSONArray questionsArray = json.getJSONArray("questions");
+
+        if (questionsArray.length() != 7) {
+            throw new RuntimeException("AI did not return exactly 7 questions.");
+        }
 
         StudentExam exam = StudentExam.builder()
                 .user(user)
@@ -157,6 +197,7 @@ Base questions:
                 case "D" -> 3;
                 default -> throw new RuntimeException("Invalid correct answer letter from AI");
             };
+
 
             GeneratedQuestion generatedQuestion = GeneratedQuestion.builder()
                     .studentExam(exam)

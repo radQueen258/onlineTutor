@@ -39,7 +39,7 @@ public class StudentExam {
     @OneToMany(mappedBy = "studentExam", cascade = CascadeType.ALL)
     private List<StudentAnswer> answers;
 
-    @OneToMany(mappedBy = "studentExam", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "studentExam", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GeneratedQuestion> generatedQuestions;
 
     @Enumerated(EnumType.STRING)

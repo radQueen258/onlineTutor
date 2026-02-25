@@ -253,6 +253,10 @@
             submitBtn.style.display = 'inline-block';
         }
     });
+
+    window.addEventListener("beforeunload", function () {
+        navigator.sendBeacon("/exam/abandon", [[${examId}]]);
+    });
 </script>
 
 </body>
