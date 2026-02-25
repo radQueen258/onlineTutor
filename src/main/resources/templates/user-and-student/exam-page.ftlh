@@ -10,6 +10,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
 
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)'], ['$', '$']],
+                displayMath: [['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         body {
             margin: 0;
@@ -248,6 +262,10 @@
         questions[currentIndex].classList.add('active');
         nextBtn.disabled = true;
 
+        if (window.MathJax) {
+            MathJax.typesetPromise();
+        }
+
         if (currentIndex === questions.length - 1) {
             nextBtn.style.display = 'none';
             submitBtn.style.display = 'inline-block';
@@ -255,7 +273,7 @@
     });
 
     window.addEventListener("beforeunload", function () {
-        navigator.sendBeacon("/exam/abandon", [[${examId}]]);
+        navigator.sendBeacon("/exam/abandon", "${exam.examId?c}");
     });
 </script>
 

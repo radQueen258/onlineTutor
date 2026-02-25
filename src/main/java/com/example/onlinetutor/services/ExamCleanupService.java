@@ -17,7 +17,7 @@ public class ExamCleanupService {
     @Autowired
     private StudentExamRepo studentExamRepo;
 
-    @Scheduled(fixedRate = 1200000) // every 20 minutes
+    @Scheduled(fixedRate = 600000) // every 20 minutes
     @Transactional
     public void deleteAbandonedExams() {
 

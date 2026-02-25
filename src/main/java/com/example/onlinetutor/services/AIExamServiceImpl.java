@@ -76,6 +76,13 @@ STRICT RULES:
 - Do NOT include ```json.
 - Do NOT include any text before or after the JSON.
 - Inside JSON strings, do NOT use real line breaks.
+- Any mathematical expression MUST be written using LaTeX.
+- Inline math must be wrapped with $ ... $.
+- Fractions must use \\frac{}{}.
+- Square roots must use \\sqrt{}.
+- Powers must use ^{}.
+- Do NOT use unicode symbols like √ or ².
+- Use display math \\[ ... \\] for large equations.
 - If needed, use \\\\n instead.
 - """ + languageInstruction + """
 
