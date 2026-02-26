@@ -64,7 +64,11 @@
     <h1>400 — Bad Request</h1>
     <p>The request could not be understood by the server.</p>
 
-    <a href="/">Go to Home</a>
+    <#if dashboardUrl??>
+        <a href="${dashboardUrl}">Go to Dashboard</a>
+    <#else>
+        <a href="/">Go to Home</a>
+    </#if>
 </div>
 
 </body>

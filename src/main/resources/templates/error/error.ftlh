@@ -68,7 +68,11 @@
     <h1>Oops! Something went wrong</h1>
     <p>${message!"An unexpected error occurred."}</p>
 
-    <a href="/">Go to Home</a>
+    <#if dashboardUrl??>
+        <a href="${dashboardUrl}">Go to Dashboard</a>
+    <#else>
+        <a href="/">Go to Home</a>
+    </#if>
 </div>
 
 </body>

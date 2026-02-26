@@ -64,7 +64,11 @@
     <h1>Redirection Error</h1>
     <p>Something went wrong while redirecting you.</p>
 
-    <a href="/">Go to Home</a>
+    <#if dashboardUrl??>
+        <a href="${dashboardUrl}">Go to Dashboard</a>
+    <#else>
+        <a href="/">Go to Home</a>
+    </#if>
 </div>
 
 </body>
