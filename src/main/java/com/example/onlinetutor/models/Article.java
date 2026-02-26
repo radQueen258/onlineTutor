@@ -39,6 +39,8 @@ public class Article {
             orphanRemoval = true)
     private Video video;
 
+    private Integer version = 1;
+
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "user_id")

@@ -183,8 +183,8 @@
         <a href="/resources" class="nav-item active">
             <i class="fa-solid fa-play"></i> Resources
         </a>
-        <a href="/exam-trends" class="nav-item">
-            <i class="fa-solid fa-chart-pie"></i> Exam Trends
+        <a href="/articles/translations" class="nav-item">
+            <i class="fa-solid fa-chart-pie"></i> Translations
         </a>
     </nav>
 
