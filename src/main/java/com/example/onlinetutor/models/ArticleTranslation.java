@@ -28,6 +28,7 @@ public class ArticleTranslation {
 
     private String language;
 
+    @Column(length = 500)
     private String translatedTitle;
 
     @Column(columnDefinition = "TEXT")

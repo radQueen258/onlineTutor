@@ -93,16 +93,30 @@ public class TranslationServiceImpl implements TranslationService {
                 - Do not add explanations.
                 - Preserve structure.
                 - Do NOT translate formulas, variable names or code.
-
-                Title:
-                %s
-
-                Content:
-                %s
-                """.formatted(language, article.getArticleTitle(), article.getArticleContent());
+                
+                Return the result in this exact format:
+                
+                TITLE:
+                <translated title>
+                
+                CONTENT:
+                <translated content>
+                
+                Article:
+                Title: %s
+                Content: %s
+              
+                """.formatted(language,
+                article.getArticleTitle(),
+                article.getArticleContent());
 
         // 4️⃣ Call AI
         String aiResponse = ask(prompt);
+
+        String[] parts = aiResponse.split("CONTENT:");
+
+        String translatedTitle = parts[0].replace("TITLE:", "").trim();
+        String translatedContent = parts.length > 1 ? parts[1].trim() : "";
 
         // ⚠️ Ideally parse title/content separately
         // For now assume whole text returned
@@ -111,8 +125,8 @@ public class TranslationServiceImpl implements TranslationService {
         ArticleTranslation translation = new ArticleTranslation();
         translation.setArticle(article);
         translation.setLanguage(language);
-        translation.setTranslatedTitle("Translated Title"); // better: split properly
-        translation.setTranslatedContent(aiResponse);
+        translation.setTranslatedTitle(translatedTitle);
+        translation.setTranslatedContent(translatedContent);
         translation.setSourceVersion(article.getVersion());
 
         return translationRepo.save(translation);

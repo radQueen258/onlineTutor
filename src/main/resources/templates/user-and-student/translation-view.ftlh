@@ -13,17 +13,29 @@
             padding:50px;
             border-radius:20px;
             box-shadow:0 10px 30px rgba(0,0,0,0.1);
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
         }
-        h1 { font-size:36px; margin-bottom:20px; }
-        .content { line-height:1.7; font-size:16px; }
+
+         /*.article-container {*/
+         /*    max-width: 800px;*/
+         /*    margin: auto;*/
+         /*    font-family: Arial, sans-serif;*/
+         /*    line-height: 1.6;*/
+         /*}*/
+        .article-title {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>${translation.translatedTitle}</h1>
-    <br>
-    <div class="content">
+    <h1 class="article-title">${translation.translatedTitle}</h1>
+
+    <hr>
+
+    <div class="article-body" style="white-space: pre-line;">
         ${translation.translatedContent?no_esc}
     </div>
 </div>
