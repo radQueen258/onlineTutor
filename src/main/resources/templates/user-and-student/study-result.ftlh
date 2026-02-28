@@ -1,12 +1,172 @@
 <!DOCTYPE html>
-<html>
-<head><title>Quiz Result</title></head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Results</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #d2c4b5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            color: #000;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        .blob-purple {
+            top: 15%;
+            left: -5%;
+            width: 250px;
+            height: 250px;
+            background-color: #9a9ae0;
+        }
+
+        .blob-orange {
+            bottom: 15%;
+            left: -5%;
+            width: 250px;
+            height: 250px;
+            background-color: #f38d21;
+        }
+
+        header {
+            margin-bottom: 40px;
+        }
+
+        header h2 {
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            font-size: 1.4rem;
+            text-align: center;
+        }
+
+        .card {
+            background-color: #ffffff;
+            width: 90%;
+            max-width: 900px;
+            padding: 80px 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .score {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .pass {
+            color: #2e7d32;
+        }
+
+        .fail {
+            color: #c62828;
+        }
+
+        .message {
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+
+        .btn-dashboard {
+            display: inline-block;
+            padding: 10px 40px;
+            border: 3px solid #000;
+            background-color: #fff;
+            color: #000;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn-dashboard:hover {
+            background-color: #000;
+            color: #fff;
+        }
+
+        footer {
+            margin-top: 40px;
+        }
+
+        footer p {
+            font-style: italic;
+            letter-spacing: 0.3em;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+
 <body>
 
-<h2>${article.articleTitle} - Quiz Results</h2>
-<p>You scored ${score} out of 3</p>
+<div class="blob blob-purple"></div>
+<div class="blob blob-orange"></div>
 
-<a href="/study-plan">Back to Study Plan</a>
+<header>
+    <h2>Website Name</h2>
+</header>
+
+<main class="card">
+
+    <h1>${article.articleTitle} - Quiz Completed</h1>
+
+    <div class="score <#if score gte 2>pass<#else>fail</#if>">
+        ${score} / 3
+    </div>
+
+    <div class="message">
+        <#if score gte 2>
+            Great job! You passed this quiz.
+        <#else>
+            You did not pass this time. Review the article and try again.
+        </#if>
+    </div>
+
+    <a href="/study-plan" class="btn-dashboard">
+        Back to Study Plan
+    </a>
+
+</main>
+
+<footer>
+    <p>Keep Learning!</p>
+</footer>
 
 </body>
 </html>

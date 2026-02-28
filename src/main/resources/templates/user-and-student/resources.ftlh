@@ -165,6 +165,74 @@
         .action-link:hover {
             text-decoration: underline;
         }
+
+        /* SEARCH BAR */
+        .search-form {
+            display: flex;
+            max-width: 400px;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 18px;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: #3498DB;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+        }
+
+        .search-btn {
+            padding: 12px 20px;
+            background-color: #3498DB;
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .search-btn:hover {
+            background-color: #2c81c9;
+        }
+
+        /* PAGINATION */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .page-link {
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            text-decoration: none;
+            color: #3498DB;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .page-link:hover {
+            background-color: #3498DB;
+            color: #fff;
+        }
+
+        .page-link.active {
+            background-color: #3498DB;
+            color: #fff;
+            font-weight: 700;
+            border-color: #3498DB;
+        }
     </style>
 </head>
 
@@ -201,12 +269,15 @@
         <h1>Resources</h1>
     </header>
 
-    <form method="get" action="/resources" style="margin-bottom: 20px;">
+    <!-- SEARCH BAR -->
+    <form method="get" action="/resources" class="search-form">
         <input type="text" name="keyword" value="${keyword!""}"
-               placeholder="Search topic..." />
-
-        <button type="submit">Search</button>
+               placeholder="Search topic..." class="search-input" />
+        <button type="submit" class="search-btn">
+            <i class="fa-solid fa-magnifying-glass"></i> Search
+        </button>
     </form>
+
     <br>
 
     <section class="resources-card">
@@ -218,9 +289,9 @@
         <div class="resource-list">
             <#list resources as resource>
                 <div class="resource-row">
-                    <a class="topic-name">
+                    <p class="topic-name">
                         ${resource.topicName}
-                    </a>
+                    </p>
 
                     <a href="/resources/${resource.id?c}/articles-and-videos"
                        class="action-link">
@@ -230,28 +301,24 @@
             </#list>
             <br>
 
+            <!-- PAGINATION -->
             <div class="pagination">
-
                 <#if currentPage gt 0>
-                    <a href="/resources?page=${currentPage - 1}&keyword=${keyword!""}">
-                        Previous
-                    </a>
+                    <a href="/resources?page=${currentPage - 1}&keyword=${keyword!""}" class="page-link">Previous</a>
                 </#if>
 
                 <#list 0..(totalPages - 1) as i>
                     <a href="/resources?page=${i}&keyword=${keyword!""}"
-                            <#if i == currentPage> style="font-weight:bold;" </#if>>
+                       class="page-link<#if i == currentPage> active</#if>">
                         ${i + 1}
                     </a>
                 </#list>
 
                 <#if currentPage lt totalPages - 1>
-                    <a href="/resources?page=${currentPage + 1}&keyword=${keyword!""}">
-                        Next
-                    </a>
+                    <a href="/resources?page=${currentPage + 1}&keyword=${keyword!""}" class="page-link">Next</a>
                 </#if>
-
             </div>
+
         </div>
     </section>
 </main>

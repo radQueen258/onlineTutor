@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
         * {
             margin: 0;
             padding: 0;
@@ -16,12 +18,12 @@
         }
 
         body {
+            background-color: #f0f4f8;
+            min-height: 100vh;
             display: flex;
-            height: 100vh;
-            background-color: #F4F7FA;
-            overflow: hidden;
         }
 
+        /* SIDEBAR */
         aside {
             width: 280px;
             background-color: #0F3456;
@@ -54,12 +56,14 @@
             font-size: 18px;
             font-weight: 500;
             margin-bottom: 10px;
+            transition: 0.2s ease;
         }
 
         .nav-item i {
             width: 30px;
             font-size: 22px;
             margin-right: 15px;
+
         }
 
         .nav-item.active {
@@ -78,7 +82,7 @@
 
         .logout-btn {
             background-color: #dc3545;
-            color: #fff;
+            color: white;
             border: none;
             padding: 10px 14px;
             border-radius: 10px;
@@ -93,11 +97,14 @@
             font-weight: 500;
         }
 
+        /* MAIN CONTENT */
         main {
-            flex-grow: 1;
+            flex: 1;
             padding: 60px 80px;
             overflow-y: auto;
+            position: relative;
         }
+
 
         header {
             display: flex;
@@ -159,28 +166,56 @@
         .action-link:hover {
             text-decoration: underline;
         }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            aside {
+                width: 80px;
+            }
+
+            .brand,
+            .nav-item span {
+                display: none;
+            }
+
+            main {
+                margin-left: 80px;
+                padding: 40px;
+            }
+
+            .top-row {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 
 <body>
 <div style="display: flex; height: 100vh;">
 
-    <!-- Sidebar -->
+    <!-- SIDEBAR -->
     <aside>
-        <div class="brand">Website Name</div>
+        <div class="brand">Online Tutor</div>
 
         <nav>
             <a href="/dashboard" class="nav-item">
                 <i class="fa-solid fa-house"></i> Dashboard
             </a>
+
             <a href="/study-plan" class="nav-item">
                 <i class="fa-solid fa-book-open"></i> Study Plan
             </a>
+
             <a href="/resources" class="nav-item active">
                 <i class="fa-solid fa-play"></i> Resources
             </a>
-            <a href="/exam-trends" class="nav-item">
-                <i class="fa-solid fa-chart-pie"></i> Exam Trends
+
+            <a href="/chat/student" class="nav-item">
+                <i class="fa-solid fa-comments"></i> Contact a Tutor
+            </a>
+
+            <a href="/articles/translations" class="nav-item">
+                <i class="fa-solid fa-globe"></i> Translations
             </a>
         </nav>
 
@@ -211,13 +246,13 @@
             <div class="resource-list">
                 <#list articleList as article>
                     <div class="resource-row">
-                        <a href="/resources/${resourceId?c}/article/${article.id?c}"
+                        <a href="/resources/${resourceId}/article/${article.id?c}"
                            class="topic-name">
                             ${article.articleTitle}
                         </a>
 
                         <#if article.video??>
-                            <a href="/resources/${resourceId?c}/video/${article.video.id?c}"
+                            <a href="/resources/${resourceId}/video/${article.video.id?c}"
                                class="action-link">
                                 Click Here
                             </a>

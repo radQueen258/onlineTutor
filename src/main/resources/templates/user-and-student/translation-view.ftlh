@@ -25,6 +25,10 @@
 <body>
 
 <div class="container">
+    <a href="/articles/translations" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i>
+    </a>
+
     <h1 class="article-title">${translation.translatedTitle}</h1>
 
     <hr>

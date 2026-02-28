@@ -6,6 +6,7 @@
     <title>Dashboard</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -214,6 +215,122 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* EXAM DROPDOWN */
+        .exam-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .exam-main-btn {
+            background: linear-gradient(135deg, #0F3456, #1c5d91);
+            color: white;
+            border: none;
+            padding: 14px 36px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .exam-main-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .exam-dropdown-content {
+            position: absolute;
+            top: 60px;
+            left: 0;
+            background: white;
+            min-width: 220px;
+            border-radius: 18px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            display: none;
+            padding: 15px;
+            z-index: 10;
+        }
+
+        .exam-dropdown:hover .exam-dropdown-content {
+            display: block;
+        }
+
+        .exam-option {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 10px;
+            text-align: left;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .exam-option:hover {
+            background-color: #f0f4f8;
+        }
+
+        .score-bar-container {
+            width: 100%;
+            background-color: #e6e6e6;
+            border-radius: 30px;
+            overflow: hidden;
+            height: 28px;
+            margin: 10px 0 20px 0;
+        }
+
+        .score-bar {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            width: 0;
+            transition: width 1s ease-in-out;
+        }
+
+        .average-card {
+            text-align: center;
+        }
+
+        .average-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #0F3456;
+        }
+
+        .topics-section {
+            margin-top: 20px;
+        }
+
+        .topics-section h4 {
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .topics-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .topic-pill {
+            background-color: #f0f4f8;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #0F3456;
+            transition: 0.2s ease;
+        }
+
+        .topic-pill:hover {
+            background-color: #82613E;
+            color: white;
+        }
     </style>
 </head>
 
@@ -279,62 +396,100 @@
                 </div>
 
                 <div class="continue-box">
-                    <a href="/study-plan">
-                        <button class="continue-btn">Continue Plan</button>
-                    </a>
+                    <div class="exam-dropdown">
+                        <button class="exam-main-btn">
+                            Take Exam <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+
+                        <div class="exam-dropdown-content">
+                            <#list selectedSubjects as subject>
+                                <form method="get" action="/exam/start">
+                                    <input type="hidden" name="userId" value="${user.id?c}">
+                                    <input type="hidden" name="subject" value="${subject}">
+                                    <button type="submit" class="exam-option">
+                                        ${subject}
+                                    </button>
+                                </form>
+                            </#list>
+                        </div>
+                    </div>
                     <div class="upcoming">
-                        <strong>Upcoming:</strong> ${upcoming}
+                        <strong>Your Study Plan Upcoming:</strong> ${upcoming}
                     </div>
                 </div>
 
             </div>
 
-        <div class="card resources-card">
+<#--        <div class="card resources-card">-->
+            <div class="card average-card">
+                <h2>Average Score</h2>
+                <div class="average-value">
+                    <#assign total = 0>
+                    <#list exams as exam>
+                        <#assign total = total + (exam.score)!0>
+                    </#list>
+                    <#if exams?size gt 0>
+                        ${(total / exams?size)?string["0.##"]}%
+                    <#else>
+                        0%
+                    </#if>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="card analytics-card">
+                <h2>Performance Overview</h2>
+                <canvas id="performanceChart" height="120"></canvas>
+            </div>
+
+            <br>
+
             <h2>Your Exam History</h2>
 
             <#if exams?? && exams?size gt 0>
                 <#list exams as exam>
                     <div class="exam-card">
                         <h3>${exam.subject} — ${exam.dateTaken}</h3>
-                         <p>Score: ${(exam.score)!0?string["0.##"]}%</p>
-                        <br>
+
+                        <p>
+                            Score:
+                            <span style="
+                            <#if exam.score gte 70>
+                                    color: #2e7d32;
+                            <#elseif exam.score gte 50>
+                                    color: #f9a825;
+                            <#else>
+                                    color: #c62828;
+                            </#if>
+                                    font-weight: 700;
+                                    ">
+        ${(exam.score)!0?string["0.##"]}%
+    </span>
+                        </p>
 
                         <#assign weakTopics = examWeakTopics[exam.id?string]>
                         <#if weakTopics?? && weakTopics?size gt 0>
-                            <h4>Suggested Topics to Review:</h4>
-                            <ul>
-                                <#list weakTopics as resource>
-                                    <li>
-                                            <strong>${resource.topicName}</strong>
-<#--                                        ${resource.description}-->
-                                    </li>
-                                </#list>
-                            </ul>
+                            <div class="topics-section">
+                                <h4>Suggested Topics to Review</h4>
+                                <div class="topics-container">
+                                    <#list weakTopics as resource>
+                                        <div class="topic-pill">
+                                            ${resource.topicName}
+                                        </div>
+                                    </#list>
+                                </div>
+                            </div>
                         </#if>
-                        <br>
-<#--                        <form action="/exam/${exam.id}/retake" method="post" style="margin-top: 10px;">-->
-<#--                            <button type="submit" class="continue-btn">Retake Exam</button>-->
-<#--                        </form>-->
                     </div>
+
+                    <br>
                 </#list>
             <#else>
                 <p>You haven’t taken any exams yet.</p>
             </#if>
-            <br>
 
-            <#list selectedSubjects as subject>
-                <div class="subject-card">
-                    <h3>${subject}</h3>
-
-                    <form method="get" action="/exam/start">
-                        <input type="hidden" name="userId" value="${user.id?c}">
-                        <input type="hidden" name="subject" value="${subject}">
-                        <button type="submit">Start Exam</button>
-                    </form>
-                </div>
-            </#list>
-
-        </div>
+<#--        </div>-->
 
 <#--            <div class="card resources-card">-->
 <#--                <h2>Recommended Articles</h2>-->
@@ -370,6 +525,53 @@
 
     </div>
 </main>
+
+<script>
+    const subjects = [
+        <#list exams as exam>
+        "${exam.subject}"<#if exam_has_next>,</#if>
+        </#list>
+    ];
+
+    const scores = [
+        <#list exams as exam>
+        ${(exam.score)!0}<#if exam_has_next>,</#if>
+        </#list>
+    ];
+
+    const ctx = document.getElementById('performanceChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: subjects,
+            datasets: [{
+                label: 'Score (%)',
+                data: scores,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+
+    window.addEventListener("load", () => {
+        document.querySelectorAll(".score-bar").forEach(bar => {
+            const width = bar.getAttribute("data-width");
+            bar.style.width = width + "%";
+        });
+    });
+</script>
 
 </body>
 </html>

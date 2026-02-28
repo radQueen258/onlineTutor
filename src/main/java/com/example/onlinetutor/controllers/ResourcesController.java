@@ -36,7 +36,7 @@ public class ResourcesController {
     public String showResources(
             @RequestParam(defaultValue = "") String keyword,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam (defaultValue = "6") int size,
+            @RequestParam (defaultValue = "10") int size,
             Model model) {
 
         Page<ResourceDto> resourcePage = resourceService.getResources(keyword, page, size);
