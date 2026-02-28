@@ -6,60 +6,79 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
             background: #f4f6f9;
             margin: 0;
-            padding: 20px;
-            color: #333;
+            padding: 40px 20px;
+            color: #1f2d3d;
         }
 
         .container {
             max-width: 1100px;
             margin: auto;
             background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 35px 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
         }
 
         h2 {
-            margin-top: 0;
+            margin: 0;
             color: #0f2b4c;
+            font-size: 26px;
+            font-weight: 700;
         }
 
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .back-link {
             text-decoration: none;
             color: white;
             background: #0f2b4c;
-            padding: 8px 14px;
-            border-radius: 6px;
+            padding: 8px 16px;
+            border-radius: 8px;
             font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .back-link:hover {
+            background: #123c5e;
+        }
+
+        canvas {
+            max-height: 300px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
+            margin-top: 30px;
+            border-radius: 12px;
+            overflow: hidden;
         }
 
         th {
             background: #0f2b4c;
             color: white;
-            text-align: left;
-            padding: 12px;
+            padding: 14px;
+            font-weight: 600;
         }
 
         td {
-            padding: 10px;
-            border-bottom: 1px solid #e0e0e0;
+            padding: 12px;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        tr:nth-child(even) {
+            background: #fafbfd;
         }
 
         tr:hover {
@@ -67,9 +86,9 @@
         }
 
         .status {
-            font-weight: bold;
-            padding: 4px 10px;
-            border-radius: 12px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 20px;
             font-size: 13px;
         }
 
@@ -85,16 +104,21 @@
 
         .btn-view {
             text-decoration: none;
-            background: #007bff;
+            background: #0f2b4c;
             color: white;
-            padding: 6px 12px;
-            border-radius: 6px;
+            padding: 6px 14px;
+            border-radius: 8px;
             font-size: 13px;
+            transition: 0.2s;
+        }
+
+        .btn-view:hover {
+            background: #123c5e;
         }
 
         .empty {
             text-align: center;
-            padding: 20px;
+            padding: 25px;
             color: #777;
         }
     </style>
