@@ -25,7 +25,6 @@ public class UserForm {
     private String lastName;
     private Role role;
     private Gender gender;
-//    private IdCard idCard;
     private MultipartFile frontImage;
     private MultipartFile backImage;
     private Long schoolId;

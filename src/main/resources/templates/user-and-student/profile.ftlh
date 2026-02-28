@@ -211,7 +211,7 @@
     <div class="profile-card">
 
         <h2 class="user-name">${user.firstName}</h2>
-        <p class="school-name">${user.schoolName}</p>
+        <p class="school-name">${user.school.name}</p>
 
         <div class="info-container">
             <div class="info-row">

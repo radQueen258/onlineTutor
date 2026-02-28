@@ -306,7 +306,7 @@
             </div>
         </div>
 
-        <div id="schoolBlock" style="display:none">
+        <div id="schoolBlock">
             <select name="schoolId" required>
                 <option value="" disabled selected>Choose your school</option>
                 <#list schools as school>

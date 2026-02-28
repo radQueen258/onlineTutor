@@ -29,7 +29,6 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
-//    private String schoolName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "school_id")
