@@ -7,10 +7,7 @@ import com.example.onlinetutor.enums.Subject;
 import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.SchoolRepo;
 import com.example.onlinetutor.repositories.UserRepo;
-import com.example.onlinetutor.services.AptitudeTestService;
-import com.example.onlinetutor.services.GPT4_IdVerificationService;
-import com.example.onlinetutor.services.IdVerificationServiceImpl;
-import com.example.onlinetutor.services.SignUpService;
+import com.example.onlinetutor.services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +33,12 @@ public class SignUpController {
     private SignUpService signUpService;
     @Autowired
     private AuthenticationManager authenticationManager;
+
     @Autowired
     private IdVerificationServiceImpl idVerificationServiceImpl;
 
-    @Autowired
-    private GPT4_IdVerificationService idVerificationService;
+//    @Autowired
+//    private GPT4_IdVerificationService idVerificationService;
 
     @Autowired
     private SchoolRepo schoolRepo;
@@ -57,81 +55,6 @@ public class SignUpController {
 
 
 //    USED FOR HF AND CLIP
-//    @PostMapping("/signUp")
-//    public String signUp(
-//            @ModelAttribute UserForm form,
-//            @RequestParam("frontImage") MultipartFile frontImage,
-//            @RequestParam("backImage") MultipartFile backImage,
-//            HttpServletRequest request,
-//            HttpSession session,
-//            Model model
-//    ) {
-//
-//        if (frontImage.isEmpty() || backImage.isEmpty()) {
-//            model.addAttribute("errorMessage",
-//                    "Please upload both front and back images of your ID.");
-//            return "/general/sign_up_page";
-//        }
-//
-//        VerificationResult verificationResult;
-//        try {
-//             verificationResult =
-//                    idVerificationServiceImpl.verifyFrontAndBack(
-//                            frontImage.getBytes(),
-//                            frontImage.getOriginalFilename(),
-//                            backImage.getBytes(),
-//                            backImage.getOriginalFilename()
-//                    );
-//
-//
-//            if (!verificationResult.isAccepted()) {
-//                model.addAttribute(
-//                        "errorMessage",
-//                        "ID verification failed (confidence: " +
-//                                String.format("%.2f", verificationResult.getProbability()) + ")"
-//                );
-//                return "/error/notId";
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            model.addAttribute(
-//                    "errorMessage",
-//                    "ID verification service error: " + e.getMessage()
-//            );
-//            return "/general/sign_up_page";
-//        }
-//
-//
-//        User savedUser = signUpService.addUser(form);
-//
-//        UsernamePasswordAuthenticationToken token =
-//                new UsernamePasswordAuthenticationToken(
-//                        form.getEmail(), form.getPassword());
-//
-//        Authentication authentication =
-//                authenticationManager.authenticate(token);
-//
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//        session = request.getSession(true);
-//        session.setAttribute(
-//                HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
-//                SecurityContextHolder.getContext()
-//        );
-//
-//        session.setAttribute("userId", savedUser.getId());
-//        session.setAttribute("testTaken", false);
-//
-//        return switch (savedUser.getRole()) {
-//            case TUTOR -> "redirect:/tutor/workplace";
-//            case ADMIN -> "redirect:/admin";
-//            default -> "redirect:/waiting-room";
-//        };
-//
-//    }
-
-
     @PostMapping("/signUp")
     public String signUp(
             @ModelAttribute UserForm form,
@@ -148,13 +71,16 @@ public class SignUpController {
             return "/general/sign_up_page";
         }
 
-//        VerificationResult verificationResult;
+        VerificationResult verificationResult;
         try {
-            GPT4_IdVerificationService.VerificationResult verificationResult =
-                    idVerificationService.verifyFrontAndBack(
-                            frontImage.getBytes(), frontImage.getOriginalFilename(),
-                            backImage.getBytes(), backImage.getOriginalFilename()
+             verificationResult =
+                    idVerificationServiceImpl.verifyFrontAndBack(
+                            frontImage.getBytes(),
+                            frontImage.getOriginalFilename(),
+                            backImage.getBytes(),
+                            backImage.getOriginalFilename()
                     );
+
 
             if (!verificationResult.isAccepted()) {
                 model.addAttribute(
@@ -174,16 +100,24 @@ public class SignUpController {
             return "/general/sign_up_page";
         }
 
+
         User savedUser = signUpService.addUser(form);
 
         UsernamePasswordAuthenticationToken token =
-                new UsernamePasswordAuthenticationToken(form.getEmail(), form.getPassword());
-        Authentication authentication = authenticationManager.authenticate(token);
+                new UsernamePasswordAuthenticationToken(
+                        form.getEmail(), form.getPassword());
+
+        Authentication authentication =
+                authenticationManager.authenticate(token);
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         session = request.getSession(true);
-        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
-                SecurityContextHolder.getContext());
+        session.setAttribute(
+                HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+                SecurityContextHolder.getContext()
+        );
+
         session.setAttribute("userId", savedUser.getId());
         session.setAttribute("testTaken", false);
 
@@ -194,6 +128,79 @@ public class SignUpController {
         };
 
     }
+
+
+//    @PostMapping("/signUp")
+//    public String signUp(
+//            @ModelAttribute UserForm form,
+//            @RequestParam("frontImage") MultipartFile frontImage,
+//            @RequestParam("backImage") MultipartFile backImage,
+//            HttpServletRequest request,
+//            HttpSession session,
+//            Model model
+//    ) {
+//
+//        if (frontImage.isEmpty() || backImage.isEmpty()) {
+//            model.addAttribute("errorMessage",
+//                    "Please upload both front and back images of your ID.");
+//            return "/general/sign_up_page";
+//        }
+//
+//        try {
+//            VerificationResult verificationResult =
+//                    idVerificationService.verifyFrontAndBack(
+//                            frontImage.getBytes(),
+//                            frontImage.getOriginalFilename(),
+//                            backImage.getBytes(),
+//                            backImage.getOriginalFilename()
+//                    );
+//
+//            if (!verificationResult.isAccepted()) {
+//                model.addAttribute(
+//                        "errorMessage",
+//                        "ID verification failed (confidence: " +
+//                                String.format("%.2f", verificationResult.getProbability()) + ")"
+//                );
+//                return "/error/notId";
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            model.addAttribute(
+//                    "errorMessage",
+//                    "ID verification service error. Please try again."
+//            );
+//            return "/general/sign_up_page";
+//        }
+//
+//        // If verification passed → continue signup
+//
+//        User savedUser = signUpService.addUser(form);
+//
+//        UsernamePasswordAuthenticationToken token =
+//                new UsernamePasswordAuthenticationToken(
+//                        form.getEmail(),
+//                        form.getPassword()
+//                );
+//
+//        Authentication authentication = authenticationManager.authenticate(token);
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//        session = request.getSession(true);
+//        session.setAttribute(
+//                HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+//                SecurityContextHolder.getContext()
+//        );
+//
+//        session.setAttribute("userId", savedUser.getId());
+//        session.setAttribute("testTaken", false);
+//
+//        return switch (savedUser.getRole()) {
+//            case TUTOR -> "redirect:/tutor/workplace";
+//            case ADMIN -> "redirect:/admin";
+//            default -> "redirect:/waiting-room";
+//        };
+//    }
 
     @GetMapping("/waiting-room")
     public String waitingRoom(HttpSession session, Model model) {

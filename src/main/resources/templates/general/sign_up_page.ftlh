@@ -306,16 +306,6 @@
             </div>
         </div>
 
-        <!-- School -->
-<#--        <div id="schoolBlock" style="display:none">-->
-<#--            <select name="schoolName">-->
-<#--                <option value="" disabled selected>School Name</option>-->
-<#--                <option value="School One">School One</option>-->
-<#--                <option value="School Two">School Two</option>-->
-<#--                <option value="School Three">School Three</option>-->
-<#--            </select>-->
-<#--        </div>-->
-
         <div id="schoolBlock" style="display:none">
             <select name="schoolId" required>
                 <option value="" disabled selected>Choose your school</option>
