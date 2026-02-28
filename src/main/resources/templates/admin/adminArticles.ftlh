@@ -156,6 +156,41 @@
             text-decoration: none;
             font-size: 14px;
         }
+
+        /* Pagination */
+        .pagination {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .page-btn {
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid #0f2b4c;
+            background: white;
+            color: #0f2b4c;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.2s ease;
+        }
+
+        .page-btn:hover {
+            background: #0f2b4c;
+            color: white;
+        }
+
+        .page-btn.active {
+            background: #0f2b4c;
+            color: white;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 
@@ -224,8 +259,67 @@
                 </tr>
             </#list>
         </table>
+
+        <div class="pagination" id="pagination"></div>
     </div>
 </main>
+
+<script>
+    const rowsPerPage = 8; // how many articles per page
+    const table = document.querySelector("table");
+    const rows = Array.from(table.querySelectorAll("tr")).slice(1); // skip header row
+    const paginationContainer = document.getElementById("pagination");
+
+    let currentPage = 1;
+    const totalPages = Math.ceil(rows.length / rowsPerPage);
+
+    function displayPage(page) {
+        currentPage = page;
+
+        rows.forEach((row, index) => {
+            row.style.display =
+                index >= (page - 1) * rowsPerPage &&
+                index < page * rowsPerPage
+                    ? ""
+                    : "none";
+        });
+
+        renderPagination();
+    }
+
+    function renderPagination() {
+        paginationContainer.innerHTML = "";
+
+        // Previous Button
+        const prevBtn = document.createElement("button");
+        prevBtn.innerText = "Prev";
+        prevBtn.className = "page-btn";
+        prevBtn.disabled = currentPage === 1;
+        prevBtn.onclick = () => displayPage(currentPage - 1);
+        paginationContainer.appendChild(prevBtn);
+
+        // Page Numbers
+        for (let i = 1; i <= totalPages; i++) {
+            const btn = document.createElement("button");
+            btn.innerText = i;
+            btn.className = "page-btn";
+            if (i === currentPage) btn.classList.add("active");
+            btn.onclick = () => displayPage(i);
+            paginationContainer.appendChild(btn);
+        }
+
+        // Next Button
+        const nextBtn = document.createElement("button");
+        nextBtn.innerText = "Next";
+        nextBtn.className = "page-btn";
+        nextBtn.disabled = currentPage === totalPages;
+        nextBtn.onclick = () => displayPage(currentPage + 1);
+        paginationContainer.appendChild(nextBtn);
+    }
+
+    // Initialize
+    displayPage(1);
+</script>
 
 </body>
 </html>
