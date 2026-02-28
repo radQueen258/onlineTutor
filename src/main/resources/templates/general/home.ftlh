@@ -342,9 +342,6 @@
         </div>
     </nav>
 
-    <div class="globe-icon-container">
-        <i class="fa-solid fa-globe"></i>
-    </div>
 </header>
 
 <main>

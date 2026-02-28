@@ -41,9 +41,26 @@
         .sidebar-brand { padding: 0 30px; font-size: 18px; font-weight: 700; margin-bottom: 60px; }
 
         .nav-menu { list-style: none; flex-grow: 1; }
-        .nav-item { padding: 15px 30px; font-size: 16px; font-weight: 500; margin-bottom: 10px; cursor: pointer; gap: 8px;}
-        .nav-item a { color: white; text-decoration: none; gap: 8px;}
-        .nav-item:hover { background-color: #8b6b45; border-radius: 10px; }
+        .nav-item {
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            gap: 8px;
+        }
+
+        .nav-item a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-item:hover {
+            background-color: #8b6b45;
+            border-radius: 10px;
+        }
 
         .sidebar-footer {
             padding: 0 40px;
@@ -144,9 +161,26 @@
 <aside class="sidebar">
     <div class="sidebar-brand">Website Name</div>
     <ul class="nav-menu">
-        <li class="nav-item"><a href="/tutor/workplace">Workplace</a></li>
-        <li class="nav-item active"><a href="/tutor/analytics">View Analytics</a></li>
-        <li class="nav-item"><a href="/chat/teacher">Help a Student</a></li>
+        <li class="nav-item active">
+            <a href="/tutor/workplace">
+                <i class="fa-solid fa-briefcase"></i>
+                Workplace
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="/tutor/analytics">
+                <i class="fa-solid fa-chart-line"></i>
+                View Analytics
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="/chat/teacher">
+                <i class="fa-solid fa-comments"></i>
+                Help a Student
+            </a>
+        </li>
     </ul>
 
     <div class="sidebar-footer">

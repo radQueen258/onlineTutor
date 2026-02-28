@@ -18,48 +18,30 @@
 
         body {
             background-color: #f0f4f9;
-            color: #333;
+            color: #1f2d3d;
             min-height: 100vh;
-        }
-
-        /* Header */
-        header {
-            background-color: #0F3456;
-            height: 260px;
-            border-bottom-left-radius: 40px;
-            border-bottom-right-radius: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        header h1 {
-            color: #fff;
-            font-size: 32px;
-            font-weight: 800;
-            letter-spacing: 1px;
         }
 
         /* Main container */
         main {
-            max-width: 1100px;
-            margin: -130px auto 60px;
+            max-width: 1200px;
+            margin: 60px auto;
             padding: 0 30px;
         }
 
         /* Card */
         .card {
             background-color: #ffffff;
-            border-radius: 14px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            padding: 40px;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 45px;
         }
 
         .card-title {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 700;
-            margin-bottom: 30px;
-            color: #123c5e;
+            margin-bottom: 40px;
+            color: #0f2b4c;
         }
 
         /* Empty state */
@@ -67,41 +49,54 @@
             font-size: 16px;
             color: #666;
             text-align: center;
-            padding: 40px 0;
+            padding: 60px 0;
+        }
+
+        /* Chart */
+        .chart-wrapper {
+            margin-bottom: 50px;
+        }
+
+        canvas {
+            max-height: 380px;
         }
 
         /* Table */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            border-radius: 14px;
+            overflow: hidden;
         }
 
         thead {
-            background-color: #f8fafc;
+            background-color: #0f2b4c;
         }
 
         th {
             text-align: left;
-            padding: 14px 16px;
+            padding: 16px;
             font-size: 14px;
-            font-weight: 700;
-            color: #123c5e;
-            border-bottom: 2px solid #e3e8ef;
+            font-weight: 600;
+            color: white;
         }
 
         td {
-            padding: 16px;
-            vertical-align: top;
-            border-bottom: 1px solid #e3e8ef;
+            padding: 18px 16px;
+            border-bottom: 1px solid #eaeaea;
             font-size: 14px;
+            vertical-align: top;
         }
 
-        tr:last-child td {
-            border-bottom: none;
+        tr:nth-child(even) {
+            background: #fafbfd;
         }
 
-        /* Lists inside table */
+        tr:hover {
+            background: #f1f5fb;
+        }
+
+        /* Lists */
         td ul {
             padding-left: 18px;
         }
@@ -112,37 +107,22 @@
 
         /* Back link */
         .back-link {
-            margin-top: 30px;
+            margin-top: 40px;
             display: inline-flex;
             align-items: center;
             gap: 8px;
             text-decoration: none;
-            color: #123c5e;
+            background: #0f2b4c;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 8px;
             font-weight: 600;
-            font-size: 15px;
-        }
-
-        .back-link i {
             font-size: 14px;
+            transition: 0.2s;
         }
 
         .back-link:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 768px) {
-            main {
-                margin-top: -100px;
-                padding: 0 20px;
-            }
-
-            .card {
-                padding: 30px 20px;
-            }
-
-            table {
-                font-size: 13px;
-            }
+            background: #123c5e;
         }
     </style>
 </head>
@@ -163,7 +143,7 @@
                 No quiz data available yet.
             </div>
         <#else>
-            <div style="margin-bottom:40px;">
+            <div class="chart-wrapper">
                 <canvas id="articleChart"></canvas>
             </div>
             <table>

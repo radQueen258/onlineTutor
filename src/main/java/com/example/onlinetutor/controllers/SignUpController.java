@@ -72,33 +72,33 @@ public class SignUpController {
         }
 
         VerificationResult verificationResult;
-//        try {
-//             verificationResult =
-//                    idVerificationServiceImpl.verifyFrontAndBack(
-//                            frontImage.getBytes(),
-//                            frontImage.getOriginalFilename(),
-//                            backImage.getBytes(),
-//                            backImage.getOriginalFilename()
-//                    );
-//
-//
-//            if (!verificationResult.isAccepted()) {
-//                model.addAttribute(
-//                        "errorMessage",
-//                        "ID verification failed (confidence: " +
-//                                String.format("%.2f", verificationResult.getProbability()) + ")"
-//                );
-//                return "/error/notId";
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            model.addAttribute(
-//                    "errorMessage",
-//                    "ID verification service error: " + e.getMessage()
-//            );
-//            return "/general/sign_up_page";
-//        }
+        try {
+             verificationResult =
+                    idVerificationServiceImpl.verifyFrontAndBack(
+                            frontImage.getBytes(),
+                            frontImage.getOriginalFilename(),
+                            backImage.getBytes(),
+                            backImage.getOriginalFilename()
+                    );
+
+
+            if (!verificationResult.isAccepted()) {
+                model.addAttribute(
+                        "errorMessage",
+                        "ID verification failed (confidence: " +
+                                String.format("%.2f", verificationResult.getProbability()) + ")"
+                );
+                return "/error/notId";
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute(
+                    "errorMessage",
+                    "ID verification service error: " + e.getMessage()
+            );
+            return "/general/sign_up_page";
+        }
 
 
         User savedUser = signUpService.addUser(form);

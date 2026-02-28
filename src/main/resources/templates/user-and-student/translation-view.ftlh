@@ -20,6 +20,12 @@
         .article-title {
             margin-bottom: 20px;
         }
+
+        .back-btn {
+            font-size: 22px;
+            color: #000;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>

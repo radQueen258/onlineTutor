@@ -3,114 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <title>Overall Statistics</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        body {
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        * {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f6f9;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: #f0f4f9;
             color: #333;
         }
 
         /* Sidebar */
-        .sidebar {
-            width: 220px;
-            position: fixed;
-            left: 0;
-            top: 0;
-            height: 100vh;
-            background: #0f2b4c;
+        aside {
+            width: 260px;
+            background-color: #0F3456;
             color: white;
-            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            padding: 40px 0;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
         }
 
-        .sidebar h3 {
-            margin-top: 0;
+        .brand {
+            padding: 0 40px;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 60px;
         }
 
-        .sidebar a {
-            display: block;
+        nav {
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 40px;
             color: white;
             text-decoration: none;
-            margin: 10px 0;
-            font-size: 14px;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            gap: 8px;
+        }
+
+        .nav-item i {
+            width: 26px;
+            margin-right: 12px;
+        }
+
+        .nav-item:hover {
+            background-color: #123c5e;
+        }
+
+        .sidebar-footer {
+            padding: 0 40px;
         }
 
         .logout-btn {
-            margin-top: 20px;
-            background: #dc3545;
-            border: none;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
             width: 100%;
+            background-color: #dc3545;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
         }
 
-        /* Main content */
+        .profile-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 50px 60px;
+        }
+
+
+
+        /* Content */
         .content {
-            margin-left: 240px;
-            padding: 25px;
+            margin-left: 270px;
+            padding: 50px 40px;
         }
 
         .card {
             background: white;
-            padding: 25px;
-            border-radius: 12px;
-            max-width: 700px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+            max-width: 900px;
         }
 
         h1 {
-            margin-top: 0;
+            margin-bottom: 30px;
             color: #0f2b4c;
+            font-size: 26px;
+            font-weight: 700;
         }
 
+        /* Table */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
+            border-radius: 12px;
+            overflow: hidden;
         }
 
         th {
             background: #0f2b4c;
             color: white;
-            padding: 12px;
-            text-align: left;
+            padding: 14px;
+            font-weight: 600;
         }
 
         td {
-            padding: 10px;
-            border-bottom: 1px solid #e0e0e0;
+            padding: 12px;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        tr:nth-child(even) {
+            background: #fafbfd;
+        }
+
+        /* Charts */
+        .chart-wrapper {
+            margin-top: 50px;
+        }
+
+        canvas {
+            max-height: 320px;
         }
 
         .back-link {
             display: inline-block;
-            margin-top: 20px;
+            margin-top: 40px;
             text-decoration: none;
             background: #0f2b4c;
             color: white;
-            padding: 8px 14px;
-            border-radius: 6px;
+            padding: 8px 16px;
+            border-radius: 8px;
             font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .back-link:hover {
+            background: #123c5e;
         }
     </style>
 </head>
 
 <body>
 
-<div class="sidebar">
-    <h3>Website Name</h3>
+<!-- Sidebar -->
+<aside>
+    <div class="brand">Website Name</div>
 
-    <a href="/admin/workplace">Go to Workplace</a>
-    <a href="/admin/aptitude-results">General Aptitude Results</a>
+    <nav>
+        <a href="/admin/dashboard" class="nav-item active">
+            <i class="fa-solid fa-house"></i>Dashboard
+        </a>
+        <a href="/admin/workplace" class="nav-item">
+            <i class="fa-solid fa-briefcase"></i>
+            Workplace
+        </a>
+        <a href="/admin/aptitude-results" class="nav-item">
+            <i class="fa-solid fa-chart-line"></i>
+            Aptitude Results
+        </a>
+    </nav>
 
-    <form action="/logout" method="post">
-        <button class="logout-btn">Logout</button>
-    </form>
-</div>
+    <div class="sidebar-footer">
+        <form action="/logout" method="post">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+        <a href="/admin/profile" class="profile-link">Profile</a>
+    </div>
+</aside>
 
+<main>
 <div class="content">
     <div class="card">
         <h1>Overall Statistics</h1>
@@ -140,25 +223,27 @@
                 </#list>
             </table>
 
-            <div style="margin-top:40px;">
+            <div class="chart-wrapper">
                 <canvas id="attemptChart"></canvas>
             </div>
 
-            <div style="margin-top:40px; width:300px;">
+            <div class="chart-wrapper">
                 <canvas id="passRateChart"></canvas>
             </div>
         <#else>
             <p>No statistics available yet.</p>
         </#if>
 
-        <a class="back-link" href="/admin/dashboard">← Back to Dashboard</a>
     </div>
 </div>
+    </main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 <script>
-    const totalAttempts = ${stats["Quiz attempts"]!0};
-    const passRate = ${stats["Pass rate (%)"]!0};
+    const totalAttempts = ${stats["Quiz attempts"]!0?c};
+    const passRate = ${stats["Pass rate (%)"]!0?c};
 
     // Bar Chart - Attempts
     new Chart(document.getElementById('attemptChart'), {

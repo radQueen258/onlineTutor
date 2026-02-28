@@ -40,9 +40,26 @@
         .sidebar-brand { padding: 0 30px; font-size: 18px; font-weight: 700; margin-bottom: 60px; }
 
         .nav-menu { list-style: none; flex-grow: 1; }
-        .nav-item { padding: 15px 30px; font-size: 16px; font-weight: 500; margin-bottom: 10px; cursor: pointer; gap: 8px;}
-        .nav-item a { color: white; text-decoration: none; gap: 8px;}
-        .nav-item:hover { background-color: #8b6b45; border-radius: 10px; }
+        .nav-item {
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            gap: 8px;
+        }
+
+        .nav-item a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-item:hover {
+            background-color: #8b6b45;
+            border-radius: 10px;
+        }
 
         .sidebar-footer {
             padding: 0 40px;
@@ -153,6 +170,36 @@
             main.content { margin-left: 0; padding: 20px; }
             aside.sidebar { display: none; }
         }
+
+        /* Pagination */
+        .pagination {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .page-btn {
+            padding: 8px 14px;
+            background-color: #e9eef5;
+            color: #113255;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            border: none;
+        }
+
+        .page-btn:hover {
+            background-color: #113255;
+            color: white;
+        }
+
+        .page-btn.active {
+            background-color: #113255;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -160,9 +207,26 @@
 <aside class="sidebar">
     <div class="sidebar-brand">Website Name</div>
     <ul class="nav-menu">
-        <li class="nav-item active"><a href="/tutor/workplace">Workplace</a></li>
-        <li class="nav-item"><a href="/tutor/analytics">View Analytics</a></li>
-        <li class="nav-item"><a href="/chat/teacher">Help a Student</a></li>
+        <li class="nav-item active">
+            <a href="/tutor/workplace">
+                <i class="fa-solid fa-briefcase"></i>
+                Workplace
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="/tutor/analytics">
+                <i class="fa-solid fa-chart-line"></i>
+                View Analytics
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="/chat/teacher">
+                <i class="fa-solid fa-comments"></i>
+                Help a Student
+            </a>
+        </li>
     </ul>
 
     <div class="sidebar-footer">
@@ -184,7 +248,7 @@
     <div class="card">
 
         <#if resources?? && (resources?size > 0)>
-            <table>
+            <table id="resourceTable">
                 <tr>
                     <th>Resource Name</th>
                     <th>Number of Articles</th>
@@ -212,11 +276,62 @@
                     </tr>
                 </#list>
             </table>
+            <div class="pagination" id="pagination"></div>
         <#else>
             <p>No resources found yet. <a href="/tutor/resources/new">Create one now</a>.</p>
         </#if>
     </div>
 </main>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const rowsPerPage = 5; // change this if you want
+        const table = document.getElementById("resourceTable");
+        const rows = table.querySelectorAll("tbody tr, tr:not(:first-child)");
+        const pagination = document.getElementById("pagination");
+
+        let currentPage = 1;
+        const totalRows = rows.length;
+        const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+        function displayPage(page) {
+            currentPage = page;
+
+            rows.forEach((row, index) => {
+                row.style.display =
+                    index >= (page - 1) * rowsPerPage &&
+                    index < page * rowsPerPage
+                        ? ""
+                        : "none";
+            });
+
+            updatePaginationButtons();
+        }
+
+        function updatePaginationButtons() {
+            const buttons = document.querySelectorAll(".page-btn");
+            buttons.forEach(btn => btn.classList.remove("active"));
+            buttons[currentPage - 1].classList.add("active");
+        }
+
+        function createPagination() {
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement("button");
+                button.innerText = i;
+                button.classList.add("page-btn");
+                button.addEventListener("click", () => displayPage(i));
+                pagination.appendChild(button);
+            }
+        }
+
+        if (totalRows > rowsPerPage) {
+            createPagination();
+            displayPage(1);
+        }
+    });
+</script>
 
 </body>
 </html>

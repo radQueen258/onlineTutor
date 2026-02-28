@@ -89,21 +89,6 @@
         }
 
 
-        .globe-icon-container {
-            position: absolute;
-            right: 50px;
-            width: 45px;
-            height: 45px;
-            border: 2px solid #f08c2d;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #000;
-            font-size: 18px;
-            cursor: pointer;
-        }
-
         /* Main Content */
         main {
             display: flex;
@@ -291,9 +276,6 @@
         </div>
     </nav>
 
-    <div class="globe-icon-container">
-        <i class="fa-solid fa-globe"></i>
-    </div>
 </header>
 
 <main>

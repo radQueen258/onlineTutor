@@ -149,9 +149,12 @@
 
 <!-- Sidebar -->
 <aside>
-    <div class="brand">Website Name</div>
+    <div class="brand">Online Tutor</div>
 
     <nav>
+        <a href="/admin/dashboard" class="nav-item active">
+            <i class="fa-solid fa-house"></i>Dashboard
+        </a>
         <a href="/admin/workplace" class="nav-item">
             <i class="fa-solid fa-briefcase"></i>
             Workplace
