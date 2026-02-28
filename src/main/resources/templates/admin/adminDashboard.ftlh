@@ -189,6 +189,9 @@
     <div class="brand">Website Name</div>
 
     <nav>
+        <a href="/admin/dashboard" class="nav-item active">
+            <i class="fa-solid fa-house"></i>Dashboard
+        </a>
         <a href="/admin/workplace" class="nav-item">
             <i class="fa-solid fa-briefcase"></i>
             Workplace
@@ -203,7 +206,7 @@
         <form action="/logout" method="post">
             <button type="submit" class="logout-btn">Logout</button>
         </form>
-        <a href="/tutor/profile" class="profile-link">Profile</a>
+        <a href="/admin/profile" class="profile-link">Profile</a>
     </div>
 </aside>
 

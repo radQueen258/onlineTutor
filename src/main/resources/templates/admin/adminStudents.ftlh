@@ -10,25 +10,27 @@
 
     <style>
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            margin: 0;
-            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
             display: flex;
             min-height: 100vh;
             background-color: #f0f4f9;
             color: #333;
         }
 
+        /* Sidebar */
         aside {
             width: 260px;
             background-color: #0F3456;
             color: white;
             display: flex;
             flex-direction: column;
-            padding: 30px 0;
+            padding: 40px 0;
             border-top-right-radius: 20px;
             border-bottom-right-radius: 20px;
         }
@@ -53,6 +55,7 @@
             font-size: 16px;
             font-weight: 500;
             margin-bottom: 10px;
+            gap: 8px;
         }
 
         .nav-item i {
@@ -69,13 +72,20 @@
         }
 
         .logout-btn {
-            margin-top: 20px;
-            background: #dc3545;
-            border: none;
-            color: white;
-            padding: 8px;
-            border-radius: 6px;
             width: 100%;
+            background-color: #dc3545;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .profile-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
         }
 
         .content {
@@ -137,6 +147,7 @@
 
 <body>
 
+<!-- Sidebar -->
 <aside>
     <div class="brand">Website Name</div>
 
@@ -145,7 +156,6 @@
             <i class="fa-solid fa-briefcase"></i>
             Workplace
         </a>
-
         <a href="/admin/aptitude-results" class="nav-item">
             <i class="fa-solid fa-chart-line"></i>
             Aptitude Results
@@ -154,16 +164,19 @@
 
     <div class="sidebar-footer">
         <form action="/logout" method="post">
-            <button class="logout-btn">Logout</button>
+            <button type="submit" class="logout-btn">Logout</button>
         </form>
+        <a href="/admin/profile" class="profile-link">Profile</a>
     </div>
 </aside>
 
 <main class="content">
     <h1>Registered Students</h1>
+    <br>
 
     <div class="card">
         <h2>Students</h2>
+        <br>
         <table>
             <tr>
                 <th>ID</th>
@@ -191,8 +204,6 @@
             </#list>
         </table>
     </div>
-
-    <a class="back-link" href="/admin/dashboard">← Back to Dashboard</a>
 </main>
 
 </body>
