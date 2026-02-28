@@ -16,9 +16,9 @@
         aside { width:280px; background:#0F3456; color:white; display:flex; flex-direction:column; padding:40px 0; border-top-right-radius:20px; border-bottom-right-radius:20px; }
         .brand { padding:0 40px; font-size:18px; font-weight:600; font-style:italic; margin-bottom:60px; }
         nav { flex-grow:1; }
-        .nav-item { display:flex; align-items:center; padding:15px 40px; color:white; text-decoration:none; font-size:18px; font-weight:500; margin-bottom:10px; }
+        .nav-item { display:flex; align-items:center; padding:15px 40px; color:white; text-decoration:none; font-size:18px; font-weight:500; margin-bottom:10px;gap: 8px; }
         .nav-item i { width:30px; font-size:22px; margin-right:15px; }
-        .nav-item.active { background:#82613E; margin-right:15px; border-top-right-radius:10px; border-bottom-right-radius:10px; }
+        .nav-item.active { background:#82613E; margin-right:15px; border-top-right-radius:10px; border-bottom-right-radius:10px; gap: 8px; }
         .sidebar-footer { padding:0 40px; display:flex; flex-direction:column; gap:20px; }
         .logout-btn { background:#dc3545; color:#fff; border:none; padding:10px 14px; border-radius:10px; font-weight:600; cursor:pointer; width:100%; }
         .profile-link { color:white; text-decoration:none; font-weight:500; }

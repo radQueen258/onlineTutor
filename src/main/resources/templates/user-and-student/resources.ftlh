@@ -55,6 +55,7 @@
             font-size: 18px;
             font-weight: 500;
             margin-bottom: 10px;
+            gap: 8px;
         }
 
         .nav-item i {
@@ -68,6 +69,7 @@
             margin-right: 15px;
             border-top-right-radius: 10px;
             border-bottom-right-radius: 10px;
+            gap: 8px;
         }
 
         .sidebar-footer {

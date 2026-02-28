@@ -58,6 +58,7 @@
             font-weight: 500;
             margin-bottom: 10px;
             transition: 0.2s ease;
+            gap: 8px;
         }
 
         .nav-item i {
@@ -72,6 +73,7 @@
             margin-right: 15px;
             border-top-right-radius: 10px;
             border-bottom-right-radius: 10px;
+            gap: 8px;
         }
 
         .sidebar-footer {
@@ -272,25 +274,6 @@
             background-color: #f0f4f8;
         }
 
-        .score-bar-container {
-            width: 100%;
-            background-color: #e6e6e6;
-            border-radius: 30px;
-            overflow: hidden;
-            height: 28px;
-            margin: 10px 0 20px 0;
-        }
-
-        .score-bar {
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            width: 0;
-            transition: width 1s ease-in-out;
-        }
 
         .average-card {
             text-align: center;
@@ -342,7 +325,7 @@
 
     <nav>
         <a href="/dashboard" class="nav-item active">
-            <i class="fa-solid fa-house"></i> Dashboard
+            <i class="fa-solid fa-house"></i>Dashboard
         </a>
 
         <a href="/study-plan" class="nav-item">
@@ -535,7 +518,7 @@
 
     const scores = [
         <#list exams as exam>
-        ${(exam.score)!0}<#if exam_has_next>,</#if>
+        ${(exam.score)!0?c}<#if exam_has_next>,</#if>
         </#list>
     ];
 

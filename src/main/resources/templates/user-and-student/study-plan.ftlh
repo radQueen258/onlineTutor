@@ -56,6 +56,7 @@
             font-weight: 500;
             margin-bottom: 10px;
             transition: 0.2s ease;
+            gap: 8px;
         }
 
         .nav-item i {
@@ -69,6 +70,7 @@
             margin-right: 15px;
             border-top-right-radius: 10px;
             border-bottom-right-radius: 10px;
+            gap: 8px;
         }
 
         .sidebar-footer {
@@ -116,60 +118,52 @@
             color: #000;
         }
 
-        .globe-icon {
-            width: 45px;
-            height: 45px;
-            border: 2px solid #e6a532;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #e6a532;
-            font-size: 1.2rem;
-        }
-
-
-        .topics-section h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 25px;
-        }
-
+        /* Topics Card Enhancements */
         .topics-card {
-            background: white;
+            background: #fff;
             border-radius: 30px;
             padding: 40px 50px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
             max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
         .topic-item {
             display: flex;
             align-items: center;
-            margin-bottom: 30px;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border-radius: 20px;
+            transition: 0.2s;
+            cursor: pointer;
+            background-color: #f9fbff;
         }
 
-        .topic-item:last-child {
-            margin-bottom: 0;
+        .topic-item:hover {
+            background-color: #e6f0ff;
+            transform: translateY(-2px);
         }
 
         .topic-item i {
-            font-size: 2rem;
-            margin-right: 25px;
-            color: #000;
+            font-size: 1.8rem;
+            margin-right: 20px;
+            color: #3498DB;
         }
 
         .topic-item span {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 600;
-            color: #000;
+            color: #0F3456;
         }
 
+        /* Fixed Continue Button */
         .action-container {
-            margin-top: 40px;
-            display: flex;
-            justify-content: flex-end;
-            max-width: 900px;
+            position: fixed;
+            bottom: 30px;
+            right: 50px;
+            z-index: 100;
         }
 
         .continue-btn {
@@ -177,27 +171,113 @@
             color: #000;
             border: none;
             padding: 15px 40px;
-            border-radius: 15px;
+            border-radius: 25px;
             font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s;
+            transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
 
         .continue-btn:hover {
             background-color: #e6b420;
             transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.2);
         }
 
-        /* Responsive adjustments */
+        /* Responsive Adjustments */
         @media (max-width: 900px) {
             main {
-                padding: 40px;
+                padding: 40px 20px;
             }
             .topics-card {
                 padding: 30px;
             }
+            .action-container {
+                right: 20px;
+                bottom: 20px;
+            }
         }
+
+
+        /* Collapsible Subject Styles */
+        .subject-section {
+            margin-bottom: 30px;
+        }
+
+        .subject-header {
+            background-color: #f4c43033;
+            padding: 15px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: background-color 0.2s;
+        }
+
+        .subject-header:hover {
+            background-color: #f4c43055;
+        }
+
+        .subject-header i {
+            transition: transform 0.3s;
+        }
+
+        .subject-header.collapsed i {
+            transform: rotate(-90deg);
+        }
+
+        /* Collapsible Topics Container */
+        .topics-collapsible {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Individual Topic Items */
+        .topic-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 18px;
+            border-radius: 20px;
+            background-color: #f9fbff;
+            transition: background-color 0.2s, transform 0.2s;
+            cursor: default;
+        }
+
+        .topic-item:hover {
+            background-color: #e6f0ff;
+            transform: translateY(-1px);
+        }
+
+        .topic-item i {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            color: #3498DB;
+        }
+
+        .topic-item span {
+            font-weight: 600;
+            color: #0F3456;
+        }
+
+        /* Fixed Continue Button */
+        .action-container {
+            position: fixed;
+            bottom: 30px;
+            right: 50px;
+            z-index: 100;
+        }
+
+
     </style>
 </head>
 <body>
@@ -239,9 +319,6 @@
 <main>
     <header>
         <h1>Your Study Plan</h1>
-        <div class="globe-icon">
-            <i class="fa-solid fa-globe"></i>
-        </div>
     </header>
 
     <#if message??>
@@ -250,24 +327,37 @@
 
     <#if plans?? && (plans?size > 0)>
         <section class="topics-section">
-            <div class="topics-card">
 
-                <#list plans as p>
-                    <div class="topic-item">
-                        <i class="fa-regular fa-circle-play"></i>
-                        <span>
-                            ${p.article.articleTitle}
-                            —
-                            <#if p.completed>
-                                Completed
-                            <#else>
-                                ${(p.progress * 100)?string["0.##"]}%
-                            </#if>
-                        </span>
+            <#list plansBySubject as subjectName, topics>
+                <div class="subject-section">
+
+                    <!-- Collapsible Header -->
+                    <div class="subject-header collapsed" onclick="toggleTopics(this)">
+                        <span>${subjectName}</span>
+                        <i class="fa-solid fa-chevron-down"></i>
                     </div>
-                </#list>
 
-            </div>
+                    <!-- Collapsible Topics -->
+                    <div class="topics-collapsible">
+                        <#list topics as p>
+                            <div class="topic-item">
+                                <div class="topic-left">
+                                    <i class="fa-regular fa-circle-play"></i>
+                                    <span>${p.article.articleTitle}</span>
+                                </div>
+                                <div class="topic-right">
+                                    <#if p.completed>
+                                        Completed
+                                    <#else>
+                                        ${(p.progress * 100)?string["0.##"]}%
+                                    </#if>
+                                </div>
+                            </div>
+                        </#list>
+                    </div>
+                </div>
+            </#list>
+
         </section>
 
         <div class="action-container">
@@ -276,11 +366,38 @@
             </a>
         </div>
 
+        <div class="action-container">
+            <a href="/study/continue">
+                <button class="continue-btn">Continue Plan</button>
+            </a>
+        </div>
+
+<#--        <div class="action-container">-->
+<#--            <a href="/study/continue">-->
+<#--                <button class="continue-btn">Continue Plan</button>-->
+<#--            </a>-->
+<#--        </div>-->
+
     <#else>
         <p>No study plan available yet.</p>
     </#if>
 
 </main>
+
+<script>
+    function toggleTopics(header) {
+        const container = header.nextElementSibling;
+        const icon = header.querySelector('i');
+
+        if (container.style.maxHeight && container.style.maxHeight !== "0px") {
+            container.style.maxHeight = "0";
+            header.classList.add("collapsed");
+        } else {
+            container.style.maxHeight = container.scrollHeight + "px";
+            header.classList.remove("collapsed");
+        }
+    }
+</script>
 
 </body>
 </html>

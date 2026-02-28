@@ -8,235 +8,209 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter', sans-serif; }
 
         body {
-            font-family: 'Inter', system-ui, sans-serif;
-            background-color: #f0f4f9;
+            background-color: #f0f4f8;
             display: flex;
             min-height: 100vh;
-            color: #333;
+            color: #0f2b4c;
         }
 
+        /* SIDEBAR */
+        aside {
+            width: 280px;
+            background-color: #0F3456;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 40px 0;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .brand { padding:0 40px; font-size:18px; font-weight:600; font-style:italic; margin-bottom:60px; }
+
+        nav { flex-grow:1; }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 40px;
+            font-size:18px;
+            font-weight:500;
+            color:white;
+            text-decoration:none;
+            margin-bottom:10px;
+            border-radius:8px;
+            transition:0.2s;
+            gap:8px;
+        }
+
+        .nav-item:hover { background-color: #123c5e; }
+        .nav-item.active { background-color:#82613E; }
+
+        .nav-item i { width:30px; font-size:22px; }
+
+        .sidebar-footer {
+            padding:0 40px;
+            display:flex;
+            flex-direction:column;
+            gap:20px;
+        }
+
+        .logout-btn { background-color:#dc3545; color:#fff; border:none; padding:10px 14px; border-radius:10px; font-weight:600; cursor:pointer; width:100%; }
+        .logout-btn:hover { background-color:#b52a38; }
+        .profile-link { color:white; text-decoration:none; font-weight:500; }
+
+        /* MAIN CONTENT */
+        main {
+            flex:1;
+            padding:60px 80px;
+            padding-right: 420px;
+            overflow-y:auto;
+            position:relative;
+            max-width: calc(100% - 420px);
+        }
+
+        h2 { font-size:2rem; font-weight:800; margin-bottom:25px; }
+
+        .article {
+            background:white;
+            padding:30px 35px;
+            border-radius:16px;
+            box-shadow:0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom:40px;
+            line-height:1.7;
+        }
+
+        /* AI Chat */
         .ai-chat {
             position: fixed;
             right: 20px;
             top: 20px;
             width: 320px;
             height: 90vh;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            display: flex;
-            flex-direction: column;
-            padding: 15px;
+            background:white;
+            border-radius:16px;
+            box-shadow:0 8px 25px rgba(0,0,0,0.15);
+            display:flex;
+            flex-direction:column;
+            overflow:hidden;
         }
 
-        /* Sidebar */
-        nav {
-            width: 240px;
-            background-color: #0F3456;
-            color: white;
-            padding: 40px 25px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        nav h3 {
-            margin-bottom: 40px;
-            font-weight: 800;
-        }
-
-        nav ul {
-            list-style: none;
-        }
-
-        nav li {
-            margin-bottom: 15px;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        nav a.active {
-            color: burlywood;
-        }
-
-        .logout-btn {
-            margin-top: auto;
-            background-color: #dc3545;
-            border: none;
-            color: white;
-            padding: 10px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        /* Main content */
-        main {
-            flex-grow: 1;
-            padding: 50px 60px;
-            /*max-width: 1100px;*/
-            margin-right: 350px;
-        }
-
-        h2 {
-            font-size: 30px;
-            font-weight: 800;
-            color: #0f2b4c;
-            margin-bottom: 20px;
-        }
-
-        .article {
-            background: white;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-            margin-bottom: 40px;
-            line-height: 1.6;
-        }
-
-        /* AI Tutor */
-        /*.ai-box {*/
-        /*    background: #ffffff;*/
-        /*    padding: 25px;*/
-        /*    border-radius: 16px;*/
-        /*    box-shadow: 0 8px 25px rgba(0,0,0,0.08);*/
-        /*    margin-bottom: 40px;*/
-        /*}*/
-
-        .ai-box h3 {
-            color: #0f2b4c;
-            margin-bottom: 15px;
+        .ai-chat h3 {
+            font-size:1.3rem;
+            font-weight:700;
+            padding:15px;
+            border-bottom:1px solid #eee;
+            margin:0;
+            background:#f9f9f9;
         }
 
         .chat-messages {
-            flex-grow: 1;
-            overflow-y: auto;
-            margin-bottom: 10px;
-            padding-right: 5px;
+            flex-grow:1;
+            padding:10px 15px;
+            overflow-y:auto;
+            display:flex;
+            flex-direction:column;
+            gap:10px;
         }
 
-        .message.ai p {
-            margin-bottom: 8px;
+        .message.user {
+            align-self:flex-end;
+            background:#0f3456;
+            color:white;
+            padding:8px 12px;
+            border-radius:12px;
+            max-width:85%;
+            word-wrap:break-word;
         }
 
-        .message.ai ul {
-            padding-left: 20px;
-            margin-bottom: 10px;
+        .message.ai {
+            align-self:flex-start;
+            background:#f1f3f5;
+            color:#0f2b4c;
+            padding:8px 12px;
+            border-radius:12px;
+            max-width:85%;
+            word-wrap:break-word;
         }
 
-        .message.ai strong {
-            font-weight: 700;
+        .chat-input {
+            display:flex;
+            gap:8px;
+            padding:10px 15px;
+            border-top:1px solid #eee;
+            background:#fafafa;
         }
 
-        .message.ai em {
-            font-style: italic;
+        .chat-input textarea {
+            flex:1;
+            padding:10px;
+            border-radius:12px;
+            border:1px solid #ccc;
+            resize:none;
+            font-family:inherit;
         }
 
-        /*.message {*/
-        /*    margin-bottom: 10px;*/
-        /*    padding: 10px;*/
-        /*    border-radius: 10px;*/
-        /*    font-size: 14px;*/
-        /*}*/
-
-        /*.user {*/
-        /*    background: #e3f2fd;*/
-        /*    align-self: flex-end;*/
-        /*}*/
-
-        /*.ai {*/
-        /*    background: #f5f5f5;*/
-        /*}*/
-
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid #ccc;
-            resize: none;
-            font-family: inherit;
+        .chat-input .btn {
+            padding:8px 15px;
+            border-radius:12px;
+            border:none;
+            background:#0f3456;
+            color:white;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.2s;
         }
 
-        .btn {
-            background-color: #0f2b4c;
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .btn:hover {
-            background-color: #123c5e;
-        }
-
-        /*#aiAnswer {*/
-        /*    margin-top: 15px;*/
-        /*    background: #f5f7fa;*/
-        /*    padding: 15px;*/
-        /*    border-radius: 10px;*/
-        /*}*/
+        .chat-input .btn:hover { background:#123c5e; }
 
         /* Quiz */
         .quiz {
-            background: white;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            background:white;
+            padding:30px 35px;
+            border-radius:16px;
+            box-shadow:0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom:60px;
         }
 
-        .quiz h3 {
-            margin-bottom: 20px;
-            color: #0f2b4c;
-        }
+        .quiz h3 { margin-bottom:20px; font-weight:700; font-size:1.5rem; }
 
-        .question-block {
-            display: none;
-            animation: slideIn 0.4s ease;
-        }
+        .question-block { display:none; animation:slideIn 0.4s ease; padding:15px 0; border-bottom:1px solid #eee; }
+        .question-block.active { display:block; }
+        .question-block:last-child { border-bottom:none; }
 
-        .question-block.active {
-            display: block;
-        }
+        .question-block p { font-weight:600; margin-bottom:10px; }
 
-        .question-block p {
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-            cursor: pointer;
-        }
+        label { display:block; margin-bottom:10px; cursor:pointer; font-weight:500; }
 
         .quiz-actions {
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-between;
+            display:flex;
+            justify-content:flex-end;
+            gap:10px;
+            margin-top:20px;
         }
 
+        .quiz-actions .btn {
+            background:#0f3456;
+            color:white;
+            border-radius:12px;
+            padding:8px 15px;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.2s;
+        }
+
+        .quiz-actions .btn:hover { background:#123c5e; }
+
+        /* Animations */
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            from { opacity:0; transform:translateX(30px); }
+            to { opacity:1; transform:translateX(0); }
         }
     </style>
 </head>
@@ -244,22 +218,39 @@
 <body>
 
 <!-- SIDEBAR -->
-<nav>
-    <h3>Website Name</h3>
+<aside>
+    <div class="brand">Online Tutor</div>
 
-    <ul>
-        <li><a href="/dashboard">Dashboard</a></li>
-        <li><a href="/study-plan" class="active">Study Plan</a></li>
-        <li><a href="/resources">Resources</a></li>
-        <li><a href="/exam-trends">Exam Trends</a></li>
-    </ul>
+    <nav>
+        <a href="/dashboard" class="nav-item active">
+            <i class="fa-solid fa-house"></i>Dashboard
+        </a>
 
-    <a href="/profile" style="margin-top:20px;">Profile</a>
+        <a href="/study-plan" class="nav-item">
+            <i class="fa-solid fa-book-open"></i> Study Plan
+        </a>
 
-    <form action="/logout" method="post">
-        <button type="submit" class="logout-btn">Logout</button>
-    </form>
-</nav>
+        <a href="/resources" class="nav-item">
+            <i class="fa-solid fa-play"></i> Resources
+        </a>
+
+        <a href="/chat/student" class="nav-item">
+            <i class="fa-solid fa-comments"></i> Contact a Tutor
+        </a>
+
+        <a href="/articles/translations" class="nav-item">
+            <i class="fa-solid fa-globe"></i> Translations
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <form action="/logout" method="post">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+        <a href="/profile" class="profile-link">Profile</a>
+    </div>
+</aside>
+
 
 <!-- MAIN -->
 <main>
@@ -270,20 +261,8 @@
         ${article.articleContent?no_esc}
     </div>
 
-    <!-- AI TUTOR -->
-<#--    <div class="ai-box">-->
-<#--        <h3>Ask the AI Tutor 🤖</h3>-->
-
-<#--        <textarea id="aiQuestion" rows="4" maxlength="300"-->
-<#--                  placeholder="Ask about this article..."></textarea>-->
-
-<#--        <button class="btn" onclick="askAi()">Ask AI</button>-->
-
-<#--        <div id="aiAnswer"></div>-->
-<#--    </div>-->
-
     <div class="ai-chat">
-        <h3>AI Tutor 🤖</h3>
+        <h3>AI Tutor </h3>
 
         <div id="chatMessages" class="chat-messages"></div>
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class StudyPlanController {
@@ -46,6 +47,14 @@ public class StudyPlanController {
     @GetMapping("/study-plan")
     public String studyPlan(Model model, Principal principal) {
         List<StudyPlan> plans = studyPlanService.getPlanForUser(principal.getName());
+
+        // Group plans by subject
+        Map<String, List<StudyPlan>> plansBySubject = plans.stream()
+                .collect(Collectors.groupingBy(
+                        plan -> plan.getArticle().getSubject().name() // assuming Article has a getSubject()
+                ));
+
+        model.addAttribute("plansBySubject", plansBySubject);
         model.addAttribute("plans", plans);
         return "/user-and-student/study-plan";
     }

@@ -28,38 +28,6 @@ public class StudyPlanServiceImpl implements StudyPlanService {
     @Autowired
     private ResourceRepo resourceRepo;
 
-//    @Override
-//    public void generatePlanForUser(
-//            User user,
-//            List<Long> weakCurriculumResourceIds
-//    ) {
-
-//        studyPlanRepo.deleteByUserId(user.getId());
-//
-//        List<Resource> resources =
-//                resourceRepo.findAll().stream()
-//                        .filter(r ->
-//                                weakCurriculumResourceIds.contains(
-//                                        r.getCurriculumResource().getId()
-//                                )
-//                        )
-//                        .toList();
-//
-//        for (Resource resource : resources) {
-//            for (Article article : resource.getArticles()) {
-//
-//                StudyPlan plan = StudyPlan.builder()
-//                        .user(user)
-//                        .article(article)
-//                        .progress(0.0)
-//                        .completed(false)
-//                        .build();
-//
-//                studyPlanRepo.save(plan);
-//            }
-//        }
-//    }
-
 
     @Override
     public List<StudyPlan> getPlanForUser(String email) {
@@ -98,24 +66,6 @@ public class StudyPlanServiceImpl implements StudyPlanService {
         }
         return true;
     }
-
-//    @Override
-//    public void createPlansForNewStudyFocus(Long userID, Subject[] newFocusAreas) {
-//        studyPlanRepo.deleteByUserId(userID);
-//
-//        User user = userRepo.findById(userID).orElse(null);
-//
-//        for (Subject focusArea : newFocusAreas) {
-//            StudyPlan plan = new StudyPlan();
-//            plan.setUser(user);
-//            plan.setProgress(0);
-//            plan.setCompleted(false);
-////            plan.setArticle(focusArea);
-//            studyPlanRepo.save(plan);
-//        }
-//
-//
-//    }
 
 
     @Override
@@ -177,13 +127,6 @@ public class StudyPlanServiceImpl implements StudyPlanService {
         if (plans.isEmpty()) {
             return new DashboardStudyPlanInfo(0, "No study plan yet");
         }
-
-//        double avgProgress = plans.stream()
-//                .mapToDouble(StudyPlan::getProgress)
-//                .average()
-//                .orElse(0.0);
-//
-//        int progressPercent = (int) Math.round(avgProgress * 100);
 
         long total = plans.size();
         long completed = plans.stream()
