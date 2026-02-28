@@ -39,19 +39,25 @@
         .sidebar-brand { padding: 0 30px; font-size: 18px; font-weight: 700; margin-bottom: 60px; }
 
         .nav-menu { list-style: none; flex-grow: 1; }
-        .nav-item { padding: 15px 30px; font-size: 16px; font-weight: 500; margin-bottom: 10px; cursor: pointer; }
-        .nav-item a { color: white; text-decoration: none; }
+        .nav-item { padding: 15px 30px; font-size: 16px; font-weight: 500; margin-bottom: 10px; cursor: pointer; gap: 8px;}
+        .nav-item a { color: white; text-decoration: none; gap: 8px;}
         .nav-item:hover { background-color: #8b6b45; border-radius: 10px; }
 
-        .sidebar-footer { padding: 0 30px; margin-top: auto; }
+        .sidebar-footer {
+            padding: 0 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
         .logout-btn {
             background-color: #dc3545;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
+            padding: 10px 14px;
+            border-radius: 10px;
             font-weight: 600;
+            cursor: pointer;
             width: 100%;
         }
 
@@ -153,7 +159,7 @@
         <form action="/logout" method="post">
             <button type="submit" class="logout-btn">Logout</button>
         </form>
-        <a href="/tutor/profile" class="profile-link">Profile</a>
+        <a href="/admin/profile" class="profile-link">Profile</a>
     </div>
 </aside>
 

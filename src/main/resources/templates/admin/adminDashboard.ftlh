@@ -54,6 +54,7 @@
             font-size: 16px;
             font-weight: 500;
             margin-bottom: 10px;
+            gap: 8px;
         }
 
         .nav-item i {
@@ -78,6 +79,12 @@
             color: white;
             font-weight: 600;
             cursor: pointer;
+        }
+
+        .profile-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
         }
 
         /* Main */
@@ -194,8 +201,9 @@
 
     <div class="sidebar-footer">
         <form action="/logout" method="post">
-            <button class="logout-btn" type="submit">Logout</button>
+            <button type="submit" class="logout-btn">Logout</button>
         </form>
+        <a href="/tutor/profile" class="profile-link">Profile</a>
     </div>
 </aside>
 
