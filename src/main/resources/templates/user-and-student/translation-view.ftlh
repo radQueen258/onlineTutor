@@ -17,12 +17,6 @@
             line-height: 1.6;
         }
 
-         /*.article-container {*/
-         /*    max-width: 800px;*/
-         /*    margin: auto;*/
-         /*    font-family: Arial, sans-serif;*/
-         /*    line-height: 1.6;*/
-         /*}*/
         .article-title {
             margin-bottom: 20px;
         }

@@ -55,6 +55,7 @@
             font-size: 18px;
             font-weight: 500;
             margin-bottom: 10px;
+            transition: 0.2s ease;
         }
 
         .nav-item i {
@@ -127,31 +128,6 @@
             font-size: 1.2rem;
         }
 
-        .progress-section {
-            margin-bottom: 60px;
-        }
-
-        .progress-label {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .progress-bar-container {
-            width: 300px;
-            height: 12px;
-            background-color: #f0f0f0;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            width: 60%;
-            background-color: #f4c430;
-            border-radius: 6px;
-        }
 
         .topics-section h2 {
             font-size: 1.5rem;
@@ -226,21 +202,29 @@
 </head>
 <body>
 
+<!-- SIDEBAR -->
 <aside>
-    <div class="brand">Website Name</div>
+    <div class="brand">Online Tutor</div>
 
     <nav>
         <a href="/dashboard" class="nav-item">
             <i class="fa-solid fa-house"></i> Dashboard
         </a>
+
         <a href="/study-plan" class="nav-item active">
             <i class="fa-solid fa-book-open"></i> Study Plan
         </a>
+
         <a href="/resources" class="nav-item">
             <i class="fa-solid fa-play"></i> Resources
         </a>
+
+        <a href="/chat/student" class="nav-item">
+            <i class="fa-solid fa-comments"></i> Contact a Tutor
+        </a>
+
         <a href="/articles/translations" class="nav-item">
-            <i class="fa-solid fa-chart-pie"></i> Translations
+            <i class="fa-solid fa-globe"></i> Translations
         </a>
     </nav>
 

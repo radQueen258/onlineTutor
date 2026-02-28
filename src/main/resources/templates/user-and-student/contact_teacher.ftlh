@@ -8,64 +8,104 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
 
     <style>
-        body {
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        * {
             margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f3f4f6;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
         }
 
-        .main-content {
-            margin-left: 260px;
-            padding: 40px;
+        body {
+            background-color: #f0f4f8;
+            min-height: 100vh;
+            display: flex;
         }
 
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 260px;
-            height: 100vh;
+        /* SIDEBAR */
+        aside {
+            width: 280px;
             background-color: #0F3456;
             color: white;
             display: flex;
             flex-direction: column;
-            padding-top: 40px;
+            padding: 40px 0;
             border-top-right-radius: 20px;
             border-bottom-right-radius: 20px;
         }
 
-        /* Brand */
         .brand {
-            padding: 0 30px;
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 40px;
+            padding: 0 40px;
+            font-size: 18px;
+            font-weight: 600;
+            font-style: italic;
+            margin-bottom: 60px;
         }
 
-        /* Nav */
-        .nav-menu {
-            display: flex;
-            flex-direction: column;
+        nav {
+            flex-grow: 1;
         }
 
         .nav-item {
-            padding: 14px 30px;
-            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 15px 40px;
             color: white;
-            font-size: 15px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 10px;
             transition: 0.2s ease;
         }
 
-        .nav-item:hover {
-            background-color: rgba(255,255,255,0.08);
-            padding-left: 36px;
+        .nav-item i {
+            width: 30px;
+            font-size: 22px;
+            margin-right: 15px;
+
         }
 
         .nav-item.active {
             background-color: #82613E;
+            margin-right: 15px;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .sidebar-footer {
+            padding: 0 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .logout-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 10px;
             font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .profile-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* MAIN CONTENT */
+        main {
+            flex: 1;
+            padding: 60px 80px;
+            overflow-y: auto;
+            position: relative;
         }
 
         .chat-container {
@@ -163,6 +203,27 @@
         .chat-input button:hover {
             background-color: #6f5032;
         }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            aside {
+                width: 80px;
+            }
+
+            .brand,
+            .nav-item span {
+                display: none;
+            }
+
+            main {
+                margin-left: 80px;
+                padding: 40px;
+            }
+
+            .top-row {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 
 </head>
@@ -170,29 +231,53 @@
 
 
 <#-- UNIFIED SIDEBAR -->
-<aside class="sidebar">
 
+<aside>
     <div class="brand">Website Name</div>
 
-    <nav class="nav-menu">
-
+    <nav>
         <#if currentUser.role?string == "STUDENT">
-            <a href="/dashboard" class="nav-item">Dashboard</a>
-            <a href="/study-plan" class="nav-item">Study Plan</a>
-            <a href="/resources" class="nav-item">Resources</a>
-            <a href="/chat/student" class="nav-item active">Contact a Tutor</a>
+            <a href="/dashboard" class="nav-item">
+                <i class="fa-solid fa-house"></i> Dashboard
+            </a>
+
+            <a href="/study-plan" class="nav-item">
+                <i class="fa-solid fa-book-open"></i> Study Plan
+            </a>
+
+            <a href="/resources" class="nav-item">
+                <i class="fa-solid fa-play"></i> Resources
+            </a>
+
+            <a href="/chat/student" class="nav-item active">
+                <i class="fa-solid fa-comments"></i> Contact a Tutor
+            </a>
+
+            <a href="/articles/translations" class="nav-item">
+                <i class="fa-solid fa-globe"></i> Translations
+            </a>
         </#if>
 
         <#if currentUser.role?string == "TUTOR">
-            <a href="/tutor/workplace" class="nav-item">Workplace</a>
-            <a href="/chat/teacher" class="nav-item active">Help a Student</a>
-        </#if>
+            <a href="/tutor/workplace" class="nav-item">
+                <i class="fa-solid fa-briefcase"></i> Workplace
+            </a>
 
+            <a href="/chat/teacher" class="nav-item active">
+                <i class="fa-solid fa-comments"></i> Help a Student
+            </a>
+        </#if>
     </nav>
 
+    <div class="sidebar-footer">
+        <form action="/logout" method="post">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+        <a href="/profile" class="profile-link">Profile</a>
+    </div>
 </aside>
 
-<div class="main-content">
+<main>
 
 <div class="chat-container">
 
@@ -219,7 +304,7 @@
     </div>
 
 </div>
-</div>
+</main>
 
 <style>
     .chat-container { max-width: 700px; margin: auto; }

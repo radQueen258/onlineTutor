@@ -20,15 +20,12 @@
         body {
             background-color: #f0f4f8;
             min-height: 100vh;
+            display: flex;
         }
 
         /* SIDEBAR */
         aside {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
-            width: 260px;
+            width: 280px;
             background-color: #0F3456;
             color: white;
             display: flex;
@@ -39,11 +36,11 @@
         }
 
         .brand {
-            padding: 0 32px;
+            padding: 0 40px;
             font-size: 18px;
             font-weight: 600;
             font-style: italic;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
         }
 
         nav {
@@ -53,42 +50,45 @@
         .nav-item {
             display: flex;
             align-items: center;
-            padding: 14px 32px;
+            padding: 15px 40px;
             color: white;
             text-decoration: none;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 500;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            transition: 0.2s ease;
         }
 
         .nav-item i {
-            width: 26px;
-            font-size: 20px;
-            margin-right: 14px;
+            width: 30px;
+            font-size: 22px;
+            margin-right: 15px;
+
         }
 
         .nav-item.active {
             background-color: #82613E;
-            margin-right: 16px;
-            border-top-right-radius: 12px;
-            border-bottom-right-radius: 12px;
+            margin-right: 15px;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
         }
 
         .sidebar-footer {
-            padding: 0 32px;
+            padding: 0 40px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 20px;
         }
 
         .logout-btn {
             background-color: #dc3545;
             color: white;
             border: none;
-            padding: 10px;
+            padding: 10px 14px;
             border-radius: 10px;
             font-weight: 600;
             cursor: pointer;
+            width: 100%;
         }
 
         .profile-link {
@@ -99,8 +99,10 @@
 
         /* MAIN CONTENT */
         main {
-            margin-left: 260px;
-            padding: 60px 70px;
+            flex: 1;
+            padding: 60px 80px;
+            overflow-y: auto;
+            position: relative;
         }
 
         h1 {
@@ -183,14 +185,6 @@
             margin-bottom: 30px;
         }
 
-        .resource-item {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            font-size: 1.1rem;
-            margin-bottom: 18px;
-        }
-
         .resource-item i {
             color: #82613E;
         }
@@ -227,23 +221,27 @@
 
 <!-- SIDEBAR -->
 <aside>
-    <div class="brand">Website Name</div>
+    <div class="brand">Online Tutor</div>
 
     <nav>
         <a href="/dashboard" class="nav-item active">
-            <i class="fa-solid fa-house"></i><span>Dashboard</span>
+            <i class="fa-solid fa-house"></i> Dashboard
         </a>
+
         <a href="/study-plan" class="nav-item">
-            <i class="fa-solid fa-book-open"></i><span>Study Plan</span>
+            <i class="fa-solid fa-book-open"></i> Study Plan
         </a>
+
         <a href="/resources" class="nav-item">
-            <i class="fa-solid fa-play"></i><span>Resources</span>
+            <i class="fa-solid fa-play"></i> Resources
         </a>
+
         <a href="/chat/student" class="nav-item">
-            <i class="fa-solid fa-chart-pie"></i><span>Contact a Tutor</span>
+            <i class="fa-solid fa-comments"></i> Contact a Tutor
         </a>
+
         <a href="/articles/translations" class="nav-item">
-            <i class="fa-solid fa-chart-pie"></i><span>Translations</span>
+            <i class="fa-solid fa-globe"></i> Translations
         </a>
     </nav>
 
