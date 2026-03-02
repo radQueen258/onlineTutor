@@ -171,32 +171,30 @@
             Excellent work! You passed the exam and are progressing well.
         <#else>
             You did not reach the required score.
-            Review the topics below and try again.
+            Review the topics in your dashboard and try again.
+        </#if>
+        <br>
+
+        <#if improvement??>
+            <#if improvement gt 0>
+                <p style="color:green;">
+                     You improved by +${improvement?string["0.##"]}% points!
+                </p>
+            <#elseif improvement lt 0>
+                <p style="color:red;">
+                    Your score decreased by ${improvement?string["0.##"]}% points.
+                </p>
+            <#else>
+                <p>
+                    ➖ Your score stayed the same.
+                </p>
+            </#if>
         </#if>
     </div>
-
-
-    <#if weakTopics?? && weakTopics?size gt 0>
-        <div class="weak-topics">
-            <h3>Topics to Review:</h3>
-            <ul>
-                <#list weakTopics as topic>
-                    <li>
-                        <strong>${topic.topic}</strong>: ${topic.explanation}
-                    </li>
-                </#list>
-            </ul>
-        </div>
-    </#if>
 
     <a href="/dashboard" class="btn-dashboard">
         Go to Dashboard
     </a>
-
-    <#-- Retake Button -->
-    <form action="/exam/${examId}/retake" method="post" style="margin-top: 20px;">
-        <button type="submit" class="continue-btn">Retake Exam</button>
-    </form>
 
 
 </main>

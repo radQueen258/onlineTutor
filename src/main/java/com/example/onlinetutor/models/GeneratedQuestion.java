@@ -23,7 +23,7 @@ public class GeneratedQuestion {
     @Column(columnDefinition = "TEXT")
     private String questionText;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "generated_question_options",
             joinColumns = @JoinColumn(name = "generated_question_id")

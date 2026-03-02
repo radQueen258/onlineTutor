@@ -187,10 +187,11 @@
 </header>
 
 <form action="/exam/submit" method="post">
-<#--    <input type="hidden" name="status" value="COMPLETED">-->
+
     <input type="hidden" name="examId" value="${exam.examId?c}">
     <input type="hidden" name="userId" value="${userId?c}">
     <input type="hidden" name="subject" value="${subject}">
+    <input type="hidden" name="retake" value="${isRetake?c}">
 
 
     <main class="container">

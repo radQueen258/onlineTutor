@@ -152,7 +152,8 @@ public class DashboardController {
                         "id", e.getId(),
                         "subject", e.getSubject(),
                         "dateTaken", e.getDateTaken().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
-                        "score", e.getExamScore()
+                        "score", e.getExamScore(),
+                        "status", e.getStatus()
                 ))
                 .collect(Collectors.toList()));
 

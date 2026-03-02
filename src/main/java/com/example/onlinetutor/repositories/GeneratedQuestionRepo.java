@@ -11,4 +11,6 @@ public interface GeneratedQuestionRepo extends JpaRepository<GeneratedQuestion, 
     List<GeneratedQuestion> findByStudentExam_Id(Long studentExamId);
 
     void deleteByStudentExam(StudentExam oldExam);
+
+    void deleteByStudentExamId(Long examId);
 }

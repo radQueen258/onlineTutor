@@ -434,6 +434,9 @@
                 <#list exams as exam>
                     <div class="exam-card">
                         <h3>${exam.subject} — ${exam.dateTaken}</h3>
+<#--                        <p style="font-size:14px;color:#777;">-->
+<#--                            Attempt ${exam.attemptCount}-->
+<#--                        </p>-->
 
                         <p>
                             Score:
@@ -447,9 +450,16 @@
                             </#if>
                                     font-weight: 700;
                                     ">
-        ${(exam.score)!0?string["0.##"]}%
-    </span>
+                                    ${(exam.score)!0?string["0.##"]}%
+                            </span>
                         </p>
+
+                        <#if exam.previousScore?? && exam.score?? && exam.score gt exam.previousScore>
+                            <#assign improvement = exam.score - exam.previousScore>
+                            <p style="color:#2e7d32;font-weight:700;">
+                                Improved +${improvement?string["0.##"]}%
+                            </p>
+                        </#if>
 
                         <#assign weakTopics = examWeakTopics[exam.id?string]>
                         <#if weakTopics?? && weakTopics?size gt 0>
@@ -464,6 +474,16 @@
                                 </div>
                             </div>
                         </#if>
+
+                        <#if exam.status == "COMPLETED" && exam.score?? && exam.score lt 70>
+                            <a href="/exam/retake/${exam.id?c}">
+                                <button type="button"
+                                        style="background:#000;color:#fff;padding:6px 15px;border:none;cursor:pointer;">
+                                    Retake Exam
+                                </button>
+                            </a>
+                        </#if>
+
                     </div>
 
                     <br>

@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StudentAnswerRepo extends JpaRepository<StudentAnswer, Long> {
     void deleteByStudentExam(StudentExam oldExam);
+
+    void deleteByStudentExam_Id(Long id);
 }

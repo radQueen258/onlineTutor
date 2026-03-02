@@ -44,5 +44,11 @@ public class StudentExam {
 
     @Enumerated(EnumType.STRING)
     private ExamStatus status;
+
+    @Column(name = "previous_score")
+    private Double previousScore;
+
+    @Column(name = "attempt_count")
+    private Integer attemptCount = 1;
 }
 

@@ -12,9 +12,14 @@ import lombok.Setter;
 public class GradeResponse {
     private Long examId;
     private double score;
+    private double improvement;
 
     public GradeResponse(double score) {
         this.score = score;
     }
 
+    public GradeResponse(Long id, double score) {
+        this.examId = id;
+        this.score = score;
+    }
 }

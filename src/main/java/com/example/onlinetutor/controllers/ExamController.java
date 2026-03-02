@@ -5,7 +5,10 @@ import com.example.onlinetutor.dto.GradeRequest;
 import com.example.onlinetutor.dto.GradeResponse;
 import com.example.onlinetutor.enums.ExamStatus;
 import com.example.onlinetutor.enums.Subject;
+import com.example.onlinetutor.models.ExamQuestion;
+import com.example.onlinetutor.models.GeneratedQuestion;
 import com.example.onlinetutor.models.StudentExam;
+import com.example.onlinetutor.repositories.ExamQuestionRepo;
 import com.example.onlinetutor.repositories.GeneratedQuestionRepo;
 import com.example.onlinetutor.repositories.StudentAnswerRepo;
 import com.example.onlinetutor.repositories.StudentExamRepo;
@@ -19,10 +22,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Controller
 public class ExamController {
@@ -35,6 +36,9 @@ public class ExamController {
 
     @Autowired
     private GeneratedQuestionRepo generatedQuestionRepo;
+
+    @Autowired
+    private ExamQuestionRepo examQuestionRepo;
 
     @Autowired
     private StudentAnswerRepo studentAnswerRepo;
@@ -51,6 +55,7 @@ public class ExamController {
         model.addAttribute("exam", exam);
         model.addAttribute("userId", userId);
         model.addAttribute("subject", subject);
+        model.addAttribute("isRetake", false);
 
         return "user-and-student/exam-page";
 
@@ -76,6 +81,8 @@ public class ExamController {
     @PostMapping("/exam/submit")
     public String submitExam(HttpServletRequest request, Model model) {
 
+        boolean isRetake = Boolean.parseBoolean(request.getParameter("retake"));
+
         Long examId = Long.parseLong(request.getParameter("examId"));
         Long userId = Long.parseLong(request.getParameter("userId"));
         Subject subject = Subject.valueOf(request.getParameter("subject"));
@@ -90,12 +97,14 @@ public class ExamController {
             }
         });
 
-        GradeResponse response = aiExamService.gradeExam(
-                examId,
-                userId,
-                subject,
-                answers
-        );
+        GradeResponse response;
+
+
+        if (isRetake) {
+            response = aiExamService.gradeRetakeExam(examId, answers);
+        } else {
+            response = aiExamService.gradeExam(examId, userId, subject, answers);
+        }
 
         StudentExam exam = studentExamRepo.findById(examId).orElseThrow();
         List<Map<String, String>> weakTopics = new ArrayList<>();
@@ -113,27 +122,105 @@ public class ExamController {
         model.addAttribute("score", response.getScore());
         model.addAttribute("examId", response.getExamId());
         model.addAttribute("weakTopics", weakTopics);
+        model.addAttribute("improvement", response.getImprovement());
 
 
         return "user-and-student/exam-result";
     }
 
-    @PostMapping("/exam/{examId}/retake")
-    public String retakeExam(@PathVariable Long examId) {
-        StudentExam oldExam = studentExamRepo.findById(examId).orElseThrow();
+    @GetMapping("/exam/retake/{examId}")
+    @Transactional
+    public String retakeGetExam(@PathVariable Long examId, Model model) {
 
-        // Delete generated questions & student answers
-        generatedQuestionRepo.deleteByStudentExam(oldExam);
-        studentAnswerRepo.deleteByStudentExam(oldExam);
+        StudentExam exam = studentExamRepo.findById(examId)
+                .orElseThrow(() -> new RuntimeException("Exam not found"));
 
-        // Keep StudentExam row (score history)
-        oldExam.setStatus(ExamStatus.IN_PROGRESS);
-        oldExam.setExamScore(null);
-        oldExam.setSuggestionsJson(null);
-        studentExamRepo.save(oldExam);
+        // Clear previous answers
+        studentAnswerRepo.deleteByStudentExam_Id(examId);
 
-        return "redirect:/exam/start?subject=" + oldExam.getSubject();
+        // Reset exam state
+        exam.setPreviousScore(exam.getExamScore());
+        exam.setExamScore(null);
+        exam.setStatus(ExamStatus.IN_PROGRESS);
+        exam.setDateTaken(LocalDateTime.now());
+
+        Integer attempts = exam.getAttemptCount() == null ? 1 : exam.getAttemptCount() + 1;
+        exam.setAttemptCount(attempts);
+
+        studentExamRepo.save(exam);
+
+        // Fetch already-generated questions
+        List<GeneratedQuestion> questions =
+                generatedQuestionRepo.findByStudentExam_Id(examId);
+
+        GeneratedExamResponse response = new GeneratedExamResponse();
+        response.setExamId(exam.getId());
+        response.setQuestions(questions);
+
+        model.addAttribute("exam", response);
+        model.addAttribute("userId", exam.getUser().getId());
+        model.addAttribute("subject", exam.getSubject());
+        model.addAttribute("isRetake", true);
+
+        return "user-and-student/exam-page";
     }
+
+//    @PostMapping("/exam/retake")
+//    @Transactional
+//    public String retakeExam(@RequestParam Long examId, Model model) {
+//
+//        StudentExam exam = studentExamRepo.findById(examId)
+//                .orElseThrow(() -> new RuntimeException("Exam not found"));
+//
+//        // Delete old generated questions
+//        studentAnswerRepo.deleteByStudentExam_Id(examId);
+//        generatedQuestionRepo.deleteByStudentExamId(examId);
+//
+//        // Fetch base questions again
+//        List<ExamQuestion> baseQuestions =
+//                examQuestionRepo.findBySubjectAndGrade(
+//                        exam.getSubject(),
+//                        exam.getUser().getExamLevel()
+//                );
+//
+//        Collections.shuffle(baseQuestions);
+//
+//        List<GeneratedQuestion> newQuestions = baseQuestions.stream()
+//                .limit(7)
+//                .map(q -> GeneratedQuestion.builder()
+//                        .studentExam(exam)
+//                        .questionText(q.getExamQuestionText())
+//                        .options(new ArrayList<>(q.getExamOptions()))
+//                        .correctOptionIndex(q.getExamCorrectAnswer())
+//                        .build())
+//                .toList();
+//
+//        generatedQuestionRepo.saveAll(newQuestions);
+//
+//
+//        exam.setPreviousScore(exam.getExamScore());
+//        exam.setExamScore(null);
+//
+//        Integer attempts = exam.getAttemptCount() == null ? 1 : exam.getAttemptCount() + 1;
+//        exam.setAttemptCount(attempts);
+//
+//        // Reset exam state
+//        exam.setStatus(ExamStatus.IN_PROGRESS);
+//        exam.setDateTaken(LocalDateTime.now());
+//
+//        studentExamRepo.save(exam);
+//
+//        GeneratedExamResponse response = new GeneratedExamResponse();
+//        response.setExamId(exam.getId());
+//        response.setQuestions(newQuestions);
+//
+//        model.addAttribute("exam", response);
+//        model.addAttribute("userId", exam.getUser().getId());
+//        model.addAttribute("subject", exam.getSubject());
+//        model.addAttribute("isRetake", true);
+//
+//        return "user-and-student/exam-page";
+//    }
 
     @PostMapping("/exam/abandon")
     @Transactional

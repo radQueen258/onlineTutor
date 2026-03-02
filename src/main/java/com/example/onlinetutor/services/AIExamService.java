@@ -11,4 +11,9 @@ public interface AIExamService {
     GeneratedExamResponse generateExam(Long userId, Subject subject) throws Exception;
 
     GradeResponse gradeExam(Long examId,Long userId, Subject subject, Map<Long, Integer> answers);
+
+    GradeResponse gradeRetakeExam(
+            Long examId,
+            Map<Long, Integer> answers
+    );
 }

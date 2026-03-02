@@ -378,6 +378,96 @@ Base questions:
         return new GradeResponse(exam.getId(), score);
     }
 
+    @Override
+    @Transactional
+    public GradeResponse gradeRetakeExam(Long examId, Map<Long, Integer> answers) {
+
+        StudentExam exam = studentExamRepo.findById(examId)
+                .orElseThrow(() -> new RuntimeException("Exam not found"));
+
+        studentAnswerRepo.deleteByStudentExam_Id(exam.getId());
+
+        List<GeneratedQuestion> questions =
+                generatedQuestionRepo.findByStudentExam_Id(exam.getId());
+
+        int correctCount = 0;
+        List<GeneratedQuestion> wrongQuestions = new ArrayList<>();
+
+        for (GeneratedQuestion q : questions) {
+
+            Integer selected = answers.get(q.getId());
+            boolean isCorrect =
+                    selected != null && selected.equals(q.getCorrectOptionIndex());
+
+            if (isCorrect) correctCount++;
+            else wrongQuestions.add(q);
+
+            StudentAnswer answer = StudentAnswer.builder()
+                    .studentExam(exam)
+                    .generatedQuestion(q)
+                    .studentExamAnswer(selected)
+                    .correct(isCorrect)
+                    .build();
+
+            studentAnswerRepo.save(answer);
+        }
+
+        double score = (correctCount * 100.0) / questions.size();
+
+        Double previousScore = exam.getPreviousScore();
+        Double improvement = null;
+
+        if (previousScore != null) {
+            improvement = score - previousScore;
+        }
+
+        exam.setExamScore(score);
+        exam.setStatus(ExamStatus.COMPLETED);
+
+        // Delete old recommendations
+        studentExamRecomRepo.deleteByStudentExam_Id(exam.getId());
+
+        // Regenerate weak topics if needed
+        if (!wrongQuestions.isEmpty()) {
+            try {
+                String weakTopicsJson =
+                        generateWeakTopicsJson(exam.getSubject(), wrongQuestions);
+
+                JSONArray arr = new JSONArray(weakTopicsJson);
+
+                List<CurriculumResource> allResources =
+                        curriculumResourceRepo.findBySubject(exam.getSubject());
+
+                Set<CurriculumResource> matchedResources = new HashSet<>();
+
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject obj = arr.getJSONObject(i);
+                    String topicName = obj.getString("topic");
+
+                    for (CurriculumResource resource : allResources) {
+                        if (resource.getTopicName().equalsIgnoreCase(topicName)) {
+                            matchedResources.add(resource);
+                        }
+                    }
+                }
+
+                StudentExamRecom recom = new StudentExamRecom();
+                recom.setStudentExam(exam);
+                recom.setUser(exam.getUser());
+                recom.setSubject(exam.getSubject());
+                recom.setRecommendedResources(new ArrayList<>(matchedResources));
+
+                studentExamRecomRepo.save(recom);
+
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to regenerate recommendations", e);
+            }
+        }
+
+        studentExamRepo.save(exam);
+
+        return new GradeResponse(exam.getId(), score, improvement);
+    }
 
 
 }
