@@ -251,10 +251,10 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
             display: none;
             padding: 15px;
-            z-index: 10;
+            z-index: 1000;
         }
 
-        .exam-dropdown:hover .exam-dropdown-content {
+        .exam-dropdown-content.show {
             display: block;
         }
 
@@ -491,45 +491,30 @@
             <#else>
                 <p>You haven’t taken any exams yet.</p>
             </#if>
-
-<#--        </div>-->
-
-<#--            <div class="card resources-card">-->
-<#--                <h2>Recommended Articles</h2>-->
-
-<#--                <#assign MAX_TITLE_LENGTH = 50>-->
-
-<#--                <#if recommendations?? && recommendations?size gt 0>-->
-<#--                    <ul class="resource-list">-->
-<#--                        <#list recommendations as r>-->
-
-<#--                            <#assign fullTitle = r.title>-->
-<#--                            <#if fullTitle?length gt MAX_TITLE_LENGTH>-->
-<#--                                <#assign shortTitle = fullTitle?substring(0, MAX_TITLE_LENGTH) + "...">-->
-<#--                            <#else>-->
-<#--                                <#assign shortTitle = fullTitle>-->
-<#--                            </#if>-->
-
-<#--                            <li class="resource-item">-->
-<#--                                <i class="fa-regular fa-circle-play"></i>-->
-<#--                                <a href="/resources/${r.resourceId?c}/article/${r.articleId?c}"-->
-<#--                                   title="${fullTitle}">-->
-<#--                                    ${shortTitle} – ${r.subject}-->
-<#--                                </a>-->
-<#--                            </li>-->
-
-<#--                        </#list>-->
-<#--                    </ul>-->
-<#--                <#else>-->
-<#--                    <p>No recommended articles</p>-->
-<#--                </#if>-->
-<#--            </div>-->
         </#if>
 
     </div>
 </main>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const dropdownBtn = document.querySelector(".exam-main-btn");
+        const dropdownContent = document.querySelector(".exam-dropdown-content");
+
+        dropdownBtn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            dropdownContent.classList.toggle("show");
+        });
+
+        document.addEventListener("click", function (e) {
+            if (!dropdownContent.contains(e.target)) {
+                dropdownContent.classList.remove("show");
+            }
+        });
+
+    });
+
     const subjects = [
         <#list exams as exam>
         "${exam.subject}"<#if exam_has_next>,</#if>

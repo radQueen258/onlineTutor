@@ -179,7 +179,7 @@
 
         <#if article.imageUrl?? && article.imageUrl?has_content>
             <div class="article-image">
-                <img src="${article.imageUrl}" alt="Article Illustration">
+                <img src="https://picsum.photos/400/600" alt="Article Illustration">
             </div>
         </#if>
     </div>
