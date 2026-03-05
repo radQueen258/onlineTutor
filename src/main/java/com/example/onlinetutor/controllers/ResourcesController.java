@@ -31,6 +31,9 @@ public class ResourcesController {
     @Autowired
     private ArticleRepo articleRepo;
 
+    @Autowired
+    private VideoRepo videoRepo;
+
 
     @GetMapping("/resources")
     public String showResources(
@@ -66,8 +69,17 @@ public class ResourcesController {
     public String openVideo(@PathVariable Long id,
                             @PathVariable Long resourceId,
                             Model model) {
-        Resource resource = resourceRepo.findById(resourceId).orElseThrow(null);
-        Video video = resource.getVideo();
+
+        Resource resource = resourceRepo.findById(resourceId)
+                .orElseThrow(() -> new RuntimeException("Resource not found"));
+
+        Video video = videoRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Video not found"));
+
+        // Optional: check that the video belongs to this resource
+//        if (!video.getResource().getId().equals(resourceId)) {
+//            throw new RuntimeException("Video does not belong to this resource");
+//        }
 
         model.addAttribute("video", video);
         model.addAttribute("resourceId", resourceId);
