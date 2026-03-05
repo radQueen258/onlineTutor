@@ -189,10 +189,10 @@
                         ${question.questionText}
                     </div>
 
-                    <div class="illustration">
-                        <img src="https://placehold.co/300x200/ffffff/000000?text=Illustration"
-                             alt="Illustration">
-                    </div>
+<#--                    <div class="illustration">-->
+<#--                        <img src="https://placehold.co/300x200/ffffff/000000?text=Illustration"-->
+<#--                             alt="Illustration">-->
+<#--                    </div>-->
                 </div>
 
                 <div class="options-container">

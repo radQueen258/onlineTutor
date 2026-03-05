@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get In Touch - AppName</title>
+    <title>Get In Touch - ONLINE TUTOR</title>
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
@@ -352,17 +352,17 @@
 </main>
 
 <footer>
-    <div class="footer-left">
-        <span class="brand">APPNAME---</span>
+    <p class="footer-left">
+        <span class="brand">ONLINE TUTOR</span>
         <p>Smarter prep. Better results.</p>
-        <p>© 2025 APPNAME. All rights reserved.</p>
+        <p>© 2026 ONLINE TUTOR. All rights reserved.</p>
     </div>
     <div class="footer-right">
         <div class="footer-links">
             Home | About | Features | Register
         </div>
         <p>Become a Tutor</p>
-        <p>support@appname.com</p>
+        <p>support@onlinetutor.com</p>
     </div>
 </footer>
 

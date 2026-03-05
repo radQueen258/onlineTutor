@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legacy - Educational Platform</title>
+    <title>Legacy - ONLINE TUTOR</title>
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -122,8 +122,8 @@
         .circle-teal { background-color: #80deea; width: 280px; height: 280px; margin-left: 100px; }
 
         .image-circle img {
-            width: 90%;
-            height: auto;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
 
@@ -281,10 +281,10 @@
 <main>
     <div class="left-content">
         <div class="image-circle circle-green">
-            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=600&auto=format&fit=crop" alt="Smiling female student with backpack and notebook">
+            <img src="/images/student4.png" alt="Smiling female student with backpack and notebook">
         </div>
         <div class="image-circle circle-teal">
-            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop" alt="Smiling male student in orange sweater">
+            <img src="/images/student1.jpg" alt="Smiling male student in orange sweater">
         </div>
     </div>
 
@@ -313,14 +313,14 @@
 <!-- ===== FOOTER ===== -->
 <footer>
     <div class="footer-left">
-        <div>APPNAME---</div>
+        <div>ONLINE TUTOR</div>
         <div>Smarter prep. Better results.</div>
-        <div>© 2025 APPNAME. All rights reserved.</div>
+        <div>© 2026 ONLINE TUTOR. All rights reserved.</div>
     </div>
     <div class="footer-right">
         <div>Home | About | Features | Register</div>
         <div>Become a Tutor</div>
-        <div>support@appname.com</div>
+        <div>support@onlinetutor.com</div>
     </div>
 </footer>
 

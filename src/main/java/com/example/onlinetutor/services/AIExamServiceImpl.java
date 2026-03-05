@@ -64,6 +64,7 @@ IMPORTANT:
 - The supporting text must appear inside the question field, before the question itself.
 - If no text is needed, create a normal standalone question.
 - Do NOT reference any external or missing text.
+-Do NOT reference images or diagrams, if question requires image reformulate the question to ask the same thing but without referencing anything.
 
 STRICT RULES:
 - Generate exactly 7 multiple choice questions.

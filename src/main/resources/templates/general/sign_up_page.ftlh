@@ -365,14 +365,14 @@
 <!-- ===== FOOTER ===== -->
 <footer>
     <div class="footer-left">
-        <div>APPNAME---</div>
+        <div>ONLINE TUTOR</div>
         <div>Smarter prep. Better results.</div>
-        <div>© 2025 APPNAME. All rights reserved.</div>
+        <div>© 2026 ONLINE TUTOR. All rights reserved.</div>
     </div>
     <div class="footer-right">
         <div>Home | About | Features | Register</div>
         <div>Become a Tutor</div>
-        <div>support@appname.com</div>
+        <div>support@onlinetutor.com</div>
     </div>
 </footer>
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>What We Offer - Study Platform</title>
+    <title>What We Offer - ONLINE TUTOR</title>
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
@@ -121,6 +121,7 @@
             aspect-ratio: 1 / 1.1;
             border-radius: 150px;
             object-fit: cover;
+            object-position: center top;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
@@ -235,7 +236,7 @@
     <div class="grid-layout">
         <!-- Left Column -->
         <div class="col-left">
-            <img src="https://placehold.co/400x450/e55050/ffffff?text=Woman+with+Books" alt="Woman with books on a red background" class="card-image">
+            <img src="/images/student4.png" alt="Woman with books on a red background" class="card-image">
 
             <div class="content-block">
                 <h3>Progress Tracking</h3>
@@ -255,21 +256,21 @@
                 <p>Organize your preparation with smart topic weighting and pacing that fit your goals.</p>
             </div>
 
-            <img src="https://placehold.co/400x450/2b58a1/ffffff?text=Man+with+Backpack" alt="Man with a backpack and yellow folder on a blue background" class="card-image">
+            <img src="/images/student2.png" alt="Man with a backpack and yellow folder on a blue background" class="card-image">
         </div>
 
         <!-- Right Column -->
         <div class="col-right">
-            <img src="https://placehold.co/400x450/a393c3/ffffff?text=Woman+with+Backpack" alt="Woman with a backpack on a purple background" class="card-image">
+            <img src="/images/student3.png" alt="Woman with a backpack on a purple background" class="card-image">
 
             <div class="content-block">
-                <h3>Exam Topic Trends</h3>
-                <p>See which topics appear most often in past exams so you know where to focus.</p>
+                <h3>Demo Exam</h3>
+                <p>Solve Demo Exams and let your AI Tutor check what you need to study more.</p>
             </div>
 
             <div class="content-block">
                 <h3>Explanation in your local language</h3>
-                <p>Check explanatory videos and articles in your own local language.</p>
+                <p>Check explanatory articles in your own local language.</p>
             </div>
         </div>
     </div>
@@ -278,14 +279,14 @@
 <!-- ===== FOOTER ===== -->
 <footer>
     <div class="footer-left">
-        <div>APPNAME---</div>
+        <div>ONLINE TUTOR---</div>
         <div>Smarter prep. Better results.</div>
-        <div>© 2025 APPNAME. All rights reserved.</div>
+        <div>© 2026 ONLINE TUTOR. All rights reserved.</div>
     </div>
     <div class="footer-right">
         <div>Home | About | Features | Register</div>
         <div>Become a Tutor</div>
-        <div>support@appname.com</div>
+        <div>support@onlinetutor.com</div>
     </div>
 </footer>
 

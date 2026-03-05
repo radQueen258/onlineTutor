@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Educational Platform UI</title>
+    <title>Home - ONLINE TUTOR</title>
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
@@ -270,6 +270,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center top;
         }
 
         @media (max-width: 1024px) {
@@ -350,8 +351,6 @@
         <h2>LIFESTYLE</h2>
         <p>A Good Education opens doors to limitless possibilities.<br>Be the change you want to see!</p>
         <div class="hero-buttons">
-<#--            <a href="/signIn" class="btn-tutor">Become a Tutor</a>-->
-<#--            <a href="/signIn" class="btn-study">Start Studying</a>-->
             <a href="/signIn"> <button class="hero-btn btn-tutor">Become a Tutor</button> </a>
             <a href="/signIn"> <button class="hero-btn btn-study">Start Studying</button> </a>
         </div>
@@ -359,13 +358,13 @@
 
     <div class="image-grid-container">
         <div class="pill-red">
-            <img src="https://placehold.co/240x760/e63946/white?text=Student+1" alt="A female student holding books, smiling, red background, vertical pill shape" class="pill-img">
+            <img src="/images/student1.jpg" alt="A female student holding books, smiling, red background, vertical pill shape" class="pill-img">
         </div>
         <div class="pill-yellow">
-            <img src="https://placehold.co/240x760/fcd12a/white?text=Student+2" alt="A female student in a red hoodie holding books, yellow background, vertical pill shape" class="pill-img">
+            <img src="/images/student2.png" alt="A female student in a red hoodie holding books, yellow background, vertical pill shape" class="pill-img">
         </div>
         <div class="pill-blue">
-            <img src="https://placehold.co/240x760/1d3557/white?text=Student+3" alt="A male student with a backpack holding books, blue background, vertical pill shape" class="pill-img">
+            <img src="/images/student3.png" alt="A male student with a backpack holding books, blue background, vertical pill shape" class="pill-img">
         </div>
     </div>
 </main>
@@ -373,14 +372,14 @@
 <!-- ===== FOOTER ===== -->
 <footer>
     <div class="footer-left">
-        <div>APPNAME---</div>
+        <div>ONLINE TUTOR---</div>
         <div>Smarter prep. Better results.</div>
-        <div>© 2025 APPNAME. All rights reserved.</div>
+        <div>© 2026 ONLINE TUTOR. All rights reserved.</div>
     </div>
     <div class="footer-right">
         <div>Home | About | Features | Register</div>
         <div>Become a Tutor</div>
-        <div>support@appname.com</div>
+        <div>support@onlinetutor.com</div>
     </div>
 </footer>
 

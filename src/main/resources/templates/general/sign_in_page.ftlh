@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>APPNAME - Login</title>
+    <title>Login - ONLINE TUTOR</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
 
-    <!-- ===== CSS (UNCHANGED) ===== -->
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
@@ -259,14 +259,14 @@
 <!-- ===== FOOTER ===== -->
 <footer>
     <div class="footer-left">
-        <div class="app-name">APPNAME---</div>
+        <div class="app-name">ONLINE TUTOR</div>
         <div class="tagline">Smarter prep. Better results.</div>
-        <div class="copyright">© 2025 APPNAME. All rights reserved.</div>
+        <div class="copyright">© 2026 ONLINE TUTOR. All rights reserved.</div>
     </div>
     <div class="footer-right">
         <div class="footer-nav">Home | About | Features | Register</div>
         <a href="#" class="footer-link">Become a Tutor</a>
-        <div class="footer-email">support@appname.com</div>
+        <div class="footer-email">support@onlinetutor.com</div>
     </div>
 </footer>
 
