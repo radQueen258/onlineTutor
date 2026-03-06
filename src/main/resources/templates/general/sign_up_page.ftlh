@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Registration - ONLINE TUTOR</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
@@ -30,6 +31,7 @@
             z-index: -1;
             opacity: 0.6;
         }
+
         .circle-purple { width: 150px; height: 150px; background-color: #a29bfe; top: 10%; left: 5%; }
         .circle-red { width: 120px; height: 120px; background-color: #ff4d4d; top: 20%; left: 40%; }
         .circle-green { width: 60px; height: 60px; background-color: #2ecc71; top: 45%; left: 18%; }
@@ -50,11 +52,16 @@
             padding: 8px 30px;
             border-radius: 50px;
             gap: 40px;
+            max-width: 95%;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .nav-links {
             display: flex;
             gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .nav-links a {
@@ -91,21 +98,6 @@
             font-size: 16px;
         }
 
-        .globe-icon-container {
-            position: absolute;
-            right: 50px;
-            width: 45px;
-            height: 45px;
-            border: 2px solid #f08c2d;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #000;
-            font-size: 18px;
-            cursor: pointer;
-        }
-
         main {
             flex: 1;
             display: flex;
@@ -120,7 +112,7 @@
             font-style: italic;
             font-size: 42px;
             font-weight: 600;
-            white-space: nowrap;
+            max-width: 400px;
         }
 
         .registration-form {
@@ -228,6 +220,80 @@
         .footer-right {
             text-align: right;
         }
+
+
+        /* Tablet */
+        @media (max-width:1024px){
+
+            main{
+                flex-direction:column;
+                gap:60px;
+                text-align:center;
+            }
+
+            .hero-text{
+                font-size:36px;
+                max-width:500px;
+            }
+
+        }
+
+
+        /* Mobile */
+        @media (max-width:768px){
+
+            main{
+                padding:40px 20px;
+                gap:40px;
+            }
+
+            .form-row{
+                flex-direction:column;
+                gap:15px;
+            }
+
+            .radio-group-container{
+                flex-direction:column;
+                align-items:flex-start;
+                gap:10px;
+            }
+
+            .radio-options{
+                gap:20px;
+                flex-wrap:wrap;
+            }
+
+            .btn-register-form{
+                width:100%;
+            }
+
+            footer{
+                flex-direction:column;
+                align-items:center;
+                text-align:center;
+                gap:20px;
+            }
+
+            .footer-right{
+                text-align:center;
+            }
+
+        }
+
+
+        /* Small phones */
+        @media (max-width:480px){
+
+            .hero-text{
+                font-size:28px;
+            }
+
+            .nav-bar{
+                gap:15px;
+                padding:10px 20px;
+            }
+
+        }
     </style>
 
     <script>
@@ -270,9 +336,6 @@
         </div>
     </nav>
 
-    <div class="globe-icon-container">
-        <i class="fa-solid fa-globe"></i>
-    </div>
 </header>
 
 <main>

@@ -18,6 +18,33 @@
             margin: 20px auto;
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .container{
+            max-width:90%;
+        }
+
+        /* Mobile */
+        @media (max-width:480px){
+
+            body{
+                padding:30px 15px;
+            }
+
+            .container{
+                padding:25px;
+            }
+
+            h1{
+                font-size:22px;
+            }
+
+            p{
+                font-size:14px;
+            }
+
+        }
+
+
     </style>
     <script>
         const userId = ${userId};

@@ -156,6 +156,10 @@
             transform: scale(0.98);
         }
 
+        .nav-bar{
+            max-width:95%;
+        }
+
         footer {
             padding: 40px 10%;
             display: flex;
@@ -204,6 +208,43 @@
                 gap: 15px;
                 border-radius: 20px;
             }
+        }
+
+        /* Mobile */
+        @media (max-width:768px){
+
+            .hero-text{
+                font-size:32px;
+                max-width:100%;
+            }
+
+            .login-form-container{
+                width:100%;
+                max-width:400px;
+            }
+
+            .input-group input{
+                font-size:16px;
+            }
+
+        }
+
+        /* Small phones */
+        @media (max-width:480px){
+
+            main{
+                padding:30px 20px;
+            }
+
+            .hero-text{
+                font-size:26px;
+            }
+
+            .btn-login-main{
+                width:100%;
+                padding:12px;
+            }
+
         }
     </style>
 </head>

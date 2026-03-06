@@ -305,6 +305,120 @@
         .footer-right {
             text-align: right;
         }
+
+        /* Tablet */
+        @media (max-width:1024px){
+
+            .nav-bar{
+                flex-wrap:wrap;
+                justify-content:center;
+                gap:20px;
+                border-radius:25px;
+            }
+
+            .nav-links{
+                flex-wrap:wrap;
+                justify-content:center;
+            }
+
+            .nav-buttons{
+                width:100%;
+                justify-content:center;
+            }
+
+            main{
+                flex-direction:column;
+                align-items:center;
+                gap:60px;
+                text-align:center;
+                padding:0 20px;
+            }
+
+            .hero-card{
+                width:100%;
+                max-width:500px;
+            }
+
+            .image-grid-container{
+                transform:scale(0.9);
+            }
+
+            .globe-icon-container{
+                right:20px;
+            }
+
+        }
+
+        /* Mobile */
+        @media (max-width:768px){
+
+            .hero-card{
+                padding:40px 30px;
+            }
+
+            .hero-card h1{
+                font-size:26px;
+            }
+
+            .hero-card h2{
+                font-size:32px;
+            }
+
+            .hero-card p{
+                font-size:16px;
+            }
+
+            .hero-buttons{
+                flex-direction:column;
+                gap:15px;
+            }
+
+            .hero-btn{
+                width:100%;
+            }
+
+            .image-grid-container{
+                transform:scale(0.75);
+                height:600px;
+            }
+
+            footer{
+                flex-direction:column;
+                align-items:center;
+                text-align:center;
+                gap:20px;
+            }
+
+            .footer-right{
+                text-align:center;
+            }
+
+        }
+
+        .nav-bar{
+            max-width:95%;
+        }
+
+        /* Small phones */
+        @media (max-width:480px){
+
+            .hero-card{
+                padding:35px 20px;
+            }
+
+            .hero-card h1{
+                font-size:22px;
+            }
+
+            .hero-card h2{
+                font-size:28px;
+            }
+
+            .image-grid-container{
+                transform:scale(0.65);
+            }
+
+        }
     </style>
 </head>
 <body>

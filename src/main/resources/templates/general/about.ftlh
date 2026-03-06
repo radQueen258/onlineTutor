@@ -243,6 +243,121 @@
         .footer-right {
             text-align: right;
         }
+
+
+        /* Tablet */
+        @media (max-width: 992px) {
+
+            .nav-bar{
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+                padding: 10px 20px;
+                border-radius: 20px;
+            }
+
+            .nav-links{
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-buttons{
+                justify-content: center;
+                width: 100%;
+            }
+
+            main{
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .left-content{
+                align-items: center;
+            }
+
+            .image-circle{
+                width: 280px;
+                height: 280px;
+            }
+
+            .circle-teal{
+                width: 220px;
+                height: 220px;
+                margin-left: 0;
+            }
+
+            .right-content{
+                padding-top: 0;
+            }
+
+            h1{
+                font-size: 28px;
+            }
+
+            .description,
+            .vision{
+                margin-top: 30px;
+                font-size: 16px;
+            }
+
+            .tagline{
+                margin-top: 30px;
+            }
+
+        }
+
+        .nav-bar{
+            max-width: 95%;
+        }
+
+        /* Mobile */
+        @media (max-width: 600px){
+
+            .nav-bar{
+                gap: 15px;
+                padding: 10px 15px;
+            }
+
+            .nav-links{
+                gap: 15px;
+            }
+
+            .nav-links a{
+                font-size: 14px;
+            }
+
+            .btn-login,
+            .btn-register-nav{
+                padding: 8px 18px;
+                font-size: 14px;
+            }
+
+            h1{
+                font-size: 24px;
+            }
+
+            .image-circle{
+                width: 220px;
+                height: 220px;
+            }
+
+            .circle-teal{
+                width: 180px;
+                height: 180px;
+            }
+
+            footer{
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .footer-right{
+                text-align: center;
+            }
+
+        }
     </style>
 </head>
 <body>
