@@ -38,20 +38,6 @@ public class ResourceServiceImpl implements ResourceService {
         return resourceDtoList(resourceRepo.findAll());
     }
 
-//    @Transactional
-//    @Override
-//    public void deleteResource(Long resourceId) {
-//        if (!resourceRepo.existsById(resourceId)) {
-//            throw new IllegalArgumentException("Resource not found");
-//        }
-//        Resource resource = resourceRepo.findById(resourceId).get();
-//
-//        for (Article article : resource.getArticles()) {
-//            articleService.safeDeleteArticle(article.getId());
-//        }
-//
-//        resourceRepo.deleteById(resourceId);
-//    }
 
     @Transactional
     @Override

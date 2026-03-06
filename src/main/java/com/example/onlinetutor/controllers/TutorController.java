@@ -17,6 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class TutorController {
@@ -231,22 +233,19 @@ public class TutorController {
 
     @GetMapping("/tutor/resources/new")
     public String createResourcePage(Model model, Principal principal) {
+
         User tutor = userRepo.findUserByEmail(principal.getName());
 
         List<CurriculumResource> availableResources =
-                curriculumResourceRepo.findBySubjectIn(tutor.getPreferredSubjects());
+                curriculumResourceRepo.findAvailableForTutor(
+                        tutor,
+                        tutor.getPreferredSubjects()
+                );
 
-        // Remove already-created ones
-        List<Resource> existingResources =
-                resourceRepo.findByTutor(tutor);
-
-        List<Long> usedIds = existingResources.stream()
-                .map(r -> r.getCurriculumResource().getId())
-                .toList();
-
-        availableResources.removeIf(cr -> usedIds.contains(cr.getId()));
+        System.out.println("Available resources: " + availableResources.size());
 
         model.addAttribute("curriculumResources", availableResources);
+
         return "/tutor/tutor-create-resource";
     }
 
