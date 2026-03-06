@@ -105,17 +105,47 @@ public class TutorController {
         List<Resource> resources = resourceRepo.findResourceById(resourceId);
         Long numArticles = articleRepo.countByResource_Id(resourceId);
 
+        Video video = videoRepo.getVideoByResource_Id(resourceId);
+
         boolean exists = false;
 
         if (numArticles > 0) {
             exists = true;
         }
 
+        String embedUrl = convertToEmbedUrl(video.getVideoUrl());
+
         List<Article> articles = articleRepo.findByTutorName_Id(tutorId);
+
         model.addAttribute("articles", articles);
+        model.addAttribute("embedUrl", embedUrl);
         model.addAttribute("resources", resources);
         model.addAttribute("exists", exists);
         return "/tutor/view-all-articles";
+    }
+
+    private String convertToEmbedUrl(String url) {
+
+        if(url == null) return null;
+
+        String videoId = null;
+
+        if(url.contains("youtu.be/")) {
+            videoId = url.substring(url.lastIndexOf("/") + 1);
+        }
+        else if(url.contains("watch?v=")) {
+            videoId = url.substring(url.indexOf("v=") + 2);
+            int amp = videoId.indexOf("&");
+            if(amp != -1) {
+                videoId = videoId.substring(0, amp);
+            }
+        }
+
+        if(videoId != null) {
+            return "https://www.youtube.com/embed/" + videoId;
+        }
+
+        return null;
     }
 
     @GetMapping("/tutor/resources/{resourceId}/article/{articleId}")

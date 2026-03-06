@@ -136,26 +136,30 @@
             max-width: 900px;
             margin: auto;
             background: white;
-            border-radius: 16px;
+            border-radius: 18px;
             display: flex;
             flex-direction: column;
             height: 80vh;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
         }
 
         .chat-header {
-            padding: 20px;
+            padding: 20px 24px;
             font-weight: 600;
+            font-size: 16px;
             border-bottom: 1px solid #eee;
+            background: #fafbfd;
         }
 
         .chat-messages {
             flex: 1;
-            padding: 20px;
+            padding: 24px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
             gap: 14px;
+            background: #f8fafc;
         }
 
         .chat-bubble {
@@ -201,31 +205,40 @@
 
         .chat-input {
             display: flex;
-            padding: 15px;
+            padding: 16px;
             border-top: 1px solid #eee;
+            background: white;
         }
 
         .chat-input input {
             flex: 1;
-            padding: 12px;
-            border-radius: 10px;
+            padding: 12px 14px;
+            border-radius: 12px;
             border: 1px solid #ddd;
             font-size: 14px;
+            outline: none;
+            transition: border 0.2s ease;
+        }
+
+        .chat-input input:focus {
+            border-color: #82613E;
         }
 
         .chat-input button {
             margin-left: 10px;
-            padding: 12px 18px;
-            border-radius: 10px;
+            padding: 12px 20px;
+            border-radius: 12px;
             border: none;
             background-color: #82613E;
             color: white;
             cursor: pointer;
             font-weight: 600;
+            transition: 0.2s;
         }
 
         .chat-input button:hover {
             background-color: #6f5032;
+            transform: translateY(-1px);
         }
 
         /* RESPONSIVE */
@@ -420,48 +433,57 @@
 </div>
 </main>
 
-<style>
-    .chat-container { max-width: 700px; margin: auto; }
-    .chat-header { font-weight: bold; padding: 10px; border-bottom: 1px solid #ccc; }
-    .chat-messages { height: 400px; overflow-y: auto; padding: 10px; }
-    .message-sent { background-color: #2563eb; color: white; text-align: right; padding: 8px 12px; border-radius: 12px; margin: 5px 0; max-width: 70%; margin-left: auto; }
-    .message-received { background-color: #e5e7eb; color: black; text-align: left; padding: 8px 12px; border-radius: 12px; margin: 5px 0; max-width: 70%; margin-right: auto; }
-    .msg-time { display: block; font-size: 0.7em; color: #9ca3af; margin-top: 2px; }
-    .chat-input { display: flex; margin-top: 10px; }
-    #messageInput { flex: 1; padding: 10px; border-radius: 6px; border: 1px solid #ccc; }
-    button { padding: 10px 15px; margin-left: 5px; border-radius: 6px; background-color: #2563eb; color: white; border: none; cursor: pointer; }
-</style>
-
 <script>
     const currentUserId = ${currentUser.id};
     const chatRoomId = ${chatRoom.id};
     let stompClient = null;
+    let lastSentMessage = null;
 
     function connect() {
         const socket = new SockJS('/chat');
         stompClient = Stomp.over(socket);
 
-        stompClient.subscribe('/topic/chat/' + chatRoomId, function(messageOutput) {
-            const msg = JSON.parse(messageOutput.body);
+        stompClient.connect({}, function() {
 
-            const messageDiv = document.createElement('div');
-            messageDiv.className = msg.mine ? 'message-sent' : 'message-received';
+            stompClient.subscribe('/topic/chat/' + chatRoomId, function(messageOutput) {
+                const msg = JSON.parse(messageOutput.body);
 
-            const contentSpan = document.createElement('span');
-            contentSpan.className = 'msg-content';
-            contentSpan.textContent = msg.content;
+                // Ignore duplicate of last sent message
+                if(msg.mine && msg.content === lastSentMessage) {
+                    lastSentMessage = null; // reset tracker
+                    return;
+                }
 
-            const timeSpan = document.createElement('span');
-            timeSpan.className = 'msg-time';
-            timeSpan.textContent = msg.time;
+                renderMessage(msg.senderName, msg.content, msg.time, msg.mine);
+            });
 
-            messageDiv.appendChild(contentSpan);
-            messageDiv.appendChild(timeSpan);
-
-            const messagesDiv = document.getElementById('messages');
-            messagesDiv.appendChild(messageDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
         });
+    }
+
+    // Function to render a message in the chat container
+    function renderMessage(senderName, content, time, mine) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'chat-bubble ' + (mine ? 'mine' : 'theirs');
+
+        const nameDiv = document.createElement('div');
+        nameDiv.className = 'sender-name';
+        nameDiv.textContent = senderName;
+
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'bubble-content';
+        contentDiv.textContent = content;
+
+        const timeDiv = document.createElement('div');
+        timeDiv.className = 'bubble-time';
+        timeDiv.textContent = time;
+
+        messageDiv.appendChild(nameDiv);
+        messageDiv.appendChild(contentDiv);
+        messageDiv.appendChild(timeDiv);
+
+        const messagesDiv = document.getElementById('messages');
+        messagesDiv.appendChild(messageDiv);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
 
     function sendMessage() {
@@ -472,31 +494,13 @@
         const now = new Date();
         const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
-        // CREATE MESSAGE LOCALLY (instant display)
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'chat-bubble mine';
+        // Render locally instantly
+        renderMessage("You", content, timeString, true);
 
-        const nameDiv = document.createElement('div');
-        nameDiv.className = 'sender-name';
-        nameDiv.textContent = "You";
+        // Track this message to avoid duplicate when server echoes it
+        lastSentMessage = content;
 
-        const contentDiv = document.createElement('div');
-        contentDiv.className = 'bubble-content';
-        contentDiv.textContent = content;
-
-        const timeDiv = document.createElement('div');
-        timeDiv.className = 'bubble-time';
-        timeDiv.textContent = timeString;
-
-        messageDiv.appendChild(nameDiv);
-        messageDiv.appendChild(contentDiv);
-        messageDiv.appendChild(timeDiv);
-
-        const messagesDiv = document.getElementById('messages');
-        messagesDiv.appendChild(messageDiv);
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
-
-        // SEND TO SERVER
+        // Send to server
         stompClient.send("/app/chat.send", {}, JSON.stringify({
             chatRoomId: chatRoomId,
             content: content
@@ -511,11 +515,16 @@
 
     connect();
 
+    // Scroll to bottom on load
+    window.onload = function() {
+        const messagesDiv = document.getElementById('messages');
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    };
+
     function toggleSidebar() {
         const sidebar = document.querySelector('aside');
         sidebar.classList.toggle('show');
     }
 </script>
-
 </body>
 </html>

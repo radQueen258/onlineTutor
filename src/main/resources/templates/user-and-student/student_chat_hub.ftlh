@@ -205,6 +205,142 @@
                 padding: 20px;
             }
         }
+
+        /* HEADER */
+
+        .page-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:30px;
+        }
+
+        .page-title{
+            font-size:26px;
+            font-weight:700;
+        }
+
+        /* CHAT CARD */
+
+        .chat-card{
+
+            background:white;
+
+            border-radius:14px;
+
+            padding:20px;
+
+            display:flex;
+
+            align-items:center;
+
+            gap:18px;
+
+            margin-bottom:15px;
+
+            box-shadow:0 6px 16px rgba(0,0,0,0.06);
+
+            transition:all 0.25s ease;
+
+        }
+
+        .chat-card:hover{
+
+            transform:translateY(-3px);
+
+            box-shadow:0 12px 28px rgba(0,0,0,0.08);
+
+        }
+
+        /* ICON */
+
+        .chat-icon{
+
+            width:45px;
+            height:45px;
+
+            border-radius:10px;
+
+            background:#0F3456;
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:center;
+
+            color:white;
+
+            font-size:18px;
+
+        }
+
+        /* INFO */
+
+        .chat-info{
+            flex:1;
+        }
+
+        .chat-subject{
+            font-weight:600;
+            font-size:16px;
+        }
+
+        .chat-meta{
+            font-size:13px;
+            color:#666;
+        }
+
+        /* OPEN BUTTON */
+
+        .chat-open{
+
+            text-decoration:none;
+
+            color:#2563eb;
+
+            font-weight:600;
+
+            display:flex;
+
+            align-items:center;
+
+            gap:6px;
+
+        }
+
+        .chat-open:hover{
+            color:#1e40af;
+        }
+
+        /* NEW CHAT BUTTON */
+
+        .new-chat-btn{
+            display:flex;
+            align-items:center;
+            gap:6px;
+        }
+
+        .empty-icon{
+            font-size:36px;
+            color:#0F3456;
+            margin-bottom:15px;
+        }
+
+        main{
+            animation:fadeIn 0.35s ease;
+        }
+
+        @keyframes fadeIn{
+            from{
+                opacity:0;
+                transform:translateY(10px);
+            }
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
     </style>
 </head>
 
@@ -251,38 +387,58 @@
 
     <div class="main-content">
 
-        <div class="page-title">Your Chats</div>
+        <div class="page-header">
+            <h1 class="page-title">Your Chats</h1>
+
+            <form id="newChatForm" onsubmit="startChat(event)">
+
+                <select id="subjectSelect">
+                    <#list subjects as subject>
+                        <option value="${subject}">${subject}</option>
+                    </#list>
+                </select>
+
+                <button type="submit" class="btn btn-primary new-chat-btn">
+                    <i class="fa-solid fa-plus"></i> New Chat
+                </button>
+
+            </form>
+        </div>
 
         <#if chatRooms?? && chatRooms?size gt 0>
 
             <#list chatRooms as room>
-                <div class="card">
-                    <strong>${room.subject}</strong><br>
-                    <a href="/chat/student/${room.subject}">
-                        Open Chat →
+                <div class="chat-card" data-subject="${room.subject}">
+
+                    <div class="chat-icon">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+
+                    <div class="chat-info">
+                        <div class="chat-subject">${room.subject}</div>
+                        <div class="chat-meta">Chat with tutor</div>
+                    </div>
+
+                    <a href="/chat/student/${room.subject}" class="chat-open">
+                        Open
+                        <i class="fa-solid fa-arrow-right"></i>
                     </a>
+
                 </div>
             </#list>
 
         <#else>
 
             <div class="empty-state">
+
+                <i class="fa-solid fa-comments empty-icon"></i>
+
                 <h3>No chats yet</h3>
-                <p>You can start a new conversation with a teacher.</p>
+
+                <p>Start a conversation with a tutor to get help.</p>
 
                 <br>
 
-                <form id="newChatForm">
-                    <select id="subjectSelect">
-                        <#list subjects as subject>
-                            <option value="${subject}">${subject}</option>
-                        </#list>
-                    </select>
-
-                    <button type="button" class="btn btn-primary" onclick="startChat()">
-                        Start New Chat
-                    </button>
-                </form>
             </div>
 
         </#if>
@@ -294,6 +450,8 @@
 
 <script>
     function startChat() {
+        event.preventDefault();
+
         const subject = document.getElementById("subjectSelect").value;
         window.location.href = "/chat/student/" + subject;
     }
@@ -303,6 +461,28 @@
 
     hamburger.addEventListener('click', () => {
         sidebar.classList.toggle('show');
+    });
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const existingSubjects = [];
+
+        document.querySelectorAll(".chat-card").forEach(card => {
+            existingSubjects.push(card.dataset.subject);
+        });
+
+        const select = document.getElementById("subjectSelect");
+
+        Array.from(select.options).forEach(option => {
+
+            if (existingSubjects.includes(option.value)) {
+                option.disabled = true;
+                option.textContent += " (already created)";
+            }
+
+        });
+
     });
 </script>
 

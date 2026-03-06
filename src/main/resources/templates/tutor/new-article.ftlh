@@ -118,7 +118,7 @@
 <main class="card">
     <h2>Create a New Article</h2>
 
-    <form action="/tutor/resources/${resourceId}/article/save" method="post">
+    <form action="/tutor/resources/${resourceId?c}/article/save" method="post">
         <label for="title">Title:</label>
         <input type="text" id="title" name="articleTitle" value="${article.articleTitle!}" placeholder="Enter the article title" required>
 
