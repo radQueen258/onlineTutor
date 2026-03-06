@@ -67,6 +67,14 @@
             background-color: #123c5e;
         }
 
+        .nav-item.active {
+            background-color: #82613E;
+            margin-right: 15px;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            gap: 8px;
+        }
+
         .sidebar-footer {
             padding: 0 40px;
         }

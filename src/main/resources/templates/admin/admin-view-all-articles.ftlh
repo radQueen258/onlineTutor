@@ -4,30 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Resources' Articles</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
 
-        body { background-color: #f0f4f9; min-height: 100vh; display: flex; }
+        body {
+            background-color: #f0f4f9;
+            min-height: 100vh;
+            display: flex;
+            overflow-x: hidden;
+            position: relative;
+        }
 
         /* Sidebar */
         aside.sidebar {
-            width: 280px; background-color: #113255; color: white;
-            display: flex; flex-direction: column; padding: 40px 0;
-            position: fixed; height: 100vh; left: 0; top: 0;
-            border-top-right-radius: 20px; border-bottom-right-radius: 20px;
-            z-index: 100; transition: all 0.3s;
+            width: 280px;
+            background-color: #113255;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 40px 0;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+            z-index: 100;
         }
-        .sidebar-brand { padding: 0 30px; font-size: 20px; font-weight: 700; margin-bottom: 60px; }
-        .nav-menu { list-style: none; flex-grow: 1; }
-        .nav-item { padding: 15px 30px; font-size: 16px; font-weight: 500; margin-bottom: 10px; border-radius: 10px; transition: background 0.3s; }
-        .nav-item a { color: white; text-decoration: none; display: block; }
-        .nav-item:hover, .nav-item.active { background-color: #82613E; }
-        .sidebar-footer { padding: 0 40px; display: flex; flex-direction: column; gap: 20px; margin-top: auto; }
-        .logout-btn { background-color: #dc3545; color: white; border: none; padding: 12px 16px; border-radius: 12px; font-weight: 600; cursor: pointer; width: 100%; transition: background 0.3s; }
-        .logout-btn:hover { background-color: #b32a3c; }
-        .profile-link { color: white; text-decoration: none; font-weight: 500; text-align: center; }
 
+        .sidebar-brand { padding: 0 30px; font-size: 18px; font-weight: 700; margin-bottom: 60px; }
+
+        .nav-menu { list-style: none; flex-grow: 1; }
+        .nav-item { padding: 15px 30px; font-size: 16px; font-weight: 500; margin-bottom: 10px; cursor: pointer; gap: 8px;}
+        .nav-item a { color: white; text-decoration: none; gap: 8px;}
+        .nav-item:hover { background-color: #8b6b45; border-radius: 10px; }
+
+        .nav-item.active {
+            background-color: #82613E;
+            margin-right: 15px;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            gap: 8px;
+        }
+
+        .sidebar-footer {
+            padding: 0 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .logout-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
         /* Main Content */
         main.content { flex-grow: 1; margin-left: 280px; padding: 40px 60px; max-width: 1200px; }
         .card { background-color: #fff; border-radius: 20px; padding: 40px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); display: flex; flex-direction: column; gap: 40px; transition: box-shadow 0.3s; }
@@ -62,12 +102,33 @@
 <body>
 
 <aside class="sidebar">
-    <div class="sidebar-brand">Admin Panel</div>
+    <div class="sidebar-brand">Online Tutor</div>
     <ul class="nav-menu">
-        <li class="nav-item active"><a href="/admin/workplace">Workplace</a></li>
-        <li class="nav-item"><a href="/admin/analytics">View Analytics</a></li>
-        <li class="nav-item"><a href="/admin/dashboard">Admin Dashboard</a></li>
+
+        <li class="nav-item">
+            <a href="/admin/dashboard">
+                <i class="fa-solid fa-house"></i>
+                Go to Dashboard
+            </a>
+        </li>
+
+
+        <li class="nav-item active">
+            <a href="/admin/workplace">
+                <i class="fa-solid fa-briefcase"></i>
+                Workplace
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="/admin/analytics">
+                <i class="fa-solid fa-chart-line"></i>
+                View Analytics
+            </a>
+        </li>
+
     </ul>
+
     <div class="sidebar-footer">
         <form action="/logout" method="post">
             <button type="submit" class="logout-btn">Logout</button>

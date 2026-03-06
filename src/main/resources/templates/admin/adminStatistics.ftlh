@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>Overall Statistics</title>
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -63,6 +64,14 @@
 
         .nav-item:hover {
             background-color: #123c5e;
+        }
+
+        .nav-item.active {
+            background-color: #82613E;
+            margin-right: 15px;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            gap: 8px;
         }
 
         .sidebar-footer {

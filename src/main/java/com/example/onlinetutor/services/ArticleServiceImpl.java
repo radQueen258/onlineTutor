@@ -1,9 +1,11 @@
 package com.example.onlinetutor.services;
 
 import com.example.onlinetutor.models.Article;
+import com.example.onlinetutor.models.StudyPlan;
 import com.example.onlinetutor.models.Video;
 import com.example.onlinetutor.repositories.ArticleRepo;
 import com.example.onlinetutor.repositories.QuizQuestionRepo;
+import com.example.onlinetutor.repositories.StudyPlanRepo;
 import com.example.onlinetutor.repositories.VideoRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private VideoRepo videoRepo;
+
+    @Autowired
+    private StudyPlanRepo studyPlanRepo;
 
 
 
@@ -41,6 +46,11 @@ public class ArticleServiceImpl implements ArticleService {
         if (article.getResource() != null) {
             article.getResource().getArticles().remove(article);
             article.setResource(null);
+        }
+
+        if (studyPlanRepo.existsByArticle_Id(articleId)) {
+            StudyPlan studyPlan = studyPlanRepo.findByArticle(article);
+            studyPlanRepo.delete(studyPlan);
         }
 
         articleRepo.delete(article);

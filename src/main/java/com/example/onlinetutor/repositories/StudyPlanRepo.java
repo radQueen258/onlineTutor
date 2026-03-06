@@ -20,7 +20,11 @@ public interface StudyPlanRepo extends JpaRepository<StudyPlan,Long> {
 
     List<StudyPlan> findByUser(User user);
 
+    StudyPlan findByArticle(Article article);
+
 //    List<StudyPlan> findByUserAndCompletedFalseOrderByIdAsc(User user);
 
     List<StudyPlan> findByUserEmailAndArchivedFalse(String email);
+
+    boolean existsByArticle_Id(Long articleId);
 }

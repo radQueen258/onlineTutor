@@ -279,8 +279,11 @@
                             </#if>
                         </td>
                         <td>
-                            <form action="/tutor/resources/${resource.id?c}/delete" method="post" style="display:inline;">
-                                <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this resource?');">
+                            <form action="/tutor/resources/${resource.id?c}/delete"
+                                  method="post" style="display:inline;">
+                                <button type="submit"
+                                        class="delete-btn"
+                                        onclick="return confirm('Are you sure you want to delete this resource?');">
                                     Delete
                                 </button>
                             </form>
@@ -301,7 +304,7 @@
 
         const rowsPerPage = 5; // change this if you want
         const table = document.getElementById("resourceTable");
-        const rows = table.querySelectorAll("tbody tr, tr:not(:first-child)");
+        const rows = table.querySelectorAll("tr:not(:first-child)");
         const pagination = document.getElementById("pagination");
 
         let currentPage = 1;

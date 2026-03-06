@@ -126,8 +126,20 @@ public class ResourcesController {
         return "user-and-student/articles-and-videos-page";
     }
 
-    @PostMapping("/tutor/resources/{resourceId}/delete")
-    public String deleteResource(@PathVariable Long resourceId,
+//    @PostMapping("/tutor/resources/{resourceId}/delete")
+//    public String deleteResource(@PathVariable Long resourceId,
+//                                 RedirectAttributes  redirectAttributes) {
+//        try {
+//            resourceService.deleteResource(resourceId);
+//            redirectAttributes.addFlashAttribute("success", "Resource Deleted Successfully");
+//        } catch (Exception e) {
+//            redirectAttributes.addFlashAttribute("error", "Failed to delete resource");
+//        }
+//        return "redirect:/tutor/workplace";
+//    }
+
+    @PostMapping("/admin/resources/{resourceId}/delete")
+    public String adminDeleteResource(@PathVariable Long resourceId,
                                  RedirectAttributes  redirectAttributes) {
         try {
             resourceService.deleteResource(resourceId);
@@ -135,7 +147,7 @@ public class ResourcesController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Failed to delete resource");
         }
-        return "redirect:/tutor/workplace";
+        return "redirect:/admin/workplace";
     }
 
 }

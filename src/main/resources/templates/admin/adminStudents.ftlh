@@ -58,6 +58,14 @@
             gap: 8px;
         }
 
+        .nav-item.active {
+            background-color: #82613E;
+            margin-right: 15px;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            gap: 8px;
+        }
+
         .nav-item i {
             width: 26px;
             margin-right: 12px;

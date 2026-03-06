@@ -18,14 +18,14 @@ public class VideoServiceImpl implements VideoService {
     @Transactional
     @Override
     public void safeDeleteVideoById(Long video_id) {
-//        Video video = videoRepo.getVideoById(video_id);
-//        if (video.getArticle() != null) {
-//            video.getArticle().setVideo(null);
-//        }
+        Video video = videoRepo.getVideoById(video_id);
+        if (video.getArticle() != null) {
+            video.getArticle().setVideo(null);
+        }
 //        videoRepo.delete(video);
 
-        Video video = videoRepo.findById(video_id)
-                .orElseThrow(() -> new IllegalArgumentException("Video not found"));
+//        Video video = videoRepo.findById(video_id)
+//                .orElseThrow(() -> new IllegalArgumentException("Video not found"));
         videoRepo.delete(video);
     }
 

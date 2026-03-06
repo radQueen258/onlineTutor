@@ -58,6 +58,14 @@
             gap: 8px;
         }
 
+        .nav-item.active {
+            background-color: #82613E;
+            margin-right: 15px;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            gap: 8px;
+        }
+
         .nav-item i {
             width: 26px;
             margin-right: 12px;
@@ -242,10 +250,14 @@
                     <td>${article.articleTitle}</td>
                     <td>${article.tutorName.firstName}</td>
                     <td>
-                        <a class="btn-upload"
-                           href="/admin/resources/${article.resource.id?c}/article/${article.id?c}/upload-video">
-                            Upload Video
-                        </a>
+                        <#if article.video??>
+                        <p>Has Video</p>
+                            <#else>
+                                <a class="btn-upload"
+                                   href="/admin/resources/${article.resource.id?c}/article/${article.id?c}/upload-video">
+                                    Upload Video
+                                </a>
+                        </#if>
 
                         <form action="/admin/articles/delete/${article.id?c}"
                               method="post"

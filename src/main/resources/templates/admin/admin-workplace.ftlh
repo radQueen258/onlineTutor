@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutor Workplace - Name of the WebApp</title>
+    <title>Admin Workplace - Online Tutor</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -42,6 +42,14 @@
         .nav-item { padding: 15px 30px; font-size: 16px; font-weight: 500; margin-bottom: 10px; cursor: pointer; gap: 8px;}
         .nav-item a { color: white; text-decoration: none; gap: 8px;}
         .nav-item:hover { background-color: #8b6b45; border-radius: 10px; }
+
+        .nav-item.active {
+            background-color: #82613E;
+            margin-right: 15px;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            gap: 8px;
+        }
 
         .sidebar-footer {
             padding: 0 40px;
@@ -183,7 +191,7 @@
     <div class="sidebar-brand">Online Tutor</div>
     <ul class="nav-menu">
 
-        <li class="nav-item active">
+        <li class="nav-item">
             <a href="/admin/dashboard">
                 <i class="fa-solid fa-house"></i>
                 Go to Dashboard

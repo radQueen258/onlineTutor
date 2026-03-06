@@ -161,14 +161,14 @@
 <aside class="sidebar">
     <div class="sidebar-brand">Website Name</div>
     <ul class="nav-menu">
-        <li class="nav-item active">
+        <li class="nav-item">
             <a href="/tutor/workplace">
                 <i class="fa-solid fa-briefcase"></i>
                 Workplace
             </a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item active">
             <a href="/tutor/analytics">
                 <i class="fa-solid fa-chart-line"></i>
                 View Analytics

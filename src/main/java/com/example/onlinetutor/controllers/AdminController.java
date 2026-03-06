@@ -190,9 +190,7 @@ public class AdminController {
 
     @PostMapping("/admin/videos/delete/{id}")
     public String deleteVideo(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
-//        System.out.println("🧹 Deleting video ID = " + id);
         videoService.safeDeleteVideoById(id);
-//        videoRepo.deleteVideoById(id);
         redirectAttributes.addFlashAttribute("successMessage", "Video deleted successfully!");
         return "redirect:/admin/videos";
     }
@@ -395,9 +393,13 @@ public class AdminController {
     public String adminViewVideos(@PathVariable Long videoId,
                                   Model model, Principal principal) {
         Video video = videoRepo.getVideoById(videoId);
+
+        String embedUrl = convertToEmbedUrl(video.getVideoUrl());
+
         Long resourceId = video.getResource().getId();
         model.addAttribute("video", video);
         model.addAttribute("resourceId", resourceId);
+        model.addAttribute("embedUrl", embedUrl);
         return  "/admin/admin-view-video";
     }
 

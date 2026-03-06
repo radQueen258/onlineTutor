@@ -273,6 +273,18 @@ public class TutorController {
         return "redirect:/tutor/workplace";
     }
 
+    @PostMapping("/tutor/resources/{resourceId}/delete")
+    public String deleteResource(@PathVariable Long resourceId,
+                                 RedirectAttributes  redirectAttributes) {
+        try {
+            resourceService.deleteResource(resourceId);
+            redirectAttributes.addFlashAttribute("success", "Resource Deleted Successfully");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Failed to delete resource");
+        }
+        return "redirect:/tutor/workplace";
+    }
+
 
 
 //    -----------------------EDITING ARTICLES AND VIDEOS -----------------------
