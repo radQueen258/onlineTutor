@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
         * {
             margin: 0;
             padding: 0;
@@ -16,13 +18,12 @@
         }
 
         body {
+            background-color: #f0f4f8;
+            min-height: 100vh;
             display: flex;
-            height: 100vh;
-            background-color: #F4F7FA;
-            overflow: hidden;
         }
 
-        /* Sidebar */
+        /* SIDEBAR */
         aside {
             width: 280px;
             background-color: #0F3456;
@@ -55,6 +56,7 @@
             font-size: 18px;
             font-weight: 500;
             margin-bottom: 10px;
+            transition: 0.2s ease;
             gap: 8px;
         }
 
@@ -62,6 +64,7 @@
             width: 30px;
             font-size: 22px;
             margin-right: 15px;
+
         }
 
         .nav-item.active {
@@ -81,7 +84,7 @@
 
         .logout-btn {
             background-color: #dc3545;
-            color: #fff;
+            color: white;
             border: none;
             padding: 10px 14px;
             border-radius: 10px;

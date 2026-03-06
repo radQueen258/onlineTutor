@@ -6,13 +6,19 @@
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
 
         body {
+            background-color: #f0f4f8;
+            min-height: 100vh;
             display: flex;
-            height: 100vh;
-            background-color: #F4F7FA;
-            overflow: hidden;
         }
 
         /* Sidebar */
@@ -26,15 +32,70 @@
             border-top-right-radius: 20px;
             border-bottom-right-radius: 20px;
         }
-        .brand { padding:0 40px; font-size:18px; font-weight:600; font-style:italic; margin-bottom:60px; }
-        nav { flex-grow:1; }
-        .nav-item { display:flex; align-items:center; padding:15px 40px; color:white; text-decoration:none; font-size:18px; font-weight:500; margin-bottom:10px; transition:0.2s; }
-        .nav-item i { width:30px; font-size:22px; margin-right:15px; }
-        .nav-item.active { background-color:#82613E; margin-right:15px; border-radius:10px; }
-        .sidebar-footer { padding:0 40px; display:flex; flex-direction:column; gap:20px; }
-        .logout-btn { background-color:#dc3545; color:white; border:none; padding:10px 14px; border-radius:10px; font-weight:600; cursor:pointer; width:100%; }
-        .profile-link { color:white; text-decoration:none; font-weight:500; }
 
+        .brand {
+            padding: 0 40px;
+            font-size: 18px;
+            font-weight: 600;
+            font-style: italic;
+            margin-bottom: 60px;
+        }
+
+        nav {
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 40px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            transition: 0.2s ease;
+            gap: 8px;
+        }
+
+        .nav-item i {
+            width: 30px;
+            font-size: 22px;
+            margin-right: 15px;
+
+        }
+
+        .nav-item.active {
+            background-color: #82613E;
+            margin-right: 15px;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            gap: 8px;
+        }
+
+        .sidebar-footer {
+            padding: 0 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .logout-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .profile-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
         /* Main */
         main { flex-grow:1; padding:40px 60px; overflow-y:auto; }
 
@@ -105,9 +166,118 @@
         }
 
         /* Video Info */
-        .content-info { max-width:900px; }
+
         .tutor-name { font-size:20px; font-weight:700; margin-bottom:15px; }
-        .description { font-size:16px; line-height:1.6; color:#333; }
+
+
+        /* Layout */
+        .video-layout{
+            display:flex;
+            gap:40px;
+            align-items:flex-start;
+        }
+
+        /* Video side */
+        .video-section{
+            flex:2;
+        }
+
+        /* Video container improvement */
+        .video-container{
+            border-radius:16px;
+            overflow:hidden;
+            background:black;
+            box-shadow:0 20px 45px rgba(0,0,0,0.25);
+        }
+
+        /* Right info panel */
+        .video-info-card{
+
+            flex:1;
+
+            background:white;
+
+            padding:30px;
+
+            border-radius:14px;
+
+            box-shadow:0 10px 30px rgba(0,0,0,0.08);
+
+            display:flex;
+
+            flex-direction:column;
+
+            gap:25px;
+
+        }
+
+        /* Tutor block */
+        .tutor-block{
+
+            display:flex;
+
+            align-items:center;
+
+            gap:15px;
+
+        }
+
+        /* Avatar */
+        .tutor-avatar{
+
+            width:55px;
+            height:55px;
+
+            border-radius:50%;
+
+            background:#0F3456;
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:center;
+
+            color:white;
+
+            font-size:22px;
+
+        }
+
+        /* Tutor name */
+        .tutor-name{
+
+            font-size:18px;
+
+            font-weight:700;
+
+            color: black;
+
+        }
+
+        /* Tutor role */
+        .tutor-role{
+
+            font-size:14px;
+
+            color:#888;
+
+        }
+
+        /* Description */
+        .video-description h3{
+
+            margin-bottom:10px;
+
+        }
+
+        .video-description p{
+
+            line-height:1.6;
+
+            color:#444;
+
+        }
 
     </style>
 </head>
@@ -115,59 +285,105 @@
 
 <!-- Sidebar -->
 <aside>
-    <div class="brand">Website Name</div>
+    <div class="brand">Online Tutor</div>
+
     <nav>
-        <a href="/dashboard" class="nav-item"><i class="fa-solid fa-house"></i>Dashboard</a>
-        <a href="/study-plan" class="nav-item"><i class="fa-solid fa-book-open"></i>Study Plan</a>
-        <a href="/resources" class="nav-item active"><i class="fa-solid fa-play"></i>Resources</a>
-        <a href="/exam-trends" class="nav-item"><i class="fa-solid fa-chart-pie"></i>Exam Trends</a>
+        <a href="/dashboard" class="nav-item">
+            <i class="fa-solid fa-house"></i> Dashboard
+        </a>
+
+        <a href="/study-plan" class="nav-item">
+            <i class="fa-solid fa-book-open"></i> Study Plan
+        </a>
+
+        <a href="/resources" class="nav-item active">
+            <i class="fa-solid fa-play"></i> Resources
+        </a>
+
+        <a href="/chat/student" class="nav-item">
+            <i class="fa-solid fa-comments"></i> Contact a Tutor
+        </a>
+
+        <a href="/articles/translations" class="nav-item">
+            <i class="fa-solid fa-globe"></i> Translations
+        </a>
     </nav>
+
     <div class="sidebar-footer">
-        <form action="/logout" method="post"><button class="logout-btn">Logout</button></form>
+        <form action="/logout" method="post">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
         <a href="/profile" class="profile-link">Profile</a>
     </div>
 </aside>
 
 <!-- Main -->
 <main>
+
     <header>
         <div class="header-left">
             <a href="/resources/${resourceId?c}/articles-and-videos" class="back-btn">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
-            <h1>Video</h1>
+            <h1>${video.videoTitle! "Video Lesson"}</h1>
         </div>
     </header>
 
-    <#if video??>
-        <div class="video-container" id="videoContainer">
+    <div class="video-layout">
 
-            <iframe
-                    src="${embedUrl}"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
-            </iframe>
+        <#if video??>
+            <div class="video-section">
 
-            <div class="video-overlay" id="videoOverlay">
-                <i class="fas fa-play overlay-icon" id="overlayIcon"></i>
+                <div class="video-container" id="videoContainer">
+                    <iframe
+                            src="${embedUrl}"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                    </iframe>
+
+                    <div class="video-overlay" id="videoOverlay">
+                        <i class="fas fa-play overlay-icon"></i>
+                    </div>
+                </div>
+
+            </div>
+        </#if>
+
+
+        <aside class="video-info-card">
+
+            <#if video.tutorName??>
+                <div class="tutor-block">
+
+                    <div class="tutor-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+
+                    <div>
+                        <div class="tutor-name">
+                            ${video.tutorName.firstName}
+                        </div>
+
+                        <div class="tutor-role">
+                            Tutor
+                        </div>
+                    </div>
+
+                </div>
+            </#if>
+
+            <div class="video-description">
+                <h3>Lesson Description</h3>
+
+                <p>
+                    ${video.videoDescription!"No description available."}
+                </p>
             </div>
 
-        </div>
-    <#else>
-        <p>Video not available</p>
-    </#if>
+        </aside>
 
-    <#if video.tutorName??>
-        <section class="content-info">
-            <div class="tutor-name">
-                ${video.tutorName.firstName} – ${video.videoTitle}
-            </div>
-            <p>${embedUrl}</p>
-            <p class="description">${video.videoDescription}</p>
-        </section>
-    <#else>
-        <p>No video information available.</p>
-    </#if>
+    </div>
+
 </main>
 
 <script>
