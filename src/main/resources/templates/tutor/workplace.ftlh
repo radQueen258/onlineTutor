@@ -272,7 +272,11 @@
                             <#else>0</#if>
                         </td>
                         <td>
-                            <a href="/tutor/resources/${resource.id?c}/articles">View Articles</a>
+                            <#if resource.articles?? && (resource.articles?size > 0)>
+                                <a href="/tutor/resources/${resource.id?c}/articles">View Articles</a>
+                            <#else>
+                                <a href="/tutor/resources/${resource.id?c}/article/new" class="btn btn-primary">Add Article</a>
+                            </#if>
                         </td>
                         <td>
                             <form action="/tutor/resources/${resource.id?c}/delete" method="post" style="display:inline;">

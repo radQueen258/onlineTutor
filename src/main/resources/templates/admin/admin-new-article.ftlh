@@ -118,12 +118,12 @@
 <main class="card">
     <h2>Create a New Article</h2>
 
-    <form action="/admin/resources/${resourceId}/article/save" method="post">
+    <form action="/admin/resources/${resourceId?c}/article/save" method="post">
         <label for="title">Title:</label>
         <input type="text" id="title" name="articleTitle" value="${article.articleTitle!}" placeholder="Enter the article title" required>
 
         <label for="content">Content:</label>
-        <textarea id="content" name="articleContent" rows="8" placeholder="Write your article content here...">${article.articleContent?no_esc}</textarea>
+        <textarea id="content" name="articleContent" rows="8" placeholder="Write your article content here..." required>${article.articleContent!}</textarea>
 
         <h3>Multiple Choice Questions (3 required)</h3>
 

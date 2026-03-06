@@ -113,7 +113,11 @@ public class TutorController {
             exists = true;
         }
 
-        String embedUrl = convertToEmbedUrl(video.getVideoUrl());
+        String embedUrl = "";
+
+        if (videoRepo.getVideoByResource_Id(resourceId) != null) {
+            embedUrl = convertToEmbedUrl(video.getVideoUrl());
+        }
 
         List<Article> articles = articleRepo.findByTutorName_Id(tutorId);
 

@@ -346,7 +346,12 @@ public class AdminController {
         Long numArticles = articleRepo.countByResource_Id(resourceId);
 
         Video video = videoRepo.getVideoByResource_Id(resourceId);
-        String embedUrl = convertToEmbedUrl(video.getVideoUrl());
+        String embedUrl = "";
+
+        if (videoRepo.getVideoByResource_Id(resourceId) != null) {
+            embedUrl = convertToEmbedUrl(video.getVideoUrl());
+        }
+
 
         boolean exists = false;
 
