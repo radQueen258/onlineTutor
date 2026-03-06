@@ -50,38 +50,58 @@
             max-width: 900px;
             width: 100%;
             aspect-ratio: 16 / 9;
+            margin: 30px auto; /* center horizontally */
             border-radius: 12px;
             overflow: hidden;
-            margin-bottom: 30px;
+            background: #000;
             box-shadow: 0 15px 40px rgba(0,0,0,0.35);
-            background-color:#000;
         }
 
-        iframe {
+        /* Make iframe fill container */
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            border:0;
+            border: none;
         }
 
-        /* Play/Pause Button Overlay */
+        /* Overlay Play/Pause */
         .video-overlay {
             position: absolute;
-            top:0; left:0;
-            width:100%; height:100%;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            cursor:pointer;
-            transition: background 0.3s;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
             background: rgba(0,0,0,0.25);
+            cursor: pointer;
+
+            transition: background 0.3s ease;
+            z-index: 2;
         }
-        .video-overlay:hover { background: rgba(0,0,0,0.4); }
+
+        .video-overlay:hover {
+            background: rgba(0,0,0,0.45);
+        }
+
+        /* Play/Pause Icon */
         .overlay-icon {
             color: white;
-            font-size: 50px;
-            background: rgba(0,0,0,0.5);
-            border-radius:50%;
-            padding:15px;
+            font-size: 48px;
+            background: rgba(0,0,0,0.55);
+            border-radius: 50%;
+            padding: 18px;
+            transition: transform 0.2s ease;
+        }
+
+        .video-overlay:hover .overlay-icon {
+            transform: scale(1.1);
         }
 
         /* Video Info */
@@ -121,10 +141,17 @@
 
     <#if video??>
         <div class="video-container" id="videoContainer">
-            <!-- iframe will be inserted dynamically -->
+
+            <iframe
+                    src="${embedUrl}"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+            </iframe>
+
             <div class="video-overlay" id="videoOverlay">
                 <i class="fas fa-play overlay-icon" id="overlayIcon"></i>
             </div>
+
         </div>
     <#else>
         <p>Video not available</p>
@@ -132,7 +159,10 @@
 
     <#if video.tutorName??>
         <section class="content-info">
-            <div class="tutor-name">${video.tutorName.firstName} – ${video.videoTitle}</div>
+            <div class="tutor-name">
+                ${video.tutorName.firstName} – ${video.videoTitle}
+            </div>
+            <p>${embedUrl}</p>
             <p class="description">${video.videoDescription}</p>
         </section>
     <#else>
@@ -141,69 +171,20 @@
 </main>
 
 <script>
-    // Convert any YouTube URL to embed URL
-    function getYouTubeEmbedUrl(url) {
-        if(!url) return null;
-        url = url.split('?')[0]; // remove query params
-        let videoId = null;
 
-        const shortMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
-        const longMatch = url.match(/v=([a-zA-Z0-9_-]+)/);
+    const overlay = document.getElementById("videoOverlay");
 
-        if(shortMatch) videoId = shortMatch[1];
-        else if(longMatch) videoId = longMatch[1];
+    overlay.addEventListener("click", function() {
 
-        return videoId ? `https://www.youtube.com/embed/${video.id?c}?enablejsapi=1` : null;
-    }
+        const iframe = document.querySelector(".video-container iframe");
 
-    const videoUrlFromDB = "${video.videoUrl}";
-    const embedUrl = getYouTubeEmbedUrl(videoUrlFromDB);
-
-    if(embedUrl) {
-        const container = document.getElementById('videoContainer');
-
-        // Insert iframe dynamically (keep overlay outside iframe)
-        const iframe = document.createElement('iframe');
-        iframe.id = 'youtubeVideo';
-        iframe.src = embedUrl;
-        iframe.frameBorder = 0;
-        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-        iframe.allowFullscreen = true;
-        iframe.style.width = "100%";
-        iframe.style.height = "100%";
-        iframe.style.borderRadius = "12px";
-
-        container.prepend(iframe);
-    }
-
-    // Load YouTube iframe API
-    let tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    let firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-    let player;
-    function onYouTubeIframeAPIReady() {
-        player = new YT.Player('youtubeVideo');
-    }
-
-    // Overlay play/pause control
-    const overlay = document.getElementById('videoOverlay');
-    const icon = document.getElementById('overlayIcon');
-
-    overlay.addEventListener('click', () => {
-        if (!player) return;
-        const state = player.getPlayerState();
-        if (state === YT.PlayerState.PLAYING) {
-            player.pauseVideo();
-            icon.classList.remove('fa-pause');
-            icon.classList.add('fa-play');
-        } else {
-            player.playVideo();
-            icon.classList.remove('fa-play');
-            icon.classList.add('fa-pause');
+        if(!iframe.src.includes("autoplay=1")){
+            iframe.src += "?autoplay=1";
         }
+
+        overlay.style.display = "none";
     });
+
 </script>
 
 </body>

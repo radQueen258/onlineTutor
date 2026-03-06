@@ -81,9 +81,36 @@ public class ResourcesController {
 //            throw new RuntimeException("Video does not belong to this resource");
 //        }
 
+        String embedUrl = convertToEmbedUrl(video.getVideoUrl());
+
         model.addAttribute("video", video);
+        model.addAttribute("embedUrl", embedUrl);
         model.addAttribute("resourceId", resourceId);
         return "/user-and-student/video-page";
+    }
+
+    private String convertToEmbedUrl(String url) {
+
+        if(url == null) return null;
+
+        String videoId = null;
+
+        if(url.contains("youtu.be/")) {
+            videoId = url.substring(url.lastIndexOf("/") + 1);
+        }
+        else if(url.contains("watch?v=")) {
+            videoId = url.substring(url.indexOf("v=") + 2);
+            int amp = videoId.indexOf("&");
+            if(amp != -1) {
+                videoId = videoId.substring(0, amp);
+            }
+        }
+
+        if(videoId != null) {
+            return "https://www.youtube.com/embed/" + videoId;
+        }
+
+        return null;
     }
 
     @GetMapping("/resources/{resourceId}/articles-and-videos")
