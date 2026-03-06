@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aptitude Test</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -92,6 +93,31 @@
             margin-top: 25px;
             font-size: 13px;
             color: #777;
+        }
+
+        /* Make the card/container responsive */
+        @media (max-width: 1024px) {
+            .card, .continue-box {
+                width: 90%;
+                margin: 20px auto;
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .card, .continue-box {
+                width: 100%;
+                padding: 15px;
+            }
+
+            h1, h2 {
+                font-size: 1.5rem;
+            }
+
+            button {
+                width: 100%;
+                font-size: 14px;
+            }
         }
     </style>
 </head>

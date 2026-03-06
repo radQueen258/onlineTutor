@@ -181,12 +181,37 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 20px;
+            }
+
+            .card {
+                width: 100%;
+            }
+
+            .page-title {
+                font-size: 20px;
+            }
+
+            select {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .empty-state {
+                width: 100%;
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 
 <body>
 
-<#--<m class="dashboard-container">-->
+<!-- Hamburger button -->
+<div class="hamburger-btn">&#9776;</div>
 
     <!-- SIDEBAR -->
     <aside>
@@ -272,6 +297,13 @@
         const subject = document.getElementById("subjectSelect").value;
         window.location.href = "/chat/student/" + subject;
     }
+
+    const hamburger = document.querySelector('.hamburger-btn');
+    const sidebar = document.querySelector('aside');
+
+    hamburger.addEventListener('click', () => {
+        sidebar.classList.toggle('show');
+    });
 </script>
 
 </body>

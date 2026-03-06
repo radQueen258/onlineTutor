@@ -133,18 +133,22 @@
             font-size: 1.2rem;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width:768px) {
             .card {
-                padding: 40px 20px;
+                padding: 30px 20px;
             }
             .card h1, .card .test-name {
                 font-size: 1.6rem;
+            }
+            .card p {
+                font-size: 0.9rem;
+                max-width: 100%;
             }
             header h2 {
                 font-size: 1rem;
             }
             footer p {
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
         }
     </style>

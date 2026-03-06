@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Teacher - ${chatRoom.subject}</title>
 
     <link rel="stylesheet" href="/css/dashboard.css">
@@ -100,6 +101,27 @@
             color: white;
             text-decoration: none;
             font-weight: 500;
+        }
+
+        /* Hide sidebar on mobile by default */
+        @media (max-width: 768px) {
+            aside {
+                position: fixed;
+                left: -280px; /* hide it initially */
+                top: 0;
+                height: 100%;
+                z-index: 1000;
+                transition: 0.3s ease;
+            }
+
+            aside.show {
+                left: 0; /* slide in */
+            }
+
+            main {
+                margin-left: 0 !important;
+                transition: 0.3s ease;
+            }
         }
 
         /* MAIN CONTENT */
@@ -226,10 +248,100 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Make chat container responsive */
+        @media (max-width: 1024px) {
+            .chat-container {
+                width: 90%;
+                margin: 0 auto;
+            }
+
+            .chat-input input {
+                width: 80%;
+            }
+
+            .chat-input button {
+                width: 18%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .chat-container {
+                width: 100%;
+                height: 70vh;
+            }
+
+            .chat-input {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .chat-input input, .chat-input button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            aside {
+                width: 280px; /* full width when shown */
+                left: -280px; /* hidden by default */
+                top: 0;
+                height: 100%;
+                padding: 40px 20px; /* make room inside */
+                background-color: #0F3456; /* ensure blue background */
+                border-top-right-radius: 20px;
+                border-bottom-right-radius: 20px;
+                transition: 0.3s ease;
+                z-index: 1000;
+            }
+
+            aside.show {
+                left: 0;
+            }
+
+            .brand,
+            .nav-item span {
+                display: inline; /* show letters */
+            }
+
+            main {
+                margin-left: 0 !important;
+                padding: 20px;
+                transition: 0.3s ease;
+            }
+        }
+
+
+
+        /* Optional: Hamburger toggle button */
+        .hamburger-btn {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1100;
+            font-size: 24px;
+            cursor: pointer;
+            background: #0F3456;
+            color: white;
+            padding: 10px 12px;
+            border-radius: 8px;
+        }
+
+        @media (max-width:768px) {
+            .hamburger-btn {
+                display: block;
+            }
+        }
     </style>
 
 </head>
 <body>
+
+<!-- Hamburger Button -->
+<div class="hamburger-btn" onclick="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+</div>
 
 
 <#-- UNIFIED SIDEBAR -->
@@ -398,6 +510,11 @@
     }
 
     connect();
+
+    function toggleSidebar() {
+        const sidebar = document.querySelector('aside');
+        sidebar.classList.toggle('show');
+    }
 </script>
 
 </body>

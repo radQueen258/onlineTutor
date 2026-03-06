@@ -100,6 +100,27 @@
             font-weight: 500;
         }
 
+        /* Hide sidebar on mobile by default */
+        @media (max-width: 768px) {
+            aside {
+                position: fixed;
+                left: -280px; /* hide it initially */
+                top: 0;
+                height: 100%;
+                z-index: 1000;
+                transition: 0.3s ease;
+            }
+
+            aside.show {
+                left: 0; /* slide in */
+            }
+
+            main {
+                margin-left: 0 !important;
+                transition: 0.3s ease;
+            }
+        }
+
         /* MAIN CONTENT */
         main {
             flex: 1;
@@ -314,10 +335,91 @@
             background-color: #82613E;
             color: white;
         }
+
+        /* Make cards and charts responsive */
+        @media (max-width: 1024px) {
+            .dashboard-card {
+                width: 45%;
+                margin-bottom: 20px;
+            }
+
+            .chart-container {
+                width: 100%;
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .dashboard-card {
+                width: 100%;
+            }
+
+            .chart-container canvas {
+                width: 100% !important;
+                height: auto !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            aside {
+                width: 280px; /* full width when shown */
+                left: -280px; /* hidden by default */
+                top: 0;
+                height: 100%;
+                padding: 40px 20px; /* make room inside */
+                background-color: #0F3456; /* ensure blue background */
+                border-top-right-radius: 20px;
+                border-bottom-right-radius: 20px;
+                transition: 0.3s ease;
+                z-index: 1000;
+            }
+
+            aside.show {
+                left: 0;
+            }
+
+            .brand,
+            .nav-item span {
+                display: inline; /* show letters */
+            }
+
+            main {
+                margin-left: 0 !important;
+                padding: 20px;
+                transition: 0.3s ease;
+            }
+        }
+
+
+        /* Optional: Hamburger toggle button */
+        .hamburger-btn {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1100;
+            font-size: 24px;
+            cursor: pointer;
+            background: #0F3456;
+            color: white;
+            padding: 10px 12px;
+            border-radius: 8px;
+        }
+
+        @media (max-width:768px) {
+            .hamburger-btn {
+                display: block;
+            }
+        }
     </style>
 </head>
 
 <body>
+
+<!-- Hamburger Button -->
+<div class="hamburger-btn" onclick="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+</div>
 
 <!-- SIDEBAR -->
 <aside>
@@ -559,6 +661,12 @@
             bar.style.width = width + "%";
         });
     });
+
+
+    function toggleSidebar() {
+        const sidebar = document.querySelector('aside');
+        sidebar.classList.toggle('show');
+    }
 </script>
 
 </body>

@@ -160,6 +160,36 @@
             opacity: 0.4;
             cursor: not-allowed;
         }
+
+        @media (max-width:1024px) {
+            .container {
+                padding: 40px 30px;
+            }
+            .content-area {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width:768px) {
+            .container {
+                padding: 30px 20px;
+            }
+            .top-row h2 {
+                font-size: 28px;
+                text-align: center;
+            }
+            .question-text {
+                font-size: 16px;
+            }
+            .illustration img {
+                max-width: 100%;
+            }
+            .next-btn {
+                padding: 10px 30px;
+                width: 100%;
+            }
+        }
     </style>
 </head>
 

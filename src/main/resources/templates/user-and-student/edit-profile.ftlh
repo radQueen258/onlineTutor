@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
@@ -219,6 +220,50 @@
             }
             .website-name {
                 font-size: 24px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                height: auto;
+                padding: 20px 10px;
+            }
+
+            .website-name {
+                font-size: 24px;
+                text-align: center;
+            }
+
+            .profile-card {
+                width: 95%;
+                margin: -150px auto 30px;
+                padding: 30px 20px;
+            }
+
+            .info-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                font-size: 14px;
+            }
+
+            .info-value {
+                text-align: left;
+            }
+
+            .button-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .warning {
+                width: 100%;
+                font-size: 14px;
             }
         }
     </style>

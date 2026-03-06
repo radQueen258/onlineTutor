@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${article.articleTitle}</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script>
@@ -122,10 +123,77 @@
             font-weight:600;
         }
 
+        /* Base sidebar */
+        aside {
+            width: 280px;
+            transition: width 0.3s ease;
+        }
+
+        /* Collapse sidebar on tablets and smaller */
+        @media (max-width:1024px) {
+            aside {
+                width: 80px; /* collapse */
+            }
+            .brand, .nav-item span {
+                display: none; /* hide text labels, show only icons */
+            }
+            main {
+                margin-left: 80px; /* leave space for collapsed sidebar */
+                padding: 20px;
+            }
+        }
+
+        /* Mobile screens */
+        @media (max-width:768px) {
+            aside {
+                position: fixed;   /* overlay the sidebar on top */
+                left: -100%;       /* hide by default */
+                top: 0;
+                height: 100%;
+                z-index: 1000;
+                width: 250px;      /* full sidebar width when opened */
+                flex-direction: column;
+                padding: 40px 20px;
+            }
+            aside.open {
+                left: 0;           /* show sidebar */
+            }
+            main {
+                margin-left: 0;    /* main content takes full width */
+                padding: 20px;
+            }
+        }
+
+        /* Optional: Hamburger toggle button */
+        .hamburger-btn {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1100;
+            font-size: 24px;
+            cursor: pointer;
+            background: #0F3456;
+            color: white;
+            padding: 10px 12px;
+            border-radius: 8px;
+        }
+
+        @media (max-width:768px) {
+            .hamburger-btn {
+                display: block;
+            }
+        }
+
     </style>
 </head>
 
 <body>
+
+<!-- Hamburger Button -->
+<div class="hamburger-btn" onclick="toggleSidebar()">
+    <i class="fa-solid fa-bars"></i>
+</div>
 
 <!-- Sidebar -->
 <aside>
@@ -211,6 +279,20 @@
                 document.getElementById("translationModal").style.display = "flex";
             });
     }
+
+    function toggleSidebar() {
+        const sidebar = document.querySelector('aside');
+        sidebar.classList.toggle('open');
+    }
+
+    // Optional: Close sidebar when clicking outside (on main content)
+    const mainContent = document.querySelector('main');
+    mainContent.addEventListener('click', () => {
+        const sidebar = document.querySelector('aside');
+        if (sidebar.classList.contains('open')) {
+            sidebar.classList.remove('open');
+        }
+    });
 </script>
 
 </body>
