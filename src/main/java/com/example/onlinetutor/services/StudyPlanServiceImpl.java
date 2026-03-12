@@ -31,7 +31,6 @@ public class StudyPlanServiceImpl implements StudyPlanService {
 
     @Override
     public List<StudyPlan> getPlanForUser(String email) {
-//        return studyPlanRepo.findByUserEmail(email);
         return studyPlanRepo.findByUserEmailAndArchivedFalse(email);
     }
 

@@ -341,17 +341,22 @@
                     <div class="topics-collapsible">
                         <#list topics as p>
                             <div class="topic-item">
-                                <div class="topic-left">
-                                    <i class="fa-regular fa-circle-play"></i>
-                                    <span>${p.article.articleTitle}</span>
-                                </div>
-                                <div class="topic-right">
-                                    <#if p.completed>
-                                        Completed
-                                    <#else>
-                                        ${(p.progress * 100)?string["0.##"]}%
-                                    </#if>
-                                </div>
+                                <a href="/study/${p.id}" class="topic-link">
+
+                                    <div class="topic-left">
+                                        <i class="fa-regular fa-circle-play"></i>
+                                        <span>${p.article.articleTitle}</span>
+                                    </div>
+
+                                    <div class="topic-right">
+                                        <#if p.completed>
+                                            Completed
+                                        <#else>
+                                           Not Started
+                                        </#if>
+                                    </div>
+
+                                </a>
                             </div>
                         </#list>
                     </div>
@@ -359,12 +364,6 @@
             </#list>
 
         </section>
-
-        <div class="action-container">
-            <a href="/study/continue">
-                <button class="continue-btn">Continue Plan</button>
-            </a>
-        </div>
 
         <div class="action-container">
             <a href="/study/continue">

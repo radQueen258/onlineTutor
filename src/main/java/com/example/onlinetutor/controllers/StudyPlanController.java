@@ -131,6 +131,25 @@ public class StudyPlanController {
         return "redirect:/study-plan";
     }
 
+    @GetMapping("/study/{planId}")
+    public String studySpecificPlan(@PathVariable Long planId,
+                                    Model model,
+                                    Principal principal) {
+
+        StudyPlan plan = studyPlanService.getById(planId);
+
+        if (plan == null) {
+            return "redirect:/study-plan";
+        }
+
+        model.addAttribute("plan", plan);
+        model.addAttribute("article", plan.getArticle());
+        model.addAttribute("quiz",
+                quizQuestionService.getQuizByArticleId(plan.getArticle().getId()));
+
+        return "/user-and-student/study-session";
+    }
+
 //    --------------- AI TUTOR CONTROLLER -----------------------
 
     @PostMapping("/articles/{id}/ask-ai")
