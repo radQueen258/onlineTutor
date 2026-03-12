@@ -2,8 +2,10 @@ package com.example.onlinetutor.repositories;
 
 import com.example.onlinetutor.enums.AptitudeTestStatus;
 import com.example.onlinetutor.models.AptitudeTest;
+import com.example.onlinetutor.models.TestQuestion;
 import com.example.onlinetutor.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,4 +20,15 @@ public interface AptitudeTestRepo extends JpaRepository<AptitudeTest,Long> {
     List<AptitudeTest> findAllByOrderByIdDesc();
 
     Optional<AptitudeTest> findAptitudeTestByUserIdAndStatus(Long userId, AptitudeTestStatus status);
+
+    @Query("""
+       SELECT COUNT(q)
+       FROM TestQuestion q
+       WHERE q.aptitudeTest.userId = :userId
+       """)
+    long countQuestionsByUserId(Long userId);
+
+    Optional<Object> findFirstByUserIdOrderByIdDesc(Long userId);
+
+    Optional<AptitudeTest> findByUserIdAndStatus(Long userId, AptitudeTestStatus aptitudeTestStatus);
 }

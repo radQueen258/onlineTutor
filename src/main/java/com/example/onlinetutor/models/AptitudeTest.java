@@ -28,8 +28,6 @@ public class AptitudeTest {
     @ToString.Exclude
     @OneToMany(
             mappedBy = "aptitudeTest"
-//            cascade = CascadeType.ALL,
-//            fetch = FetchType.EAGER
     )
     private List<TestQuestion> questions = new ArrayList<>();
 }

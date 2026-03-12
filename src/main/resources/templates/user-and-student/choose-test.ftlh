@@ -129,7 +129,7 @@
 
     <p>
         This aptitude test evaluates your core skills and takes approximately
-        <strong>1 hour</strong> to complete.
+        <strong>1 hour</strong> to complete <strong> ${questionCount} </strong> questions.
         Please ensure you have a stable internet connection and sufficient time
         before starting.
     </p>

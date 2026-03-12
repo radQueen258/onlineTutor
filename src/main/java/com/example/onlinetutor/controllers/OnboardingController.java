@@ -3,8 +3,11 @@ package com.example.onlinetutor.controllers;
 import com.example.onlinetutor.enums.AptitudeTestStatus;
 import com.example.onlinetutor.enums.Grade;
 import com.example.onlinetutor.enums.Subject;
+import com.example.onlinetutor.models.TestQuestion;
 import com.example.onlinetutor.models.User;
+import com.example.onlinetutor.repositories.AptitudeTestRepo;
 import com.example.onlinetutor.repositories.UserRepo;
+import com.example.onlinetutor.services.AptitudeGeneratorService;
 import com.example.onlinetutor.services.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,6 +33,12 @@ public class OnboardingController {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    private AptitudeTestRepo aptitudeTestRepo;
+
+    @Autowired
+    private AptitudeGeneratorService questionGenerator;
+
     @GetMapping("/onboarding")
     public String onboarding(HttpSession session, Model model, Authentication authentication) {
         User user = userRepo.findUserByEmail(authentication.getName());
@@ -52,6 +61,10 @@ public class OnboardingController {
         userService.updateOnboarding(userId,examLevel, subjects);
 
         userService.updateAptitudeTestStatus(userId, AptitudeTestStatus.NOT_STARTED);
+        User user = userRepo.findById(userId).orElseThrow();
+
+//        List<TestQuestion> questions =
+                questionGenerator.generateQuestionsForStudent(user);
 
         session.setAttribute("examLevel", examLevel);
         session.setAttribute("subjects", subjects);
@@ -60,7 +73,14 @@ public class OnboardingController {
     }
 
     @GetMapping("/choose-test")
-    public String chooseTest() {
+    public String chooseTest(Model model, Authentication authentication) {
+
+        User user = userRepo.findUserByEmail(authentication.getName());
+
+        long questionCount = aptitudeTestRepo.countQuestionsByUserId(user.getId());
+
+        model.addAttribute("questionCount", questionCount);
+
         return "/user-and-student/choose-test";
     }
 
