@@ -210,6 +210,11 @@
             background: white;
         }
 
+        .chat-bubble img {
+            margin-top: 5px;
+            border-radius: 10px;
+        }
+
         .chat-input input {
             flex: 1;
             padding: 12px 14px;
@@ -428,6 +433,8 @@
     <div class="chat-input">
         <input type="text" id="messageInput" placeholder="Type your message..." onkeypress="handleKey(event)">
         <button onclick="sendMessage()">Send</button>
+
+        <input type="file" id="fileInput" onchange="uploadFile()">
     </div>
 
 </div>
@@ -461,7 +468,8 @@
     }
 
     // Function to render a message in the chat container
-    function renderMessage(senderName, content, time, mine) {
+    function renderMessage(senderName, content, time, mine, fileUrl = null, fileType = null) {
+
         const messageDiv = document.createElement('div');
         messageDiv.className = 'chat-bubble ' + (mine ? 'mine' : 'theirs');
 
@@ -471,7 +479,29 @@
 
         const contentDiv = document.createElement('div');
         contentDiv.className = 'bubble-content';
-        contentDiv.textContent = content;
+
+        // ✅ NEW: handle file vs text
+        if (fileUrl) {
+
+            if (fileType === "image") {
+                const img = document.createElement("img");
+                img.src = fileUrl;
+                img.style.maxWidth = "200px";
+                img.style.borderRadius = "10px";
+                contentDiv.appendChild(img);
+
+            } else {
+                const link = document.createElement("a");
+                link.href = fileUrl;
+                link.textContent = "Download file";
+                link.target = "_blank";
+                contentDiv.appendChild(link);
+            }
+
+        } else {
+            // existing behavior
+            contentDiv.textContent = content;
+        }
 
         const timeDiv = document.createElement('div');
         timeDiv.className = 'bubble-time';
@@ -494,13 +524,11 @@
         const now = new Date();
         const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
 
-        // Render locally instantly
-        renderMessage("You", content, timeString, true);
+        // Instant UI
+        renderMessage("You", content, timeString, true, null, null);
 
-        // Track this message to avoid duplicate when server echoes it
         lastSentMessage = content;
 
-        // Send to server
         stompClient.send("/app/chat.send", {}, JSON.stringify({
             chatRoomId: chatRoomId,
             content: content
@@ -524,6 +552,41 @@
     function toggleSidebar() {
         const sidebar = document.querySelector('aside');
         sidebar.classList.toggle('show');
+    }
+
+    function uploadFile() {
+        const fileInput = document.getElementById("fileInput");
+        const file = fileInput.files[0];
+
+        if (!file) return;
+
+        const now = new Date();
+        const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("chatRoomId", chatRoomId);
+
+        fetch("/chat/upload", {
+            method: "POST",
+            body: formData
+        })
+            .then(res => res.json())
+            .then(msg => {
+
+                // ✅ FIX: use renderMessage (NOT showMessage)
+                renderMessage(
+                    msg.senderName,
+                    msg.content,
+                    msg.time,
+                    true,
+                    msg.fileUrl,
+                    msg.fileType
+                );
+
+            });
+
+        fileInput.value = ""; // reset input
     }
 </script>
 </body>

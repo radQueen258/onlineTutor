@@ -39,6 +39,8 @@ public class SecurityConfig {
         this.userDetailsService = userDetailsService;
     }
 
+
+
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -100,7 +102,7 @@ public class SecurityConfig {
                 .requestMatchers("/choose-test/**", "/videos/**"
                 ,"/resources/**", "/article/**", "/exam-trends/**", "/study/**"
                 , "/study-plan/**", "/submit/**", "/tutor/**","/admin/**", "/statistics","/debug/**","/api/**").permitAll()
-                .requestMatchers("/error/**", "/waiting-room/**").permitAll()
+                .requestMatchers("/error/**", "/waiting-room/**", "/uploads/**", "/chat/**").permitAll()
                 .requestMatchers("/aptitude-test/**").permitAll()
                 .anyRequest().permitAll()
         );

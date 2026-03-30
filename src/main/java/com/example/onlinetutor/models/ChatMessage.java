@@ -40,4 +40,10 @@ public class ChatMessage {
 
     @Column(nullable = false)
     private boolean read = false;
+
+    @Column(name = "file_url")
+    private String fileUrl;
+
+    @Column(name = "file_type")
+    private String fileType; // "image", "pdf", etc.
 }

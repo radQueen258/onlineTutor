@@ -13,10 +13,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 @Controller
 public class ChatWebSocketController {
@@ -65,6 +74,8 @@ public class ChatWebSocketController {
                 .senderName(sender.getFirstName())
                 .content(message.getContent())
                 .time(message.getTimestamp().format(formatter))
+                .fileUrl(message.getFileUrl())
+                .fileType(message.getFileType())
                 .mine(isMine)
                 .build();
 
@@ -87,5 +98,56 @@ public class ChatWebSocketController {
                 throw new RuntimeException("Access denied");
             }
         }
+    }
+
+    @PostMapping("/chat/upload")
+    @ResponseBody
+    public ChatMessageResponseDTO uploadFile(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("chatRoomId") Long chatRoomId,
+            Principal principal) throws IOException {
+
+        User sender = userRepo.findByEmail(principal.getName()).orElseThrow();
+        ChatRoom room = chatRoomRepo.findById(chatRoomId).orElseThrow();
+
+        validateAccess(sender, room);
+
+        // SAVE FILE
+        String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+        Path path = Paths.get("uploads/" + fileName);
+        Files.createDirectories(path.getParent());
+        Files.write(path, file.getBytes());
+
+        String fileUrl = "/uploads/" + fileName;
+
+        String fileType = file.getContentType().startsWith("image") ? "image" : "file";
+
+        ChatMessage message = ChatMessage.builder()
+                .chatRoom(room)
+                .sender(sender)
+                .content("") // no text
+                .fileUrl(fileUrl)
+                .fileType(fileType)
+                .timestamp(LocalDateTime.now())
+                .build();
+
+        chatMessageRepo.save(message);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        ChatMessageResponseDTO response = ChatMessageResponseDTO.builder()
+                .id(message.getId())
+                .senderId(sender.getId())
+                .senderName(sender.getFirstName())
+                .content("")
+                .fileUrl(fileUrl)
+                .fileType(fileType)
+                .time(message.getTimestamp().format(formatter))
+                .mine(true)
+                .build();
+
+        messagingTemplate.convertAndSend("/topic/chat/" + room.getId(), response);
+
+        return response;
     }
 }

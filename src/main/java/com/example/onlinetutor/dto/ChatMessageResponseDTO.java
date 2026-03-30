@@ -19,4 +19,7 @@ public class ChatMessageResponseDTO {
     private String content;
     private String time;
     private boolean mine;
+
+    private String fileUrl;
+    private String fileType;
 }
