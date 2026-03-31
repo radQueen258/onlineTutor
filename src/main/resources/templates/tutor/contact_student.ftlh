@@ -171,6 +171,28 @@
             animation: fadeIn 0.2s ease;
         }
 
+        .chat-bubble img {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .chat-bubble img:hover {
+            transform: scale(1.05);
+        }
+
+        .chat-bubble a {
+            color: #007bff;
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .chat-bubble a:hover {
+            text-decoration: underline;
+        }
+
         /* My messages */
         .chat-bubble.mine {
             align-self: flex-end;
@@ -238,6 +260,41 @@
         .chat-input button:hover {
             background-color: #6f5032;
             transform: translateY(-1px);
+        }
+
+        .file-btn {
+            background: #eef2f7;
+            border: none;
+            border-radius: 12px;
+            padding: 10px 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 16px;
+        }
+
+        .file-btn:hover {
+            background: #dbe3ec;
+        }
+
+        .preview-container {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 16px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .preview-container img {
+            max-width: 250px;
+            border-radius: 12px;
         }
 
         @keyframes fadeIn {
@@ -312,7 +369,19 @@
             <#list messages as msg>
                 <div class="chat-bubble ${msg.mine?then('mine','theirs')}">
                     <div class="sender-name">${msg.senderName}</div>
-                    <div class="bubble-content">${msg.content}</div>
+                    <div class="bubble-content">
+                        <#if msg.fileUrl?? && msg.fileUrl?has_content>
+                            <#if msg.fileType == "image">
+                                <img src="${msg.fileUrl}"
+                                     style="max-width:200px; border-radius:10px; cursor:pointer;"
+                                     onclick="window.open('${msg.fileUrl}', '_blank')"/>
+                            <#else>
+                                <a href="${msg.fileUrl}" target="_blank">📎 Download file</a>
+                            </#if>
+                        <#else>
+                            ${msg.content}
+                        </#if>
+                    </div>
                     <div class="bubble-time">${msg.time}</div>
                 </div>
             </#list>
@@ -320,8 +389,28 @@
     </div>
 
     <div class="chat-input">
-        <input type="text" id="messageInput" placeholder="Reply..." onkeypress="handleKey(event)">
+
+        <!-- FILE BUTTON -->
+        <button class="file-btn" onclick="document.getElementById('fileInput').click()">
+            <i class="fa-solid fa-paperclip"></i>
+        </button>
+
+        <!-- HIDDEN FILE INPUT -->
+        <input type="file" id="fileInput" onchange="handleFileSelect()" hidden>
+
+        <!-- TEXT -->
+        <input type="text" id="messageInput" placeholder="Type your message..." onkeypress="handleKey(event)">
+
+        <!-- SEND -->
         <button onclick="sendMessage()">Send</button>
+
+    </div>
+
+    <!-- IMAGE PREVIEW -->
+    <div id="previewContainer" class="preview-container" style="display:none;">
+        <img id="previewImage">
+        <button onclick="sendSelectedFile()">Send</button>
+        <button onclick="cancelPreview()">Cancel</button>
     </div>
 
 </div>
@@ -340,52 +429,59 @@
         const socket = new SockJS('/chat');
         stompClient = Stomp.over(socket);
 
-        stompClient.subscribe('/topic/chat/' + chatRoomId, function(messageOutput) {
-            const msg = JSON.parse(messageOutput.body);
+        stompClient.connect({}, function() {
+            stompClient.subscribe('/topic/chat/' + chatRoomId, function(messageOutput) {
+                const msg = JSON.parse(messageOutput.body);
 
-            const messageDiv = document.createElement('div');
-            messageDiv.className = msg.mine ? 'message-sent' : 'message-received';
+                console.log("FILE URL:", msg.fileUrl);
 
-            const contentSpan = document.createElement('span');
-            contentSpan.className = 'msg-content';
-            contentSpan.textContent = msg.content;
+                const isMine = msg.senderId === currentUserId;
 
-            const timeSpan = document.createElement('span');
-            timeSpan.className = 'msg-time';
-            timeSpan.textContent = msg.time;
-
-            messageDiv.appendChild(contentSpan);
-            messageDiv.appendChild(timeSpan);
-
-            const messagesDiv = document.getElementById('messages');
-            messagesDiv.appendChild(messageDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                renderMessage(
+                    msg.senderName,
+                    msg.content,
+                    msg.time,
+                    isMine,
+                    msg.fileUrl,
+                    msg.fileType
+                );
+            });
         });
     }
 
-    function sendMessage() {
-        const input = document.getElementById("messageInput");
-        const content = input.value.trim();
-        if(!content) return;
-
-        const now = new Date();
-        const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-
-        // CREATE MESSAGE LOCALLY (instant display)
+    function renderMessage(senderName, content, time, mine, fileUrl = null, fileType = null) {
         const messageDiv = document.createElement('div');
-        messageDiv.className = 'chat-bubble mine';
+        messageDiv.className = 'chat-bubble ' + (mine ? 'mine' : 'theirs');
 
         const nameDiv = document.createElement('div');
         nameDiv.className = 'sender-name';
-        nameDiv.textContent = "You";
+        nameDiv.textContent = mine ? "You" : senderName;
 
         const contentDiv = document.createElement('div');
         contentDiv.className = 'bubble-content';
-        contentDiv.textContent = content;
+
+        if (fileUrl) {
+            if (fileType === "image") {
+                const img = document.createElement("img");
+                img.src = fileUrl;
+                img.style.maxWidth = "200px";
+                img.style.borderRadius = "10px";
+                img.onclick = () => window.open(fileUrl, '_blank');
+                contentDiv.appendChild(img);
+            } else {
+                const link = document.createElement("a");
+                link.href = fileUrl;
+                link.textContent = "📎 Download file";
+                link.target = "_blank";
+                contentDiv.appendChild(link);
+            }
+        } else {
+            contentDiv.textContent = content;
+        }
 
         const timeDiv = document.createElement('div');
         timeDiv.className = 'bubble-time';
-        timeDiv.textContent = timeString;
+        timeDiv.textContent = time;
 
         messageDiv.appendChild(nameDiv);
         messageDiv.appendChild(contentDiv);
@@ -394,8 +490,13 @@
         const messagesDiv = document.getElementById('messages');
         messagesDiv.appendChild(messageDiv);
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
 
-        // SEND TO SERVER
+    function sendMessage() {
+        const input = document.getElementById("messageInput");
+        const content = input.value.trim();
+        if (!content) return;
+
         stompClient.send("/app/chat.send", {}, JSON.stringify({
             chatRoomId: chatRoomId,
             content: content
@@ -404,17 +505,61 @@
         input.value = "";
     }
 
+    let selectedFile = null;
+
+    function handleFileSelect() {
+        const fileInput = document.getElementById("fileInput");
+        const file = fileInput.files[0];
+        if (!file) return;
+
+        selectedFile = file;
+
+        // Show preview if image
+        if (file.type.startsWith("image")) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById("previewImage").src = e.target.result;
+                document.getElementById("previewContainer").style.display = "flex";
+            };
+            reader.readAsDataURL(file);
+        } else {
+            // Direct send for non-images
+            sendSelectedFile();
+        }
+    }
+
+    function sendSelectedFile() {
+        if (!selectedFile) return;
+
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+        formData.append("chatRoomId", chatRoomId);
+
+        fetch("/chat/upload", {
+            method: "POST",
+            body: formData
+        }).catch(err => console.error(err));
+
+        cancelPreview();
+    }
+
+    function cancelPreview() {
+        selectedFile = null;
+        document.getElementById("fileInput").value = "";
+        document.getElementById("previewContainer").style.display = "none";
+    }
+
     function handleKey(event) {
-        if(event.key === "Enter") sendMessage();
+        if (event.key === "Enter") sendMessage();
     }
 
     connect();
-
 
     window.onload = () => {
         const messagesDiv = document.getElementById('messages');
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
     };
+
 </script>
 
 </body>

@@ -9,6 +9,7 @@ import com.example.onlinetutor.models.User;
 import com.example.onlinetutor.repositories.ChatMessageRepo;
 import com.example.onlinetutor.repositories.ChatRoomRepo;
 import com.example.onlinetutor.repositories.UserRepo;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -105,7 +106,8 @@ public class ChatWebSocketController {
     public ChatMessageResponseDTO uploadFile(
             @RequestParam("file") MultipartFile file,
             @RequestParam("chatRoomId") Long chatRoomId,
-            Principal principal) throws IOException {
+            Principal principal,
+            HttpServletRequest request) throws IOException {
 
         User sender = userRepo.findByEmail(principal.getName()).orElseThrow();
         ChatRoom room = chatRoomRepo.findById(chatRoomId).orElseThrow();
@@ -113,12 +115,21 @@ public class ChatWebSocketController {
         validateAccess(sender, room);
 
         // SAVE FILE
-        String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+        String extension = "";
+
+        String original = file.getOriginalFilename();
+        if (original != null && original.contains(".")) {
+            extension = original.substring(original.lastIndexOf("."));
+        }
+
+        String fileName = UUID.randomUUID() + extension;
         Path path = Paths.get("uploads/" + fileName);
         Files.createDirectories(path.getParent());
         Files.write(path, file.getBytes());
 
-        String fileUrl = "/uploads/" + fileName;
+        // Create absolute URL for file access
+        String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+        String fileUrl = baseUrl + "/uploads/" + fileName;
 
         String fileType = file.getContentType().startsWith("image") ? "image" : "file";
 
@@ -143,9 +154,10 @@ public class ChatWebSocketController {
                 .fileUrl(fileUrl)
                 .fileType(fileType)
                 .time(message.getTimestamp().format(formatter))
-                .mine(true)
+//                .mine(true)
                 .build();
 
+        // Send to both sender and receiver via WebSocket
         messagingTemplate.convertAndSend("/topic/chat/" + room.getId(), response);
 
         return response;

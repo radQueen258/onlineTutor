@@ -65,6 +65,8 @@ public class ChatController {
                                 .senderId(msg.getSender().getId())
                                 .senderName(msg.getSender().getFirstName())
                                 .content(msg.getContent())
+                                .fileUrl(msg.getFileUrl())     // ✅ ADD THIS
+                                .fileType(msg.getFileType())
                                 .time(msg.getTimestamp().format(formatter))
                                 .mine(msg.getSender().getId().equals(student.getId())) // or tutor.getId()
                                 .build())
@@ -153,6 +155,8 @@ public class ChatController {
                                 .senderId(msg.getSender().getId())
                                 .senderName(msg.getSender().getFirstName())
                                 .content(msg.getContent())
+                                .fileUrl(msg.getFileUrl())     // ✅ ADD THIS
+                                .fileType(msg.getFileType())
                                 .time(msg.getTimestamp().format(formatter))
                                 .mine(msg.getSender().getId().equals(tutor.getId())) // or tutor.getId()
                                 .build())
