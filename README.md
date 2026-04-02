@@ -2,7 +2,6 @@
 
 This project is a full-stack educational platform designed to support students preparing for Mozambican national examinations, combining a Spring Boot backend with a web-based frontend and advanced LLM (Large Language Model) integration.
 
----
 
 # Features
 
@@ -16,7 +15,6 @@ This project is a full-stack educational platform designed to support students p
 * AI-powered tutoring assistance
 * Role-based system (Student / Teacher / Admin)
 
----
 
 # AI Capabilities (Core Functionality)
 
@@ -48,7 +46,6 @@ The platform integrates an LLM to implement a complete intelligent learning cycl
 * Translates educational content to your desired language
 * Improves comprehension of complex materials
 
----
 
 # Setup
 
@@ -95,13 +92,6 @@ spring.datasource.password=your_password
 mvn spring-boot:run
 ```
 
----
-
-# Frontend Setup
-
-* Frontend is inside Spring Boot static folder
-
----
 
 # Project Structure
 
@@ -117,11 +107,9 @@ mvn spring-boot:run
 └── README.md
 ```
 
----
-
 # Tech Stack
 
-## Backend
+### Backend
 
 * Java
 * Spring Boot
@@ -129,13 +117,13 @@ mvn spring-boot:run
 * Spring Data JPA
 * REST API
 
-## Frontend
+### Frontend
 
 * HTML
 * CSS
 * JavaScript
 
-## AI Integration
+### AI Integration
 
 * LLM API (for:
 
@@ -145,11 +133,10 @@ mvn spring-boot:run
     * translation
       )
 
-## Database
+### Database
 
 * PostgreSQL
 
----
 
 ## System Focus: Mozambican Education
 
@@ -160,7 +147,6 @@ This platform is specifically designed to:
 * Simulate real exam conditions using AI
 * Improve accessibility to educational resources
 
----
 
 ## Development
 
@@ -168,7 +154,6 @@ The application runs on:
 
 * Backend: [http://localhost:3000](http://localhost:3000)
 
----
 
 ## License
 
