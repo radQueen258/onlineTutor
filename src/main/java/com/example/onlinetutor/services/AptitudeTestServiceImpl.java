@@ -140,18 +140,18 @@ public class AptitudeTestServiceImpl implements AptitudeTestService {
         request.setTopK(5);
 
 
-        Map<String, Object> response = articleRecommendationService.recommend(request);
+//        Map<String, Object> response = articleRecommendationService.recommend(request);
 
 // Save results
-        List<Map<String, Object>> results = (List<Map<String, Object>>) response.get("recommendations");
-        for (Map<String, Object> r : results) {
-            ArticleRecommendation rec = new ArticleRecommendation();
-            rec.setUserId(test.getUserId());
-            rec.setArticleId(Long.valueOf(r.get("article_id").toString()));
-            rec.setScore(Double.parseDouble(r.get("score").toString()));
-            rec.setCreatedAt(LocalDateTime.now());
-            articleRecommendationRepo.save(rec);
-        }
+//        List<Map<String, Object>> results = (List<Map<String, Object>>) response.get("recommendations");
+//        for (Map<String, Object> r : results) {
+//            ArticleRecommendation rec = new ArticleRecommendation();
+//            rec.setUserId(test.getUserId());
+//            rec.setArticleId(Long.valueOf(r.get("article_id").toString()));
+//            rec.setScore(Double.parseDouble(r.get("score").toString()));
+//            rec.setCreatedAt(LocalDateTime.now());
+//            articleRecommendationRepo.save(rec);
+//        }
 
         return test;
 

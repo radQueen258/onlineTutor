@@ -53,7 +53,7 @@ public class ChatWebSocketController {
         ChatRoom room = chatRoomRepo.findById(dto.getChatRoomId())
                 .orElseThrow();
 
-        // SECURITY CHECK
+
         validateAccess(sender, room);
 
         ChatMessage message = ChatMessage.builder()
@@ -114,7 +114,6 @@ public class ChatWebSocketController {
 
         validateAccess(sender, room);
 
-        // SAVE FILE
         String extension = "";
 
         String original = file.getOriginalFilename();
@@ -127,7 +126,7 @@ public class ChatWebSocketController {
         Files.createDirectories(path.getParent());
         Files.write(path, file.getBytes());
 
-        // Create absolute URL for file access
+        // URL for file access
         String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
         String fileUrl = baseUrl + "/uploads/" + fileName;
 
@@ -136,7 +135,7 @@ public class ChatWebSocketController {
         ChatMessage message = ChatMessage.builder()
                 .chatRoom(room)
                 .sender(sender)
-                .content("") // no text
+                .content("")
                 .fileUrl(fileUrl)
                 .fileType(fileType)
                 .timestamp(LocalDateTime.now())
