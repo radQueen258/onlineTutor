@@ -25,8 +25,6 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private StudyPlanRepo studyPlanRepo;
 
-
-
     @Transactional
     @Override
     public void safeDeleteArticle(Long articleId) {

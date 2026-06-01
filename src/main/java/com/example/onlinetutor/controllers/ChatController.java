@@ -65,7 +65,7 @@ public class ChatController {
                                 .senderId(msg.getSender().getId())
                                 .senderName(msg.getSender().getFirstName())
                                 .content(msg.getContent())
-                                .fileUrl(msg.getFileUrl())     // ✅ ADD THIS
+                                .fileUrl(msg.getFileUrl())
                                 .fileType(msg.getFileType())
                                 .time(msg.getTimestamp().format(formatter))
                                 .mine(msg.getSender().getId().equals(student.getId())) // or tutor.getId()

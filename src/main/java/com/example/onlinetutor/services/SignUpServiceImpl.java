@@ -54,7 +54,7 @@ public class SignUpServiceImpl implements SignUpService{
                 .isVerified(true);
 
         if (form.getRole() == Role.STUDENT) {
-            Long schoolId = form.getSchoolId(); // new field in UserForm
+            Long schoolId = form.getSchoolId();
             School school = schoolRepo.findById(schoolId)
                     .orElseThrow(() -> new RuntimeException("School not found"));
             userBuilder.school(school);

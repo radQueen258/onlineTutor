@@ -213,7 +213,7 @@
 <body>
 
 <aside class="sidebar">
-    <div class="sidebar-brand">Website Name</div>
+    <div class="sidebar-brand">Online Tutor</div>
     <ul class="nav-menu">
         <li class="nav-item active">
             <a href="/tutor/workplace">

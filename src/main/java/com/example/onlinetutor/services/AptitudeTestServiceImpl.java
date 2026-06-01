@@ -115,8 +115,8 @@ public class AptitudeTestServiceImpl implements AptitudeTestService {
                 .map(q -> {
                     WrongAnswerDto dto = new WrongAnswerDto();
                     dto.setTopic(q.getSubject().name());
-                    dto.setKeywords(Collections.emptyList()); // no keywords yet
-                    dto.setDifficulty(3); // default if you don’t track difficulty yet
+                    dto.setKeywords(Collections.emptyList());
+                    dto.setDifficulty(3);
                     return dto;
                 })
                 .toList();

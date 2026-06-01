@@ -194,7 +194,7 @@
 
 <!-- Sidebar -->
 <aside>
-    <div class="brand">Website Name</div>
+    <div class="brand">Online Tutor</div>
 
     <nav>
         <a href="/admin/dashboard" class="nav-item active">

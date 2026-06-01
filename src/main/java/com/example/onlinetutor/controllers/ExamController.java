@@ -38,9 +38,6 @@ public class ExamController {
     private GeneratedQuestionRepo generatedQuestionRepo;
 
     @Autowired
-    private ExamQuestionRepo examQuestionRepo;
-
-    @Autowired
     private StudentAnswerRepo studentAnswerRepo;
 
 

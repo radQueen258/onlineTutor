@@ -71,11 +71,9 @@ public class TranslationServiceImpl implements TranslationService {
 
     @Override
     public ArticleTranslation translateArticle(Long articleId, String language) {
-        // 1️⃣ Get article
         Article article = articleRepo.findById(articleId)
                 .orElseThrow(() -> new RuntimeException("Article not found"));
 
-        // 2️⃣ Check if translation already exists
         Optional<ArticleTranslation> existing =
                 translationRepo.findByArticleIdAndLanguage(articleId, language);
 
@@ -83,7 +81,6 @@ public class TranslationServiceImpl implements TranslationService {
             return existing.get();
         }
 
-        // 3️⃣ Build prompt
         String prompt = """
                 Translate the following educational article into %s.
 
@@ -110,7 +107,6 @@ public class TranslationServiceImpl implements TranslationService {
                 article.getArticleTitle(),
                 article.getArticleContent());
 
-        // 4️⃣ Call AI
         String aiResponse = ask(prompt);
 
         String[] parts = aiResponse.split("CONTENT:");
@@ -118,10 +114,7 @@ public class TranslationServiceImpl implements TranslationService {
         String translatedTitle = parts[0].replace("TITLE:", "").trim();
         String translatedContent = parts.length > 1 ? parts[1].trim() : "";
 
-        // ⚠️ Ideally parse title/content separately
-        // For now assume whole text returned
 
-        // 5️⃣ Save translation
         ArticleTranslation translation = new ArticleTranslation();
         translation.setArticle(article);
         translation.setLanguage(language);

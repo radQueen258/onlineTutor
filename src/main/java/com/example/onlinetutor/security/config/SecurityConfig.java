@@ -96,14 +96,17 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/signIn","/signUp", "/features", "/about","/contact").permitAll()
                 .requestMatchers("/dashboard/**").hasAnyAuthority("STUDENT", "TEACHER", "ADMIN")
-                .requestMatchers("/onboarding/**").permitAll()
-                .requestMatchers("/setGoals/**").permitAll()
-                .requestMatchers("/exam/**").permitAll()
+                .requestMatchers("/onboarding/**").hasAnyAuthority("STUDENT")
+                .requestMatchers("/setGoals/**").hasAnyAuthority("STUDENT")
+                .requestMatchers("/exam/**").hasAnyAuthority("STUDENT")
                 .requestMatchers("/choose-test/**", "/videos/**"
                 ,"/resources/**", "/article/**", "/exam-trends/**", "/study/**"
-                , "/study-plan/**", "/submit/**", "/tutor/**","/admin/**", "/statistics","/debug/**","/api/**").permitAll()
-                .requestMatchers("/error/**", "/waiting-room/**", "/uploads/**", "/chat/**").permitAll()
-                .requestMatchers("/aptitude-test/**").permitAll()
+                , "/study-plan/**", "/submit/**", "/tutor/**",
+                        "/admin/**", "/statistics","/debug/**","/api/**", "/articles/**")
+                        .hasAnyAuthority("STUDENT", "TEACHER", "ADMIN")
+                .requestMatchers("/error/**", "/waiting-room/**", "/uploads/**", "/chat/**")
+                        .hasAnyAuthority("STUDENT", "TEACHER", "ADMIN")
+                .requestMatchers("/aptitude-test/**").hasAnyAuthority("STUDENT")
                 .anyRequest().permitAll()
         );
 

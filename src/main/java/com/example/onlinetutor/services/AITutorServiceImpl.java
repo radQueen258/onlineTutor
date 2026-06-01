@@ -56,14 +56,15 @@ public class AITutorServiceImpl implements AITutorService {
                 req.getQuestion()
         );
 
-        // Build DeepSeek request
+        // Build LLM request
         Map<String, Object> body = Map.of(
                 "model", model,
                 "messages", List.of(
                         Map.of("role", "system", "content", systemPrompt),
                         Map.of("role", "user", "content", userPrompt)
                 ),
-                "temperature", temperature
+                "temperature", temperature,
+                "max_tokens", 500
         );
 
         HttpHeaders headers = new HttpHeaders();

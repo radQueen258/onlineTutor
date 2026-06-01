@@ -41,8 +41,8 @@ public class ExamQuestionServiceImpl {
                                     .subject(subject)
                                     .examQuestionText(questionText)
                                     .grade(Grade.GRADE12)
-                                    .examOptions(new ArrayList<>()) // empty for now
-                                    .examCorrectAnswer(null) // empty for now
+                                    .examOptions(new ArrayList<>())
+                                    .examCorrectAnswer(null)
                                     .build();
 
                             examQuestionRepo.save(question);
